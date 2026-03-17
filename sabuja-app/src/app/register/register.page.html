@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create BSB Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="ion-text-center">
+    <ion-icon name="leaf-outline" style="font-size: 60px; color: #2e7d32;"></ion-icon>
+    <h3>Join Sabuja Bahini</h3>
+  </div>
+
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="floating">Full Name</ion-label>
+      <ion-input type="text" [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">WhatsApp Number</ion-label>
+      <ion-input type="tel" [(ngModel)]="whatsapp"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Create Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" color="success" shape="round" (click)="register()">Register Now</ion-button>
+  </div>
+</ion-content>
