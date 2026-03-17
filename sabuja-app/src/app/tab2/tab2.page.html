@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-title>Monthly Contribution</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div style="text-align: center; margin-top: 20px;">
+    <ion-icon name="wallet-outline" style="font-size: 64px; color: #2e7d32;"></ion-icon>
+    <h3>Support Our Mission</h3>
+    <p>Your contribution of ₹200 helps us plant and maintain trees in Brahmapur.</p>
+  </div>
+
+  <ion-card color="light" style="margin-top: 20px;">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Amount to Pay:</ion-label>
+        <ion-note slot="end" style="font-size: 20px; font-weight: bold; color: #000;">₹200</ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" color="success" shape="round" size="large" style="margin-top: 30px;"
+              href="upi://pay?pa=YOUR_UPI_ID@okaxis&pn=Sabuja%20Bahini&am=200&cu=INR&tn=Monthly%20Contribution">
+    <ion-icon name="flash" slot="start"></ion-icon>
+    Pay Now via UPI
+  </ion-button>
+
+  <p style="text-align: center; font-size: 12px; color: gray; margin-top: 20px;">
+    After payment, please take a screenshot for your records.
+  </p>
+</ion-content>
