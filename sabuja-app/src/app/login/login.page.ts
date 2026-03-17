@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: false, // <--- Add this line here
 })
 export class LoginPage {
   email: string = '';
