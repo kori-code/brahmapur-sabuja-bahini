@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.page.html'
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
   name: string = '';
-  whatsapp: string = '';
   email: string = '';
   password: string = '';
 
   constructor(
-    private afAuth: AngularFireAuth,
-    private firestore: AngularFirestore,
+    @Inject(AngularFireAuth) private afAuth: AngularFireAuth,
+    @Inject(AngularFirestore) private firestore: AngularFirestore,
     private router: Router
   ) {}
 
@@ -24,17 +24,17 @@ export class RegisterPage {
       const res = await this.afAuth.createUserWithEmailAndPassword(this.email, this.password);
       if (res.user) {
         await this.firestore.collection('members').doc(res.user.uid).set({
-          fullName: this.name,
-          phoneNumber: this.whatsapp,
+          name: this.name,
           email: this.email,
           role: 'member',
-          status: 'pending'
+          paymentStatus: 'pending',
+          createdAt: new Date()
         });
-        alert('Registered Successfully!');
-        this.router.navigate(['/login']);
+        alert('Registration Successful! Welcome to BSB.');
+        this.router.navigate(['/tabs/tab1']);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (error: any) {
+      alert('Registration Failed: ' + error.message);
     }
   }
 }
