@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+  standalone: false, // THIS LINE IS CRITICAL
 })
 export class RegisterPage {
   name: string = '';
