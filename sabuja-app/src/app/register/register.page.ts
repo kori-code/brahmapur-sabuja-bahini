@@ -13,6 +13,7 @@ export class RegisterPage {
   name: string = '';
   email: string = '';
   password: string = '';
+  whatsapp: string = ''; // <--- Add this line here
 
   constructor(
     @Inject(AngularFireAuth) private afAuth: AngularFireAuth,
