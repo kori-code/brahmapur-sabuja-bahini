@@ -5,38 +5,38 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div style="text-align: center; margin-bottom: 20px;">
-    <ion-icon name="cash-outline" style="font-size: 64px; color: #2e7d32;"></ion-icon>
-    <h2 style="font-weight: bold;">Make a Difference</h2>
-    <p>Your contribution helps us keep Brahmapur green.</p>
+  <div style="max-width: 500px; margin: 0 auto;">
+    <div style="text-align: center; margin: 30px 0;">
+      <ion-icon name="heart-circle-outline" style="font-size: 90px; color: #2e7d32;"></ion-icon>
+      <h2 style="font-weight: bold; color: #2e7d32; margin-top: 10px;">Brahmapur Sabuja Bahini</h2>
+      <p style="color: #666;">Empowering nature through your support.</p>
+    </div>
+
+    <ion-list lines="inset" style="border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+      <ion-item>
+        <ion-label position="floating">Contribution Amount (₹)</ion-label>
+        <ion-input type="number" placeholder="Enter amount" [(ngModel)]="paymentAmount"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Purpose of Giving</ion-label>
+        <ion-select placeholder="Select Purpose" [(ngModel)]="paymentPurpose">
+          <ion-select-option value="Monthly Subscription">Monthly Subscription</ion-select-option>
+          <ion-select-option value="General Donation">General Donation</ion-select-option>
+          <ion-select-option value="Tree Plantation Drive">Tree Plantation Drive</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div style="margin-top: 40px;">
+      <ion-button expand="block" color="success" shape="round" style="height: 60px; font-weight: bold; font-size: 1.2rem;" (click)="payNow()">
+        PROCEED TO PAY
+      </ion-button>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height: 30px; opacity: 0.5;">
+      <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">Works with GPay, PhonePe, Paytm & BHIM</p>
+    </div>
   </div>
-
-  <ion-list lines="full" class="ion-margin-bottom">
-    <ion-item>
-      <ion-label position="floating">Amount (₹)</ion-label>
-      <ion-input type="number" placeholder="Enter amount" [(ngModel)]="paymentAmount"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Purpose of Contribution</ion-label>
-      <ion-select placeholder="Select Purpose" [(ngModel)]="paymentPurpose">
-        <ion-select-option value="Monthly Subscription">Monthly Subscription</ion-select-option>
-        <ion-select-option value="General Donation">General Donation</ion-select-option>
-        <ion-select-option value="Plantation Drive">Tree Plantation Support</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Message / Note</ion-label>
-      <ion-textarea placeholder="Why are you contributing today?" [(ngModel)]="paymentNote" rows="3"></ion-textarea>
-    </ion-item>
-  </ion-list>
-
-  <ion-button expand="block" color="success" shape="round" style="margin-top: 20px; height: 50px;" (click)="payNow()">
-    Proceed to Pay ₹{{ paymentAmount || 0 }}
-  </ion-button>
-
-  <p class="ion-text-center" style="font-size: 0.8em; color: #888; margin-top: 15px;">
-    Secure Payment Powered by BSB Gateway
-  </p>
 </ion-content>
