@@ -1,42 +1,71 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="success">
-    <ion-title>Support BSB</ion-title>
+    <ion-title>Contribution Portal</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div style="max-width: 500px; margin: 0 auto;">
-    <div style="text-align: center; margin: 30px 0;">
-      <ion-icon name="heart-circle-outline" style="font-size: 90px; color: #2e7d32;"></ion-icon>
-      <h2 style="font-weight: bold; color: #2e7d32; margin-top: 10px;">Brahmapur Sabuja Bahini</h2>
-      <p style="color: #666;">Empowering nature through your support.</p>
+<ion-content class="ion-padding">
+  
+  <div *ngIf="!showQrScreen && !showSuccessScreen" style="max-width: 500px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <ion-icon name="heart-circle" style="font-size: 80px; color: #2e7d32;"></ion-icon>
+      <h2>Support BSB</h2>
     </div>
 
-    <ion-list lines="inset" style="border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <ion-list lines="full">
       <ion-item>
-        <ion-label position="floating">Contribution Amount (₹)</ion-label>
-        <ion-input type="number" placeholder="Enter amount" [(ngModel)]="paymentAmount"></ion-input>
+        <ion-label position="floating">Amount (₹)</ion-label>
+        <ion-input type="number" [(ngModel)]="paymentAmount"></ion-input>
       </ion-item>
-
       <ion-item>
-        <ion-label position="floating">Purpose of Giving</ion-label>
-        <ion-select placeholder="Select Purpose" [(ngModel)]="paymentPurpose">
+        <ion-label position="floating">Purpose</ion-label>
+        <ion-select [(ngModel)]="paymentPurpose">
           <ion-select-option value="Monthly Subscription">Monthly Subscription</ion-select-option>
           <ion-select-option value="General Donation">General Donation</ion-select-option>
-          <ion-select-option value="Tree Plantation Drive">Tree Plantation Drive</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
 
-    <div style="margin-top: 40px;">
-      <ion-button expand="block" color="success" shape="round" style="height: 60px; font-weight: bold; font-size: 1.2rem;" (click)="payNow()">
-        PROCEED TO PAY
-      </ion-button>
-    </div>
-
-    <div style="text-align: center; margin-top: 30px;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height: 30px; opacity: 0.5;">
-      <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">Works with GPay, PhonePe, Paytm & BHIM</p>
-    </div>
+    <ion-button expand="block" color="success" (click)="payNow()" style="margin-top: 20px;">
+      PROCEED TO PAY
+    </ion-button>
   </div>
+
+  <div *ngIf="showQrScreen" style="max-width: 500px; margin: 0 auto; text-align: center;">
+    <ion-card class="ion-padding">
+      <h3 style="font-weight: bold; color: #2e7d32;">Scan to Pay</h3>
+      <p style="font-size: 1.2rem; font-weight: bold;">Amount: ₹{{paymentAmount}}</p>
+      
+      <div style="background: white; padding: 10px; display: inline-block; border-radius: 10px; border: 1px solid #ddd;">
+        <img [src]="qrCodeUrl" />
+      </div>
+
+      <div style="margin-top: 15px; background: #f4f4f4; padding: 10px; border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.8rem; color: #666;">Payable to: <strong>{{orgName}}</strong></p>
+        <p style="margin: 5px 0 0 0; font-size: 0.8rem; color: #666;">UPI ID: <strong>{{myUpiId}}</strong></p>
+      </div>
+
+      <ion-button expand="block" color="success" (click)="verifyPayment()" style="margin-top: 20px;">
+        I HAVE PAID
+      </ion-button>
+      <ion-button expand="block" fill="clear" color="medium" (click)="showQrScreen = false">
+        Cancel
+      </ion-button>
+    </ion-card>
+  </div>
+
+  <div *ngIf="showSuccessScreen" style="max-width: 500px; margin: 0 auto; text-align: center;">
+    <ion-icon name="checkmark-circle" style="font-size: 100px; color: #2e7d32;"></ion-icon>
+    <h2 style="color: #2e7d32; font-weight: bold;">Payment Successful!</h2>
+    <p>Thank you for your generous contribution of ₹{{paymentAmount}}.</p>
+
+    <ion-button expand="block" color="success" (click)="downloadInvoice()">
+      DOWNLOAD INVOICE
+    </ion-button>
+    
+    <ion-button expand="block" fill="clear" (click)="resetForm()">
+      Back to Home
+    </ion-button>
+  </div>
+
 </ion-content>

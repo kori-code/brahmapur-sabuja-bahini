@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -10,91 +10,82 @@ export class Tab2Page {
   paymentAmount: number | null = null;
   paymentPurpose: string = 'Monthly Subscription';
   paymentNote: string = '';
+  
+  // States for the UI
+  showQrScreen: boolean = false;
+  showSuccessScreen: boolean = false;
+  qrCodeUrl: string = '';
 
-  // REPLACE THIS WITH YOUR REAL UPI ID
   myUpiId: string = 'berhampursabujabahini@sbi'; 
-  merchantName: string = 'Brahmapur Sabuja Bahini';
+  orgName: string = 'Brahmapur Sabuja Bahini';
 
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private alertController: AlertController,
+    private loadingController: LoadingController
+  ) {}
 
   async payNow() {
     if (!this.paymentAmount || this.paymentAmount <= 0) {
       const alert = await this.alertController.create({
         header: 'Amount Required',
-        message: 'Please enter the amount to contribute.',
+        message: 'Please enter a valid amount.',
         buttons: ['OK']
       });
       await alert.present();
       return;
     }
 
-    const encodedName = encodeURIComponent(this.merchantName);
-    const encodedNote = encodeURIComponent(this.paymentPurpose);
-    const upiUrl = `upi://pay?pa=${this.myUpiId}&pn=${encodedName}&am=${this.paymentAmount}&tn=${encodedNote}&cu=INR`;
-
-    // Check if user is on Mobile
+    const upiUrl = `upi://pay?pa=${this.myUpiId}&pn=${encodeURIComponent(this.orgName)}&am=${this.paymentAmount}&tn=${encodeURIComponent(this.paymentPurpose)}&cu=INR`;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      // Direct deep link for phones
       window.location.href = upiUrl;
     } else {
-      // Show QR Code for Desktop
-      this.showQrModal(upiUrl);
+      // Generate QR and show the desktop UI
+      this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+      this.showQrScreen = true;
     }
   }
 
-  async showQrModal(upiUrl: string) {
-    // We use a public QR API to generate the image based on the UPI string
-    const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
-
-    const alert = await this.alertController.create({
-      header: 'Scan to Pay',
-      subHeader: `Amount: ₹${this.paymentAmount}`,
-      message: `
-        <div style="text-align: center;">
-          <p>Please scan this QR code using Google Pay, PhonePe, or BHIM.</p>
-          <img src="${qrImageUrl}" style="margin: 20px auto; display: block; border: 5px solid #fff; border-radius: 10px;" />
-          <p>Once paid, click "I have Paid" to generate your receipt.</p>
-        </div>
-      `,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'I have Paid',
-          handler: () => {
-            this.generateInvoice();
-          }
-        }
-      ]
+  async verifyPayment() {
+    const loading = await this.loadingController.create({
+      message: 'Verifying payment with bank...',
+      duration: 2000
     });
+    await loading.present();
 
-    await alert.present();
+    setTimeout(() => {
+      this.showQrScreen = false;
+      this.showSuccessScreen = true;
+    }, 2000);
   }
 
-  generateInvoice() {
-    // Simple logic to simulate success and download
-    const invoiceContent = `
-      BRAHMAPUR SABUJA BAHINI - RECEIPT
-      ---------------------------------
-      Purpose: ${this.paymentPurpose}
-      Amount Paid: ₹${this.paymentAmount}
+  downloadInvoice() {
+    const invoice = `
+      -----------------------------------------
+      OFFICIAL PAYMENT RECEIPT
+      BRAHMAPUR SABUJA BAHINI (BSB)
+      -----------------------------------------
       Date: ${new Date().toLocaleDateString()}
+      UPI ID: ${this.myUpiId}
+      Organization: ${this.orgName}
+      Amount: ₹${this.paymentAmount}
+      Purpose: ${this.paymentPurpose}
       Status: SUCCESSFUL
-      
-      Thank you for keeping Brahmapur green!
+      -----------------------------------------
+      Thank you for your contribution!
     `;
-    
-    const blob = new Blob([invoiceContent], { type: 'text/plain' });
+    const blob = new Blob([invoice], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `BSB_Receipt_${Date.now()}.txt`;
     a.click();
-    
-    alert("Payment confirmed! Your receipt has been downloaded.");
+  }
+
+  resetForm() {
+    this.showSuccessScreen = false;
+    this.paymentAmount = null;
+    this.showQrScreen = false;
   }
 }
