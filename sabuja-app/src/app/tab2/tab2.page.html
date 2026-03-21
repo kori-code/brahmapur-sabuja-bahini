@@ -1,32 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="success">
-    <ion-title>Monthly Contribution</ion-title>
+    <ion-title>Support BSB</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div style="text-align: center; margin-top: 20px;">
-    <ion-icon name="wallet-outline" style="font-size: 64px; color: #2e7d32;"></ion-icon>
-    <h3>Support Our Mission</h3>
-    <p>Your contribution of ₹200 helps us plant and maintain trees in Brahmapur.</p>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <ion-icon name="cash-outline" style="font-size: 64px; color: #2e7d32;"></ion-icon>
+    <h2 style="font-weight: bold;">Make a Difference</h2>
+    <p>Your contribution helps us keep Brahmapur green.</p>
   </div>
 
-  <ion-card color="light" style="margin-top: 20px;">
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-label>Amount to Pay:</ion-label>
-        <ion-note slot="end" style="font-size: 20px; font-weight: bold; color: #000;">₹200</ion-note>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+  <ion-list lines="full" class="ion-margin-bottom">
+    <ion-item>
+      <ion-label position="floating">Amount (₹)</ion-label>
+      <ion-input type="number" placeholder="Enter amount" [(ngModel)]="paymentAmount"></ion-input>
+    </ion-item>
 
-  <ion-button expand="block" color="success" shape="round" size="large" style="margin-top: 30px;"
-              href="upi://pay?pa=berhampursabujabahini@sbi&pn=Sabuja%20Bahini&am=200&cu=INR&tn=Monthly%20Contribution">
-    <ion-icon name="flash" slot="start"></ion-icon>
-    Pay Now via UPI
+    <ion-item>
+      <ion-label position="floating">Purpose of Contribution</ion-label>
+      <ion-select placeholder="Select Purpose" [(ngModel)]="paymentPurpose">
+        <ion-select-option value="Monthly Subscription">Monthly Subscription</ion-select-option>
+        <ion-select-option value="General Donation">General Donation</ion-select-option>
+        <ion-select-option value="Plantation Drive">Tree Plantation Support</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Message / Note</ion-label>
+      <ion-textarea placeholder="Why are you contributing today?" [(ngModel)]="paymentNote" rows="3"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="success" shape="round" style="margin-top: 20px; height: 50px;" (click)="payNow()">
+    Proceed to Pay ₹{{ paymentAmount || 0 }}
   </ion-button>
 
-  <p style="text-align: center; font-size: 12px; color: gray; margin-top: 20px;">
-    After payment, please take a screenshot for your records.
+  <p class="ion-text-center" style="font-size: 0.8em; color: #888; margin-top: 15px;">
+    Secure Payment Powered by BSB Gateway
   </p>
 </ion-content>

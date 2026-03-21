@@ -1,29 +1,25 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="success">
-    <ion-title>Brahmapur Sabuja Bahini</ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/login">
-        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>BSB Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding ion-text-center">
-  <div style="margin-top: 50px;">
-    <ion-icon name="leaf" style="font-size: 100px; color: #2dd36f;"></ion-icon>
+  <div style="margin-top: 40px;">
+    <img src="assets/icon/favicon.png" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #2e7d32;" />
     
-    <h1 style="font-weight: bold; color: #1b5e20;">Sabuja Bahini</h1>
-    <p style="font-style: italic; color: #43a047;">"Green Odisha, Clean Odisha"</p>
-    
-    <ion-card style="margin-top: 30px; border-radius: 15px; background: #f1f8e9;">
-      <ion-card-header>
-        <ion-card-title>Our Mission</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        We are dedicated to tree plantation and blood donation camps in Berhampur. 
-        Join us in making our city greener!
-      </ion-card-content>
-    </ion-card>
+    <h1 style="color: #2e7d32; font-weight: bold; margin-top: 20px; text-transform: uppercase;">
+      Brahmapur Sabuja Bahini
+    </h1>
+    <p style="font-style: italic; color: #666;">"Green City, Clean City"</p>
   </div>
+
+  <ion-card style="margin-top: 30px; text-align: left;">
+    <ion-card-header>
+      <ion-card-title color="success">Our Mission</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      To promote environmental awareness and sustainable living in Brahmapur through community action and tree plantation drives.
+    </ion-card-content>
+  </ion-card>
 </ion-content>
