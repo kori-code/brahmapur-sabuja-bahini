@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+
 import { AdminPage } from './admin.page';
 
 @NgModule({
@@ -10,8 +11,13 @@ import { AdminPage } from './admin.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    // This connects the AdminPage to the router correctly
-    RouterModule.forChild([{ path: '', component: AdminPage }])
+    // This defines the route for the admin page
+    RouterModule.forChild([
+      {
+        path: '',
+        component: AdminPage
+      }
+    ])
   ],
   declarations: [AdminPage]
 })
