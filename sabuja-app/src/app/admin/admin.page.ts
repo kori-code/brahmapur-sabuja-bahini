@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, collection, query, where, onSnapshot, doc, updateDoc } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-admin',
@@ -7,53 +7,35 @@ import { Firestore, collection, query, where, onSnapshot, doc, updateDoc } from 
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  // This array will hold the pending transactions from Firebase
   pendingPayments: any[] = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
-    // 1. Create a reference to the 'contributions' collection
-    const contributionsRef = collection(this.firestore, 'contributions');
-    
-    // 2. Query only for 'pending' status
-    const q = query(contributionsRef, where('status', '==', 'pending'));
-
-    // 3. Listen for real-time updates
-    onSnapshot(q, (snapshot) => {
-      this.pendingPayments = snapshot.docs.map(d => ({
-        id: d.id,
-        ...d.data()
-      }));
-      console.log("Current pending payments:", this.pendingPayments);
-    });
+    // This matches your AngularFirestoreModule in AppModule
+    this.afs.collection('contributions', ref => ref.where('status', '==', 'pending'))
+      .valueChanges({ idField: 'id' })
+      .subscribe(data => {
+        this.pendingPayments = data;
+        console.log("Pending BSB Payments:", data);
+      });
   }
 
-  // Function to Approve Payment
   async approve(id: string) {
     try {
-      const docRef = doc(this.firestore, 'contributions', id);
-      await updateDoc(docRef, { 
+      await this.afs.collection('contributions').doc(id).update({ 
         status: 'verified',
-        verifiedAt: new Date() 
+        verifiedAt: new Date().toISOString()
       });
-      alert("Payment Verified! The donor can now see their receipt.");
+      alert("Verified! Fund added to BSB records.");
     } catch (error) {
-      console.error("Error approving:", error);
-      alert("Failed to approve. Check your internet connection.");
+      alert("Error: " + error);
     }
   }
 
-  // Function to Reject Fake Payment
   async reject(id: string) {
-    const confirmation = confirm("Are you sure you want to reject this UTR? Use this for fake entries only.");
-    if (confirmation) {
-      try {
-        const docRef = doc(this.firestore, 'contributions', id);
-        await updateDoc(docRef, { status: 'rejected' });
-      } catch (error) {
-        console.error("Error rejecting:", error);
-      }
+    if (confirm("Reject this fake UTR?")) {
+      await this.afs.collection('contributions').doc(id).update({ status: 'rejected' });
     }
   }
 }
