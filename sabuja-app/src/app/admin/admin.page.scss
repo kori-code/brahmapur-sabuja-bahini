@@ -1,0 +1,57 @@
+// BSB Admin Styling
+ion-content {
+  --background: #f8f9fa; // Light grey background for professional look
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+ion-card {
+  margin: 15px 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.98); // Slight press effect
+  }
+}
+
+ion-card-title {
+  font-weight: bold;
+  color: #1b5e20; // Deep green for BSB branding
+}
+
+ion-card-subtitle {
+  font-family: 'Courier New', Courier, monospace; // Makes UTR look like a digital code
+  background: #fff3e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #e65100;
+  margin-top: 5px;
+}
+
+ion-button {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  --border-radius: 8px;
+}
+
+.empty-state {
+  margin-top: 100px;
+  opacity: 0.5;
+  
+  ion-icon {
+    font-size: 80px;
+  }
+}
