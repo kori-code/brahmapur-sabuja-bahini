@@ -8,8 +8,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  // --- CONFIGURE EMAILS HERE ---
-  superAdminEmail = "your-personal-email@gmail.com"; 
+  // Use your real email here
+  superAdminEmail = "your-email@gmail.com"; 
   presidentEmail = "president@bsb-testing.com"; 
 
   pendingPayments: any[] = [];
@@ -32,12 +32,19 @@ export class AdminPage implements OnInit {
   }
 
   async login() {
+    console.log("Login button clicked for:", this.adminEmail);
+    if (!this.adminEmail || !this.adminPassword) {
+      alert("Please enter both email and password.");
+      return;
+    }
+
     try {
       const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
+      console.log("Firebase Auth Success");
       this.checkRole(res.user?.email || '');
     } catch (error: any) {
-      console.error("Login Error:", error);
-      alert("Error: " + error.message);
+      console.error("Firebase Login Error:", error);
+      alert("Login Failed: " + error.message);
     }
   }
 
@@ -51,9 +58,8 @@ export class AdminPage implements OnInit {
       this.isAdminLoggedIn = true;
       this.loadData();
     } else {
-      // Not an admin email
-      this.isAdminLoggedIn = false;
-      this.userRole = null;
+      alert("Access Denied: You are not authorized as an Admin.");
+      this.afAuth.signOut();
     }
   }
 
@@ -66,25 +72,13 @@ export class AdminPage implements OnInit {
   }
 
   async approve(id: string) {
-    try {
-      await this.afs.collection('contributions').doc(id).update({ 
-        status: 'verified',
-        verifiedAt: new Date().toISOString()
-      });
-      alert("Contribution verified successfully!");
-    } catch (error: any) {
-      alert("Error approving: " + error.message);
-    }
+    await this.afs.collection('contributions').doc(id).update({ status: 'verified' });
+    alert("Verified!");
   }
 
   async deletePermanently(id: string) {
-    if (confirm("Are you sure? This will permanently delete the BSB record.")) {
-      try {
-        await this.afs.collection('contributions').doc(id).delete();
-        alert("Record deleted.");
-      } catch (error: any) {
-        alert("Error deleting: " + error.message);
-      }
+    if (confirm("Delete this record?")) {
+      await this.afs.collection('contributions').doc(id).delete();
     }
   }
 
@@ -92,8 +86,6 @@ export class AdminPage implements OnInit {
     this.afAuth.signOut().then(() => {
       this.isAdminLoggedIn = false;
       this.userRole = null;
-      this.adminEmail = "";
-      this.adminPassword = "";
     });
   }
 }
