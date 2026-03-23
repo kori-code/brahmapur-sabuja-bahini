@@ -30,10 +30,18 @@ export class AdminPage implements OnInit {
 
   async login() {
     try {
-      const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
-      this.checkRole(res.user?.email || '');
-    } catch (error) {
-      alert("Invalid Admin Credentials");
+    const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
+    console.log("Login Success:", res.user?.email);
+    this.checkRole(res.user?.email || '');
+  } catch (error: any) {
+    // This will tell you if it's "auth/user-not-found" or "auth/wrong-password"
+    console.error("Firebase Error:", error.code);
+    if (error.code === 'auth/user-not-found') {
+      alert("This email is not registered in Firebase.");
+    } else if (error.code === 'auth/wrong-password') {
+      alert("Incorrect password. Please try again.");
+    } else {
+      alert(""Error: " + error.message);
     }
   }
 
