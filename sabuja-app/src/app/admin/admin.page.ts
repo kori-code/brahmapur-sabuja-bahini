@@ -8,8 +8,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  // --- PASTE EMAILS HERE ---
-  superAdminEmail = "susilsfriends10@gmail.com"; 
+  // --- CONFIGURE EMAILS HERE ---
+  superAdminEmail = "your-personal-email@gmail.com"; 
   presidentEmail = "president@bsb-testing.com"; 
 
   pendingPayments: any[] = [];
@@ -18,7 +18,10 @@ export class AdminPage implements OnInit {
   adminEmail = "";
   adminPassword = "";
 
-  constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) {}
+  constructor(
+    private afs: AngularFirestore, 
+    public afAuth: AngularFireAuth
+  ) {}
 
   ngOnInit() {
     this.afAuth.authState.subscribe(user => {
@@ -30,18 +33,11 @@ export class AdminPage implements OnInit {
 
   async login() {
     try {
-    const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
-    console.log("Login Success:", res.user?.email);
-    this.checkRole(res.user?.email || '');
-  } catch (error: any) {
-    // This will tell you if it's "auth/user-not-found" or "auth/wrong-password"
-    console.error("Firebase Error:", error.code);
-    if (error.code === 'auth/user-not-found') {
-      alert("This email is not registered in Firebase.");
-    } else if (error.code === 'auth/wrong-password') {
-      alert("Incorrect password. Please try again.");
-    } else {
-      alert(""Error: " + error.message);
+      const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
+      this.checkRole(res.user?.email || '');
+    } catch (error: any) {
+      console.error("Login Error:", error);
+      alert("Error: " + error.message);
     }
   }
 
@@ -50,26 +46,45 @@ export class AdminPage implements OnInit {
       this.userRole = 'super';
       this.isAdminLoggedIn = true;
       this.loadData();
-    } else if (email === this.presidentEmail) {
+    } else if (this.presidentEmail && email === this.presidentEmail) {
       this.userRole = 'president';
       this.isAdminLoggedIn = true;
       this.loadData();
+    } else {
+      // Not an admin email
+      this.isAdminLoggedIn = false;
+      this.userRole = null;
     }
   }
 
   loadData() {
     this.afs.collection('contributions', ref => ref.where('status', '==', 'pending'))
       .valueChanges({ idField: 'id' })
-      .subscribe(data => this.pendingPayments = data);
+      .subscribe(data => {
+        this.pendingPayments = data;
+      });
   }
 
   async approve(id: string) {
-    await this.afs.collection('contributions').doc(id).update({ status: 'verified' });
+    try {
+      await this.afs.collection('contributions').doc(id).update({ 
+        status: 'verified',
+        verifiedAt: new Date().toISOString()
+      });
+      alert("Contribution verified successfully!");
+    } catch (error: any) {
+      alert("Error approving: " + error.message);
+    }
   }
 
   async deletePermanently(id: string) {
-    if(confirm("Are you sure you want to delete this record permanently?")) {
-      await this.afs.collection('contributions').doc(id).delete();
+    if (confirm("Are you sure? This will permanently delete the BSB record.")) {
+      try {
+        await this.afs.collection('contributions').doc(id).delete();
+        alert("Record deleted.");
+      } catch (error: any) {
+        alert("Error deleting: " + error.message);
+      }
     }
   }
 
@@ -77,6 +92,8 @@ export class AdminPage implements OnInit {
     this.afAuth.signOut().then(() => {
       this.isAdminLoggedIn = false;
       this.userRole = null;
+      this.adminEmail = "";
+      this.adminPassword = "";
     });
   }
 }
