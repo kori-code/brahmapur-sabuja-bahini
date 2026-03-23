@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class AdminPage implements OnInit {
   // Use your real email here
-  superAdminEmail = "your-email@gmail.com"; 
+  superAdminEmail = "susilsfriends10@gmail.com"; 
   presidentEmail = "president@bsb-testing.com"; 
 
   pendingPayments: any[] = [];
