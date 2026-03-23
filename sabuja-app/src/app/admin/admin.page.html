@@ -1,32 +1,61 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-title>BSB Admin Panel</ion-title>
+    <ion-title>BSB Admin Portal</ion-title>
+    <ion-buttons slot="end" *ngIf="isAdminLoggedIn">
+      <ion-button (click)="logout()">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div style="text-align: center; margin-bottom: 20px;">
+  
+  <!-- 1. LOGIN FORM (Shows if not logged in) -->
+  <div *ngIf="!isAdminLoggedIn" style="max-width: 400px; margin: 50px auto; text-align: center;">
+    <ion-icon name="lock-closed" color="success" style="font-size: 64px;"></ion-icon>
+    <h3>Admin Authentication</h3>
+    <ion-item lines="outline" style="margin-top: 20px;">
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="adminEmail"></ion-input>
+    </ion-item>
+    <ion-item lines="outline">
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="adminPassword"></ion-input>
+    </ion-item>
+    <ion-button expand="block" color="success" style="margin-top: 20px;" (click)='login()'>
+      Login to Dashboard
+    </ion-button>
+  </div>
+
+  <!-- 2. ADMIN DASHBOARD (Shows after login) -->
+  <div *ngIf="isAdminLoggedIn">
     <h2 style="font-weight: bold; color: #2e7d32;">Pending Verifications</h2>
-    <p>Check your bank for these UTR numbers</p>
+    <p>Logged in as: <ion-badge color="primary">{{ userRole }}</ion-badge></p>
+
+    <ion-card *ngFor="let p of pendingPayments" style="margin-top: 20px; border-left: 4px solid orange;">
+      <ion-card-header>
+        <ion-card-title>₹{{ p.amount }} - {{ p.userName }}</ion-card-title>
+        <ion-card-subtitle>UTR: {{ p.utrNumber }}</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p><strong>Purpose:</strong> {{ p.purpose }}</p>
+        <div style="margin-top: 15px;">
+          <!-- Both can see Verify -->
+          <ion-button color="success" (click)="approve(p.id)">VERIFY</ion-button>
+
+          <!-- ONLY YOU (Super Admin) can see Delete -->
+          <ion-button *ngIf="userRole === 'super'" color="danger" fill="clear" (click)="deletePermanently(p.id)">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Empty State -->
+    <div *ngIf="pendingPayments.length === 0" style="text-align: center; margin-top: 50px; color: gray;">
+      <ion-icon name="checkmark-done-circle-outline" style="font-size: 48px;"></ion-icon>
+      <p>No pending contributions.</p>
+    </div>
   </div>
 
-  <ion-card *ngFor="let p of pendingPayments" style="border-left: 5px solid #ff9800; border-radius: 10px;">
-    <ion-card-header>
-      <ion-card-title>₹{{ p.amount }} - {{ p.userName }}</ion-card-title>
-      <ion-card-subtitle>UTR: <strong>{{ p.utrNumber }}</strong></ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong>Purpose:</strong> {{ p.purpose }}</p>
-      <p><strong>Date:</strong> {{ p.date }}</p>
-      <div style="margin-top: 15px; display: flex; gap: 10px;">
-        <ion-button color="success" (click)="approve(p.id)">APPROVE</ion-button>
-        <ion-button color="danger" fill="outline" (click)="reject(p.id)">REJECT</ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
-
-  <div *ngIf="pendingPayments.length === 0" style="text-align: center; margin-top: 50px; color: #999;">
-    <ion-icon name="checkmark-done-circle-outline" style="font-size: 64px;"></ion-icon>
-    <p>All contributions are verified!</p>
-  </div>
 </ion-content>

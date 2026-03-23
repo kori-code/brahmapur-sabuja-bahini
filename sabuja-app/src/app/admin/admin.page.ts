@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-admin',
@@ -7,35 +8,67 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  pendingPayments: any[] = [];
+  // --- PASTE EMAILS HERE ---
+  superAdminEmail = "susilsfriends10@gmail.com"; 
+  presidentEmail = "president@bsb-testing.com"; 
 
-  constructor(private afs: AngularFirestore) {}
+  pendingPayments: any[] = [];
+  isAdminLoggedIn = false;
+  userRole: 'super' | 'president' | null = null;
+  adminEmail = "";
+  adminPassword = "";
+
+  constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) {}
 
   ngOnInit() {
-    // This matches your AngularFirestoreModule in AppModule
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.checkRole(user.email);
+      }
+    });
+  }
+
+  async login() {
+    try {
+      const res = await this.afAuth.signInWithEmailAndPassword(this.adminEmail, this.adminPassword);
+      this.checkRole(res.user?.email || '');
+    } catch (error) {
+      alert("Invalid Admin Credentials");
+    }
+  }
+
+  checkRole(email: string | null) {
+    if (email === this.superAdminEmail) {
+      this.userRole = 'super';
+      this.isAdminLoggedIn = true;
+      this.loadData();
+    } else if (email === this.presidentEmail) {
+      this.userRole = 'president';
+      this.isAdminLoggedIn = true;
+      this.loadData();
+    }
+  }
+
+  loadData() {
     this.afs.collection('contributions', ref => ref.where('status', '==', 'pending'))
       .valueChanges({ idField: 'id' })
-      .subscribe(data => {
-        this.pendingPayments = data;
-        console.log("Pending BSB Payments:", data);
-      });
+      .subscribe(data => this.pendingPayments = data);
   }
 
   async approve(id: string) {
-    try {
-      await this.afs.collection('contributions').doc(id).update({ 
-        status: 'verified',
-        verifiedAt: new Date().toISOString()
-      });
-      alert("Verified! Fund added to BSB records.");
-    } catch (error) {
-      alert("Error: " + error);
+    await this.afs.collection('contributions').doc(id).update({ status: 'verified' });
+  }
+
+  async deletePermanently(id: string) {
+    if(confirm("Are you sure you want to delete this record permanently?")) {
+      await this.afs.collection('contributions').doc(id).delete();
     }
   }
 
-  async reject(id: string) {
-    if (confirm("Reject this fake UTR?")) {
-      await this.afs.collection('contributions').doc(id).update({ status: 'rejected' });
-    }
+  logout() {
+    this.afAuth.signOut().then(() => {
+      this.isAdminLoggedIn = false;
+      this.userRole = null;
+    });
   }
 }
