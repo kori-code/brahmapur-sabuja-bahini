@@ -1,11 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "brahmapur-sabuja-bahini.firebaseapp.com",
-    projectId: "brahmapur-sabuja-bahini",
-    storageBucket: "brahmapur-sabuja-bahini.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCn413HVT9A7pOtvUDxe9oAtbM8Tw6V4lA",
+    authDomain: "bsb-member-portal.firebaseapp.com",
+    projectId: "bsb-member-portal",
+    storageBucket: "bsb-member-portal.firebasestorage.app",
+    messagingSenderId: "290263451870",
+    appId: "1:290263451870:web:655930314949dda0cd5a4f",
+    measurementId: "G-CR7WZC329S"
   }
 };
