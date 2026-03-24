@@ -1,0 +1,336 @@
+@import "../../theme/variables.scss";
+
+.gallery-content {
+  --background: $bg-secondary;
+  --ion-padding: 0;
+}
+
+// ==========================================
+// HEADER SECTION
+// ==========================================
+
+.gallery-header {
+  background: linear-gradient(135deg, $primary-green-dark 0%, $primary-green 100%);
+  padding: $spacing-3xl $spacing-lg $spacing-2xl;
+  text-align: center;
+  color: $neutral-white;
+  margin-bottom: $spacing-xl;
+
+  .header-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    color: $neutral-white;
+  }
+
+  .subtitle {
+    font-size: $font-size-base;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: $line-height-relaxed;
+  }
+}
+
+// ==========================================
+// FILTER TABS
+// ==========================================
+
+.filter-tabs {
+  display: flex;
+  gap: $spacing-md;
+  overflow-x: auto;
+  padding: $spacing-md $spacing-lg;
+  background: $neutral-white;
+  margin-bottom: $spacing-md;
+  -webkit-overflow-scrolling: touch;
+
+  .filter-btn {
+    padding: $spacing-md $spacing-lg;
+    border: 2px solid $neutral-medium-gray;
+    border-radius: $radius-full;
+    background: $neutral-white;
+    color: $text-primary;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all $transition-base;
+    font-size: $font-size-sm;
+
+    &:hover {
+      border-color: $primary-green;
+    }
+
+    &.active {
+      background: $primary-green;
+      color: $neutral-white;
+      border-color: $primary-green;
+    }
+  }
+}
+
+// ==========================================
+// GALLERY GRID
+// ==========================================
+
+.gallery-container {
+  padding: 0;
+  background: $neutral-white;
+}
+
+.gallery-grid {
+  padding: $spacing-lg;
+  margin: 0;
+
+  .gallery-row {
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .gallery-col {
+    padding: $spacing-sm;
+    display: flex;
+  }
+}
+
+.gallery-card {
+  margin: 0;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+
+    .gallery-overlay {
+      opacity: 1;
+    }
+  }
+}
+
+.gallery-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: $neutral-light-gray;
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-base;
+  }
+
+  &:hover .gallery-image {
+    transform: scale(1.05);
+  }
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity $transition-base;
+
+  .view-btn {
+    --background: rgba(255, 255, 255, 0.2);
+    --color: $neutral-white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    &:hover {
+      --background: rgba(255, 255, 255, 0.3);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+.gallery-info {
+  padding: $spacing-md;
+  background: $neutral-white;
+
+  .gallery-title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+    margin: 0 0 $spacing-xs 0;
+    color: $text-primary;
+  }
+
+  .gallery-date {
+    font-size: $font-size-xs;
+    color: $text-tertiary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// ==========================================
+// STATS SECTION
+// ==========================================
+
+.stats-section {
+  padding: $spacing-xl $spacing-lg;
+  background: $neutral-white;
+  margin-bottom: $spacing-md;
+}
+
+.stats-card {
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(78, 175, 80, 0.05) 100%);
+  border: 1px solid $primary-green-light;
+  margin: 0;
+
+  ion-card-content {
+    padding: $spacing-xl;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-lg;
+    text-align: center;
+  }
+
+  .stat-item {
+    .stat-number {
+      font-size: $font-size-3xl;
+      font-weight: $font-weight-bold;
+      color: $primary-green;
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      font-weight: $font-weight-medium;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+// ==========================================
+// CTA FOOTER
+// ==========================================
+
+.cta-footer {
+  padding: $spacing-2xl $spacing-lg;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(78, 175, 80, 0.05) 100%);
+  text-align: center;
+  border-top: 1px solid $primary-green-light;
+
+  p {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-lg;
+  }
+
+  ion-button {
+    height: 50px;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: $shadow-md;
+  }
+}
+
+// ==========================================
+// RESPONSIVE DESIGN
+// ==========================================
+
+@media (max-width: 576px) {
+  .gallery-header {
+    padding: $spacing-2xl $spacing-md $spacing-xl;
+
+    h1 {
+      font-size: $font-size-2xl;
+    }
+
+    .subtitle {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .gallery-grid {
+    padding: $spacing-md;
+
+    .gallery-col {
+      padding: $spacing-xs;
+    }
+  }
+
+  .stats-card .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+
+    .stat-item .stat-number {
+      font-size: $font-size-2xl;
+    }
+
+    .stat-item p {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .cta-footer {
+    padding: $spacing-xl $spacing-md;
+
+    p {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .stats-card .stats-grid .stat-item .stat-number {
+    font-size: $font-size-xl;
+  }
+}
+
+// ==========================================
+// ANIMATION
+// ==========================================
+
+@keyframes fadeInDelayed {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.gallery-card {
+  animation: slideInUp $transition-base ease-out both;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 50}ms;
+    }
+  }
+}

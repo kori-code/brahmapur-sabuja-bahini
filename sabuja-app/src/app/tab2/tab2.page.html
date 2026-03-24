@@ -1,71 +1,226 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="success">
-    <ion-title>Contribution Portal</ion-title>
+  <ion-toolbar>
+    <ion-title>Contributions</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="contribution-content">
   
-  <div *ngIf="!showQrScreen && !showSuccessScreen" style="max-width: 500px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 30px;">
-      <ion-icon name="heart-circle" style="font-size: 80px; color: #2e7d32;"></ion-icon>
-      <h2>Support BSB</h2>
+  <!-- Initial Form Screen -->
+  <div *ngIf="!showQrScreen && !showSuccessScreen" class="contribution-form animate-slide-up">
+    <div class="form-container">
+      <!-- Header -->
+      <div class="form-header">
+        <div class="heart-icon">
+          <ion-icon name="heart"></ion-icon>
+        </div>
+        <h1>Support Our Mission</h1>
+        <p class="subtitle">Your contribution helps us plant more trees and create a greener Brahmapur</p>
+      </div>
+
+      <!-- Form Card -->
+      <ion-card class="form-card">
+        <ion-card-content class="card-content">
+          <!-- Amount Input -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Contribution Amount</span>
+              <span class="required">*</span>
+            </label>
+            <div class="amount-input-wrapper">
+              <span class="currency">₹</span>
+              <ion-input 
+                type="number" 
+                [(ngModel)]="paymentAmount"
+                placeholder="Enter amount"
+                min="10"
+                inputmode="decimal">
+              </ion-input>
+            </div>
+          </div>
+
+          <!-- Amount Presets -->
+          <div class="amount-presets">
+            <button class="preset-btn" *ngFor="let amount of [100, 250, 500, 1000]"
+                    (click)="paymentAmount = amount">
+              ₹{{amount}}
+            </button>
+          </div>
+
+          <!-- Purpose Selection -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Contribution Purpose</span>
+              <span class="required">*</span>
+            </label>
+            <ion-item lines="none" class="form-select">
+              <ion-icon slot="start" name="heart-outline"></ion-icon>
+              <ion-select [(ngModel)]="paymentPurpose" placeholder="Select purpose">
+                <ion-select-option value="Monthly Subscription">Monthly Membership (₹99/month)</ion-select-option>
+                <ion-select-option value="Tree Plantation">Tree Plantation Drive</ion-select-option>
+                <ion-select-option value="General Donation">General Donation</ion-select-option>
+                <ion-select-option value="Special Event">Special Event Support</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-box">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>100% of your contribution goes to environmental initiatives</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Button -->
+      <ion-button 
+        expand="block" 
+        color="success" 
+        (click)="payNow()"
+        class="pay-btn"
+        shape="round">
+        <ion-icon slot="start" name="card-outline"></ion-icon>
+        Proceed to Payment
+      </ion-button>
+
+      <!-- Benefits -->
+      <div class="benefits-section">
+        <h3>Member Benefits</h3>
+        <ul class="benefits-list">
+          <li><ion-icon name="checkmark-circle"></ion-icon> Certificate of Appreciation</li>
+          <li><ion-icon name="checkmark-circle"></ion-icon> Exclusive Updates</li>
+          <li><ion-icon name="checkmark-circle"></ion-icon> Event Invitations</li>
+          <li><ion-icon name="checkmark-circle"></ion-icon> Tax Benefit (80G)</li>
+        </ul>
+      </div>
     </div>
-
-    <ion-list lines="full">
-      <ion-item>
-        <ion-label position="floating">Amount (₹)</ion-label>
-        <ion-input type="number" [(ngModel)]="paymentAmount"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Purpose</ion-label>
-        <ion-select [(ngModel)]="paymentPurpose">
-          <ion-select-option value="Monthly Subscription">Monthly Subscription</ion-select-option>
-          <ion-select-option value="General Donation">General Donation</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-
-    <ion-button expand="block" color="success" (click)="payNow()" style="margin-top: 20px;">
-      PROCEED TO PAY
-    </ion-button>
   </div>
 
-  <div *ngIf="showQrScreen" style="max-width: 500px; margin: 0 auto; text-align: center;">
-    <ion-card class="ion-padding">
-      <h3 style="font-weight: bold; color: #2e7d32;">Scan to Pay</h3>
-      <p style="font-size: 1.2rem; font-weight: bold;">Amount: ₹{{paymentAmount}}</p>
-      
-      <div style="background: white; padding: 10px; display: inline-block; border-radius: 10px; border: 1px solid #ddd;">
-        <img [src]="qrCodeUrl" />
+  <!-- QR Code Payment Screen -->
+  <div *ngIf="showQrScreen && !showSuccessScreen" class="qr-screen animate-slide-up">
+    <div class="qr-container">
+      <!-- Header -->
+      <div class="qr-header">
+        <ion-button fill="clear" color="dark" class="back-btn" (click)="showQrScreen = false">
+          <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+          Back
+        </ion-button>
       </div>
 
-      <div style="margin-top: 15px; background: #f4f4f4; padding: 10px; border-radius: 8px;">
-        <p style="margin: 0; font-size: 0.8rem; color: #666;">Payable to: <strong>{{orgName}}</strong></p>
-        <p style="margin: 5px 0 0 0; font-size: 0.8rem; color: #666;">UPI ID: <strong>{{myUpiId}}</strong></p>
-      </div>
+      <!-- Card -->
+      <ion-card class="qr-card">
+        <ion-card-header>
+          <ion-card-title>Complete Your Payment</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="qr-content">
+          <!-- Amount Display -->
+          <div class="amount-display">
+            <span>Amount to Pay</span>
+            <h2>₹{{paymentAmount}}</h2>
+          </div>
 
-      <ion-button expand="block" color="success" (click)="verifyPayment()" style="margin-top: 20px;">
-        I HAVE PAID
-      </ion-button>
-      <ion-button expand="block" fill="clear" color="medium" (click)="showQrScreen = false">
-        Cancel
-      </ion-button>
-    </ion-card>
+          <!-- QR Code -->
+          <div class="qr-code-box">
+            <p class="qr-label">Scan with Any UPI App</p>
+            <img [src]="qrCodeUrl" alt="UPI QR Code" class="qr-image" />
+          </div>
+
+          <!-- Payment Details -->
+          <div class="payment-details">
+            <div class="detail-item">
+              <span class="detail-label">Payable To</span>
+              <span class="detail-value">{{orgName}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">UPI ID</span>
+              <span class="detail-value detail-copy">{{myUpiId}}</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="verifyPayment()"
+            shape="round"
+            class="verify-btn">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            I Have Paid
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            color="medium" 
+            (click)="showQrScreen = false"
+            shape="round">
+            Cancel
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Help Section -->
+      <div class="help-section">
+        <p><strong>Didn't work?</strong> Contact us at <a href="tel:+919876543210">+91 98765 43210</a></p>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="showSuccessScreen" style="max-width: 500px; margin: 0 auto; text-align: center;">
-    <ion-icon name="checkmark-circle" style="font-size: 100px; color: #2e7d32;"></ion-icon>
-    <h2 style="color: #2e7d32; font-weight: bold;">Payment Successful!</h2>
-    <p>Thank you for your generous contribution of ₹{{paymentAmount}}.</p>
+  <!-- Success Screen -->
+  <div *ngIf="showSuccessScreen" class="success-screen animate-slide-up">
+    <div class="success-container">
+      <div class="success-animation">
+        <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+      </div>
 
-    <ion-button expand="block" color="success" (click)="downloadInvoice()">
-      DOWNLOAD INVOICE
-    </ion-button>
-    
-    <ion-button expand="block" fill="clear" (click)="resetForm()">
-      Back to Home
-    </ion-button>
+      <h1 class="success-title">Thank You!</h1>
+      <p class="success-subtitle">Your contribution has been received</p>
+
+      <!-- Amount Display -->
+      <div class="success-amount">
+        <span>Amount Contributed</span>
+        <h2>₹{{paymentAmount}}</h2>
+      </div>
+
+      <!-- Message -->
+      <ion-card class="success-message">
+        <ion-card-content>
+          <p>Thank you for your generous contribution of <strong>₹{{paymentAmount}}</strong>! Your support makes a real difference in making Brahmapur greener.</p>
+          <p>A receipt has been sent to your email. Expect your certificate within 7 business days.</p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Buttons -->
+      <div class="success-actions">
+        <ion-button 
+          expand="block" 
+          color="success" 
+          (click)="downloadInvoice()"
+          shape="round"
+          class="download-btn">
+          <ion-icon slot="start" name="document-text-outline"></ion-icon>
+          Download Invoice
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          color="success" 
+          (click)="resetForm()"
+          shape="round">
+          <ion-icon slot="start" name="home-outline"></ion-icon>
+          Back to Tabs
+        </ion-button>
+      </div>
+
+      <!-- Social Actions -->
+      <div class="social-actions">
+        <p>Share your contribution</p>
+        <button class="social-btn">
+          <ion-icon name="logo-facebook"></ion-icon> Share
+        </button>
+      </div>
+    </div>
   </div>
 
 </ion-content>

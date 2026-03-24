@@ -1,0 +1,268 @@
+@import "../../theme/variables.scss";
+
+.login-content {
+  --background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  ion-content {
+    --ion-padding: 0;
+  }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 500px;
+  padding: $spacing-xl $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+// Welcome Section
+.welcome-section {
+  text-align: center;
+  padding: $spacing-xl 0;
+
+  .logo-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $primary-green-dark, $primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto $spacing-lg;
+    box-shadow: $shadow-lg;
+    animation: slideInDown $transition-base ease-out;
+
+    ion-icon {
+      font-size: 50px;
+      color: $neutral-white;
+    }
+  }
+
+  h1 {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+    color: $text-primary;
+  }
+
+  .subtitle {
+    font-size: $font-size-base;
+    color: $text-secondary;
+    font-weight: $font-weight-regular;
+  }
+}
+
+// Form Section
+.form-section {
+  animation: slideInUp $transition-base ease-out;
+}
+
+.login-card {
+  margin: 0;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+}
+
+.form-content {
+  padding: $spacing-xl;
+}
+
+.form-group {
+  margin-bottom: $spacing-lg;
+  position: relative;
+
+  &:last-of-type {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.form-item {
+  --background: $neutral-light-gray;
+  --inner-padding-start: $spacing-md;
+  --inner-padding-end: $spacing-md;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-md;
+  padding: 0;
+  transition: all $transition-base;
+
+  &:focus-within {
+    --background: rgba(46, 125, 50, 0.05);
+    box-shadow: inset 0 0 0 2px $primary-green-light;
+  }
+
+  ion-icon {
+    color: $primary-green;
+    font-size: 20px;
+    margin-right: $spacing-md;
+  }
+
+  ion-label {
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+    margin-left: $spacing-md;
+  }
+
+  ion-input {
+    font-size: $font-size-base;
+    color: $text-primary;
+
+    &::placeholder {
+      color: $text-tertiary;
+      opacity: 0.7;
+    }
+  }
+}
+
+// Form Footer
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-sm;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $text-secondary;
+  }
+
+  ion-checkbox {
+    --size: 18px;
+    --background-checked: $primary-green;
+    --border-color-checked: $primary-green;
+  }
+
+  .forgot-password {
+    color: $primary-green;
+    text-decoration: none;
+    font-weight: $font-weight-semibold;
+    transition: all $transition-base;
+
+    &:hover {
+      color: $primary-green-dark;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Login Button
+.login-btn {
+  height: 50px;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
+  margin: $spacing-lg 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+
+  &:hover:not(:disabled) {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Form Divider
+.form-divider {
+  position: relative;
+  margin: $spacing-xl 0;
+  text-align: center;
+  color: $text-tertiary;
+  font-size: $font-size-sm;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: $neutral-medium-gray;
+  }
+
+  span {
+    position: relative;
+    background-color: $neutral-white;
+    padding: 0 $spacing-md;
+    display: inline-block;
+  }
+}
+
+// Social Buttons
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-md;
+
+  ion-button {
+    --padding-start: $spacing-md;
+    --padding-end: $spacing-md;
+    --border-width: 2px;
+    --border-color: $neutral-medium-gray;
+    min-width: 50px;
+    transition: all $transition-base;
+
+    &:hover {
+      --border-color: $primary-green;
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Sign Up Section
+.signup-section {
+  text-align: center;
+  padding-top: $spacing-lg;
+  color: $text-secondary;
+  font-size: $font-size-base;
+
+  a {
+    color: $primary-green;
+    text-decoration: none;
+    font-weight: $font-weight-bold;
+    transition: all $transition-base;
+
+    &:hover {
+      color: $primary-green-dark;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .login-container {
+    padding: $spacing-lg $spacing-md;
+    gap: $spacing-lg;
+  }
+
+  .welcome-section {
+    padding: $spacing-lg 0;
+
+    h1 {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .form-content {
+    padding: $spacing-lg;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    gap: $spacing-md;
+    align-items: flex-start;
+  }
+}

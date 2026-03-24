@@ -1,31 +1,94 @@
 <ion-header>
-  <ion-toolbar color="success">
-    <ion-title>BSB Member Login</ion-title>
+  <ion-toolbar>
+    <ion-title>Member Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="ion-text-center" style="margin-top: 30px;">
-    <ion-icon name="person-circle-outline" style="font-size: 70px; color: #2e7d32;"></ion-icon>
-    <h3>Welcome Back</h3>
-  </div>
+<ion-content class="login-content">
+  <div class="login-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section animate-slide-down">
+      <div class="logo-circle">
+        <ion-icon name="leaf"></ion-icon>
+      </div>
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Join us in making Brahmapur greener</p>
+    </div>
 
-  <ion-list lines="full">
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
+    <!-- Login Form -->
+    <div class="form-section animate-slide-up">
+      <ion-card class="login-card">
+        <ion-card-content class="form-content">
+          <!-- Email Input -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-label position="floating">Email Address</ion-label>
+              <ion-input 
+                type="email" 
+                [(ngModel)]="email"
+                placeholder="your@email.com"
+                inputmode="email">
+              </ion-input>
+            </ion-item>
+          </div>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-  </ion-list>
+          <!-- Password Input -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input 
+                type="password" 
+                [(ngModel)]="password"
+                placeholder="Enter your password">
+              </ion-input>
+            </ion-item>
+          </div>
 
-  <div class="ion-padding-top">
-    <ion-button expand="block" color="success" shape="round" (click)="login()">Login</ion-button>
-    <ion-button expand="block" fill="clear" color="medium" routerLink="/register">
-      Don't have an account? Create one
-    </ion-button>
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-footer">
+            <div>
+              <ion-checkbox></ion-checkbox>
+              <span>Remember me</span>
+            </div>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+
+          <!-- Login Button -->
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="login()"
+            class="login-btn"
+            shape="round">
+            <ion-icon slot="start" name="log-in-outline"></ion-icon>
+            Login
+          </ion-button>
+
+          <!-- Divider -->
+          <div class="form-divider">
+            <span>or</span>
+          </div>
+
+          <!-- Social Login Placeholder -->
+          <div class="social-buttons">
+            <ion-button fill="outline" color="medium" shape="round">
+              <ion-icon name="logo-google"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline" color="medium" shape="round">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Sign Up Link -->
+      <div class="signup-section">
+        <p>Don't have an account? 
+          <a routerLink="/register" class="signup-link">Create one now</a>
+        </p>
+      </div>
+    </div>
   </div>
 </ion-content>

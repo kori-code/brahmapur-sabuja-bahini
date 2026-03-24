@@ -9,6 +9,9 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+// Import design tokens and variables
+@import "theme/variables.scss";
+
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -24,6 +27,417 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+// ==========================================
+// GLOBAL SETUP
+// ==========================================
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: $bg-secondary;
+  color: $text-primary;
+}
+
+// ==========================================
+// TYPOGRAPHY
+// ==========================================
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  line-height: $line-height-normal;
+  margin: 0 0 $spacing-md 0;
+  color: $text-primary;
+}
+
+h1 { font-size: $font-size-4xl; }
+h2 { font-size: $font-size-3xl; }
+h3 { font-size: $font-size-2xl; }
+h4 { font-size: $font-size-xl; }
+h5 { font-size: $font-size-lg; }
+h6 { font-size: $font-size-base; }
+
+p {
+  line-height: $line-height-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $spacing-md 0;
+
+  &.muted {
+    color: $text-tertiary;
+    font-size: $font-size-sm;
+  }
+}
+
+// ==========================================
+// IONIC COMPONENT OVERRIDES
+// ==========================================
+
+// Toolbar theming
+ion-toolbar {
+  --background: #{$primary-green};
+  --color: #{$neutral-white};
+  --ion-toolbar-background: #{$primary-green};
+  --ion-toolbar-color: #{$neutral-white};
+  box-shadow: $shadow-md;
+
+  &.secondary {
+    --background: #{$secondary-color};
+    --ion-toolbar-background: #{$secondary-color};
+  }
+
+  &.light {
+    --background: #{$neutral-light-gray};
+    --color: #{$text-primary};
+    --ion-toolbar-background: #{$neutral-light-gray};
+    --ion-toolbar-color: #{$text-primary};
+  }
+}
+
+// Tabs theming
+ion-tab-bar {
+  --background: #{$neutral-white};
+  --border-color: #{$neutral-medium-gray};
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  border-top: 1px solid $neutral-medium-gray;
+
+  ion-tab-button {
+    --color: #{$text-tertiary};
+    --color-selected: #{$primary-green};
+    transition: all $transition-base;
+
+    &.tab-selected {
+      --color: #{$primary-green};
+
+      ion-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    ion-icon {
+      transition: transform $transition-base;
+      font-size: 24px;
+    }
+
+    ion-label {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+      margin-top: $spacing-sm;
+    }
+  }
+}
+
+// Button theming
+ion-button {
+  --padding-top: #{$btn-padding-y};
+  --padding-bottom: #{$btn-padding-y};
+  --padding-start: #{$btn-padding-x};
+  --padding-end: #{$btn-padding-x};
+  --border-radius: #{$btn-border-radius};
+  --font-weight: #{$font-weight-semibold};
+  text-transform: none;
+  letter-spacing: 0;
+  height: auto;
+  transition: all $transition-base;
+
+  &.primary {
+    --background: #{$primary-green};
+    --color: #{$neutral-white};
+
+    &:hover:not(:disabled) {
+      --background: #{$primary-green-dark};
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &.secondary {
+    --background: #{$secondary-color};
+    --color: #{$neutral-white};
+
+    &:hover:not(:disabled) {
+      --background: darken($secondary-color, 10%);
+    }
+  }
+
+  &.success {
+    --background: #{$success-color};
+    --color: #{$neutral-white};
+
+    &:hover:not(:disabled) {
+      --background: darken($success-color, 10%);
+    }
+  }
+
+  ion-icon {
+    margin-right: $spacing-sm;
+  }
+}
+
+// Input theming
+ion-input,
+ion-textarea,
+ion-select {
+  --padding-top: #{$input-padding-y};
+  --padding-bottom: #{$input-padding-y};
+  --padding-start: #{$input-padding-x};
+  --padding-end: #{$input-padding-x};
+  --highlight-color-invalid: #{$error-color};
+  --highlight-color: #{$primary-green};
+}
+
+ion-item {
+  --padding-top: $spacing-md;
+  --padding-bottom: $spacing-md;
+  --inner-padding-end: 0;
+  border-bottom: 1px solid $neutral-medium-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  ion-label {
+    color: $text-primary;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+
+    &[position="floating"] {
+      margin-bottom: $spacing-sm;
+    }
+  }
+}
+
+// Card theming
+ion-card {
+  --background: #{$card-background};
+  --box-shadow: #{$card-shadow};
+  border-radius: $card-border-radius;
+  overflow: hidden;
+  margin: $spacing-md 0;
+
+  ion-card-header {
+    padding: $card-padding;
+    background: $neutral-light-gray;
+    border-bottom: 1px solid $neutral-medium-gray;
+  }
+
+  ion-card-title {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-lg;
+    margin: 0;
+    color: $text-primary;
+  }
+
+  ion-card-content {
+    padding: $card-padding;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+  }
+}
+
+// Content styling
+ion-content {
+  --background: #{$bg-secondary};
+  --ion-safe-area-left: 0px;
+  --ion-safe-area-right: 0px;
+}
+
+// Header styling
+ion-header {
+  box-shadow: $shadow-md;
+
+  &[translucent="true"] {
+    --background: rgba(46, 125, 50, 0.95);
+  }
+}
+
+// ==========================================
+// ANIMATIONS
+// ==========================================
+
+// Fade in animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Utility animation classes
+.animate-fade-in {
+  animation: fadeIn $transition-base ease-in;
+}
+
+.animate-slide-up {
+  animation: slideInUp $transition-base ease-out;
+}
+
+.animate-slide-down {
+  animation: slideInDown $transition-base ease-out;
+}
+
+// ==========================================
+// UTILITY CLASSES
+// ==========================================
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-muted {
+  color: $text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.text-success {
+  color: $success-color;
+  font-weight: $font-weight-semibold;
+}
+
+.text-error {
+  color: $error-color;
+  font-weight: $font-weight-semibold;
+}
+
+.text-warning {
+  color: $warning-color;
+  font-weight: $font-weight-semibold;
+}
+
+.badge {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  background-color: $neutral-light-gray;
+  color: $text-primary;
+
+  &.badge-success {
+    background-color: lighten($success-color, 35%);
+    color: $success-color;
+  }
+
+  &.badge-error {
+    background-color: lighten($error-color, 40%);
+    color: $error-color;
+  }
+
+  &.badge-primary {
+    background-color: lighten($primary-green, 30%);
+    color: $primary-green;
+  }
+}
+
+.pill-button {
+  border-radius: $radius-full;
+  padding: $spacing-md $spacing-lg;
+  font-weight: $font-weight-semibold;
+  transition: all $transition-base;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+
+  &.primary {
+    background-color: $primary-green;
+    color: $neutral-white;
+
+    &:hover {
+      background-color: $primary-green-dark;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &.outline {
+    background-color: transparent;
+    color: $primary-green;
+    border: 2px solid $primary-green;
+
+    &:hover {
+      background-color: rgba(46, 125, 50, 0.05);
+    }
+  }
+}
+
+.gradient-bg-primary {
+  background: linear-gradient(135deg, $primary-green-dark 0%, $primary-green 100%);
+  color: $neutral-white;
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg, $primary-green-dark 0%, $primary-green 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ==========================================
+// RESPONSIVE UTILITIES
+// ==========================================
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: $font-size-sm;
+  }
+
+  h1 { font-size: $font-size-2xl; }
+  h2 { font-size: $font-size-xl; }
+  h3 { font-size: $font-size-lg; }
+}
 
 /**
  * Ionic Dark Mode

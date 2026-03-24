@@ -1,51 +1,117 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="success">
-    <ion-title>BSB Home</ion-title>
-    <!-- Top Right Login Icon -->
+  <ion-toolbar>
+    <ion-title>Brahmapur Sabuja Bahini</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/login">
+      <ion-button routerLink="/login" class="profile-btn">
         <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding ion-text-center">
-  <div style="margin-top: 40px;">
-    <!-- BSB Logo -->
-    <div style="display: flex; justify-content: center;">
+<ion-content [fullscreen]="true" class="home-content">
+  <!-- Hero Section -->
+  <div class="hero-section animate-fade-in">
+    <!-- Logo -->
+    <div class="logo-container">
       <img src="assets/icon/favicon.png" 
-           style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15);" />
+           alt="Brahmapur Sabuja Bahini Logo"
+           class="logo-image" />
     </div>
     
-    <h1 style="color: #2e7d32; font-weight: bold; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.4rem;">
-      Brahmapur Sabuja Bahini
-    </h1>
-    <p style="font-style: italic; color: #666; font-size: 0.9rem;">"Green City, Clean City"</p>
+    <!-- Title & Tagline -->
+    <div class="hero-text">
+      <h1 class="hero-title">Brahmapur Sabuja Bahini</h1>
+      <p class="tagline">"Green City, Clean City"</p>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number">1000+</div>
+      <p class="stat-label">Active Volunteers</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">50K+</div>
+      <p class="stat-label">Trees Planted</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100+</div>
+      <p class="stat-label">Drives Completed</p>
+    </div>
   </div>
 
   <!-- Mission Card -->
-  <ion-card style="margin-top: 30px; text-align: left; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <ion-card-header>
-      <ion-card-title color="success" style="font-size: 1.1rem; font-weight: bold;">Our Mission</ion-card-title>
-    </ion-card-header>
-    <ion-card-content style="color: #444; line-height: 1.6;">
-      To promote environmental awareness and sustainable living in Brahmapur through community action and tree plantation drives.
-    </ion-card-content>
-  </ion-card>
+  <div class="content-section">
+    <ion-card class="mission-card animate-slide-up">
+      <ion-card-header>
+        <ion-icon name="leaf-outline" class="card-icon"></ion-icon>
+        <ion-card-title>Our Mission</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>To promote environmental awareness and sustainable living in Brahmapur through community action and tree plantation drives.</p>
+      </ion-card-content>
+    </ion-card>
 
-  <!-- Navigation Buttons -->
-  <div style="margin-top: 25px; padding: 0 10px;">
-    <ion-button expand="block" color="success" routerLink="/login" style="height: 50px; font-weight: bold;">
-      MEMBER LOGIN
-    </ion-button>
-    
-    <ion-button expand="block" fill="outline" color="success" routerLink="/register" style="margin-top: 12px; height: 50px;">
-      JOIN AS VOLUNTEER
-    </ion-button>
+    <!-- Vision Card -->
+    <ion-card class="vision-card animate-slide-up">
+      <ion-card-header>
+        <ion-icon name="eye-outline" class="card-icon"></ion-icon>
+        <ion-card-title>Our Vision</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Building a greener, cleaner, and more sustainable Brahmapur through collective effort and community participation.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Key Activities -->
+    <ion-card class="activities-card animate-slide-up">
+      <ion-card-header>
+        <ion-icon name="sparkles-outline" class="card-icon"></ion-icon>
+        <ion-card-title>What We Do</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ul class="activities-list">
+          <li><span class="activity-bullet">🌱</span> Tree plantation campaigns</li>
+          <li><span class="activity-bullet">♻️</span> Waste management drives</li>
+          <li><span class="activity-bullet">💚</span> Environmental awareness programs</li>
+          <li><span class="activity-bullet">🌍</span> Community engagement initiatives</li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
   </div>
 
-  <p style="margin-top: 20px; color: #999; font-size: 0.8rem;">
-    Together for a Greener Odisha
-  </p>
+  <!-- CTA Buttons -->
+  <div class="cta-section">
+    <p class="cta-text">Join Our Green Revolution</p>
+    
+    <div class="button-group">
+      <ion-button 
+        expand="block" 
+        color="success" 
+        routerLink="/login"
+        shape="round"
+        class="cta-btn primary-btn">
+        <ion-icon slot="start" name="log-in-outline"></ion-icon>
+        Member Login
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="success" 
+        routerLink="/register"
+        shape="round"
+        class="cta-btn secondary-btn">
+        <ion-icon slot="start" name="person-add-outline"></ion-icon>
+        Join as Volunteer
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Footer Text -->
+  <div class="footer-text">
+    <p>Together for a Greener Odisha</p>
+  </div>
 </ion-content>

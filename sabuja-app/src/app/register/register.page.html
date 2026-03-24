@@ -1,38 +1,135 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
+      <ion-back-button defaultHref="/login" text="Back"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create BSB Account</ion-title>
+    <ion-title>Join Our Movement</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="ion-text-center">
-    <ion-icon name="leaf-outline" style="font-size: 60px; color: #2e7d32;"></ion-icon>
-    <h3>Join Sabuja Bahini</h3>
-  </div>
+<ion-content class="register-content">
+  <div class="register-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section animate-slide-down">
+      <div class="logo-circle">
+        <ion-icon name="leaf"></ion-icon>
+      </div>
+      <h1>Join Sabuja Bahini</h1>
+      <p class="subtitle">Be part of Brahmapur's green revolution</p>
+    </div>
 
-  <ion-list lines="full">
-    <ion-item>
-      <ion-label position="floating">Full Name</ion-label>
-      <ion-input type="text" [(ngModel)]="name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">WhatsApp Number</ion-label>
-      <ion-input type="tel" [(ngModel)]="whatsapp"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Create Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-  </ion-list>
+    <!-- Registration Form -->
+    <div class="form-section animate-slide-up">
+      <ion-card class="register-card">
+        <ion-card-content class="form-content">
+          <!-- Full Name -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-label position="floating">Full Name</ion-label>
+              <ion-input 
+                type="text" 
+                [(ngModel)]="name"
+                placeholder="Your full name"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
 
-  <div class="ion-padding-top">
-    <ion-button expand="block" color="success" shape="round" (click)="register()">Register Now</ion-button>
+          <!-- Email -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-label position="floating">Email Address</ion-label>
+              <ion-input 
+                type="email" 
+                [(ngModel)]="email"
+                placeholder="your@email.com"
+                inputmode="email"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- WhatsApp Number -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+              <ion-label position="floating">WhatsApp Number</ion-label>
+              <ion-input 
+                type="tel" 
+                [(ngModel)]="whatsapp"
+                placeholder="+91 98765 43210"
+                inputmode="tel"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating">Create Password</ion-label>
+              <ion-input 
+                type="password" 
+                [(ngModel)]="password"
+                placeholder="Min. 8 characters"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Terms & Conditions -->
+          <div class="terms-section">
+            <ion-checkbox></ion-checkbox>
+            <span class="terms-text">I agree to the 
+              <a href="#" class="terms-link">Terms & Conditions</a>
+            </span>
+          </div>
+
+          <!-- Register Button -->
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="register()"
+            class="register-btn"
+            shape="round">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Register Now
+          </ion-button>
+
+          <!-- Divider -->
+          <div class="form-divider">
+            <span>or</span>
+          </div>
+
+          <!-- Login Link -->
+          <div class="login-section">
+            <p>Already have an account? 
+              <a routerLink="/login" class="login-link">Sign in here</a>
+            </p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Info Box -->
+      <ion-card class="info-card">
+        <ion-card-content>
+          <div class="info-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Your data is secure and protected</span>
+          </div>
+          <div class="info-item">
+            <ion-icon name="leaf-outline"></ion-icon>
+            <span>Join 1000+ volunteers in Brahmapur</span>
+          </div>
+          <div class="info-item">
+            <ion-icon name="heart-outline"></ion-icon>
+            <span>Make a real difference in your community</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>

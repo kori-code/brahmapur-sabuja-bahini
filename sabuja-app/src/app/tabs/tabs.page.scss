@@ -1,1 +1,123 @@
+@import "../../theme/variables.scss";
 
+ion-tabs {
+  --background: transparent;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-tab-bar {
+  --background: $neutral-white;
+  --border-color: $neutral-medium-gray;
+  border-top: 1px solid $neutral-medium-gray;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+
+  ::part(indicator-background) {
+    background: $primary-green;
+  }
+}
+
+ion-tab-button {
+  --color: $text-tertiary;
+  --color-selected: $primary-green;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+  --padding-end: 0;
+  transition: all $transition-base;
+  position: relative;
+  overflow: visible;
+
+  &.tab-selected {
+    --color: $primary-green;
+
+    ion-icon {
+      transform: scale(1.15);
+      filter: drop-shadow(0 2px 4px rgba(46, 125, 50, 0.2));
+    }
+
+    ion-label {
+      font-weight: $font-weight-semibold;
+      transform: scale(1.05);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 3px;
+      background: $primary-green;
+      border-radius: 2px 2px 0 0;
+      animation: slideInDown 250ms ease;
+    }
+  }
+
+  ion-icon {
+    font-size: 24px;
+    transition: all $transition-base;
+    margin-bottom: 4px;
+  }
+
+  ion-label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-regular;
+    transition: all $transition-base;
+    display: block;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  // Hover effect (desktop)
+  @media (hover: hover) {
+    &:hover:not(.tab-selected) {
+      --color: $primary-green-light;
+      background-color: rgba(46, 125, 50, 0.05);
+    }
+  }
+}
+
+// Tab content styling
+ion-tab {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+// Responsive design
+@media (max-width: 576px) {
+  ion-tab-button {
+    --padding-top: 6px;
+    --padding-bottom: 6px;
+
+    ion-label {
+      font-size: $font-size-xs;
+    }
+
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+}
+
+// Animation for selected indicator
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

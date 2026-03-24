@@ -1,46 +1,141 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="success">
+  <ion-toolbar>
     <ion-title>Our Work</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="ion-padding">
-    <h2>Activity Gallery</h2>
-    <p>Real photos of our plantation drives in Berhampur.</p>
+<ion-content [fullscreen]="true" class="gallery-content">
+  <!-- Header Section -->
+  <div class="gallery-header">
+    <div class="header-content">
+      <h1>Our Impact</h1>
+      <p class="subtitle">Real photographs from our environmental initiatives in Berhampur</p>
+    </div>
   </div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card>
-          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400" />
-          <ion-card-content>Tree Drive</ion-card-content>
-        </ion-card>
-      </ion-col>
+  <!-- Filter Tabs -->
+  <div class="filter-tabs" *ngIf="false">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Tree Planting</button>
+    <button class="filter-btn">Community</button>
+    <button class="filter-btn">Events</button>
+  </div>
 
-      <ion-col size="6">
-        <ion-card>
-          <img src="https://images.unsplash.com/photo-1615461066870-40c144056e52?w=400" />
-          <ion-card-content>Blood Camp</ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+  <!-- Gallery Grid -->
+  <div class="gallery-container">
+    <ion-grid class="gallery-grid">
+      <ion-row class="gallery-row">
+        <!-- Item 1 -->
+        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
+          <ion-card class="gallery-card animate-slide-up">
+            <div class="gallery-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&h=400&fit=crop" 
+                   alt="Tree Plantation Drive"
+                   class="gallery-image" />
+              <div class="gallery-overlay">
+                <ion-button fill="clear" color="light" class="view-btn">
+                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            <ion-card-content class="gallery-info">
+              <p class="gallery-title">Tree Plantation Drive</p>
+              <span class="gallery-date">March 2024</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-    <ion-row>
-      <ion-col size="6">
-        <ion-card>
-          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400" />
-          <ion-card-content>Our Team</ion-card-content>
-        </ion-card>
-      </ion-col>
+        <!-- Item 2 -->
+        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
+          <ion-card class="gallery-card animate-slide-up">
+            <div class="gallery-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1615461066870-40c144056e52?w=400&h=400&fit=crop" 
+                   alt="Community Cleanup"
+                   class="gallery-image" />
+              <div class="gallery-overlay">
+                <ion-button fill="clear" color="light" class="view-btn">
+                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            <ion-card-content class="gallery-info">
+              <p class="gallery-title">Community Cleanup</p>
+              <span class="gallery-date">February 2024</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-      <ion-col size="6">
-        <ion-card>
-          <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400" />
-          <ion-card-content>Clean City</ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <!-- Item 3 -->
+        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
+          <ion-card class="gallery-card animate-slide-up">
+            <div class="gallery-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop" 
+                   alt="Team Volunteers"
+                   class="gallery-image" />
+              <div class="gallery-overlay">
+                <ion-button fill="clear" color="light" class="view-btn">
+                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            <ion-card-content class="gallery-info">
+              <p class="gallery-title">Team Volunteers</p>
+              <span class="gallery-date">January 2024</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <!-- Item 4 -->
+        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
+          <ion-card class="gallery-card animate-slide-up">
+            <div class="gallery-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400&h=400&fit=crop" 
+                   alt="Green Initiative"
+                   class="gallery-image" />
+              <div class="gallery-overlay">
+                <ion-button fill="clear" color="light" class="view-btn">
+                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            <ion-card-content class="gallery-info">
+              <p class="gallery-title">Green Initiative</p>
+              <span class="gallery-date">December 2023</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <ion-card class="stats-card">
+      <ion-card-content>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <p>Trees Planted</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1000+</div>
+            <p>Active Members</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">200+</div>
+            <p>Events Held</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="cta-footer">
+    <p>Interested in joining us?</p>
+    <ion-button expand="block" color="success" routerLink="/register" shape="round">
+      <ion-icon slot="start" name="person-add-outline"></ion-icon>
+      Become a Volunteer
+    </ion-button>
+  </div>
 </ion-content>

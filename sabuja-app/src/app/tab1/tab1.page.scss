@@ -1,0 +1,359 @@
+@import "../../theme/variables.scss";
+
+.home-content {
+  --background: $bg-secondary;
+  --ion-padding: 0;
+  --ion-padding-top: 0;
+  --ion-padding-bottom: 0;
+}
+
+// Hero Section
+.hero-section {
+  background: linear-gradient(135deg, $primary-green-dark 0%, $primary-green 100%);
+  padding: $spacing-3xl $spacing-lg $spacing-2xl;
+  text-align: center;
+  color: $neutral-white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+  }
+}
+
+.logo-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: $spacing-xl;
+}
+
+.logo-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid $neutral-white;
+  box-shadow: $shadow-xl;
+  animation: slideInDown $transition-base ease-out;
+  object-fit: cover;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 1;
+
+  .hero-title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    margin: $spacing-lg 0 $spacing-sm;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $neutral-white;
+  }
+
+  .tagline {
+    font-size: $font-size-lg;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: $font-weight-light;
+  }
+}
+
+// Stats Container
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+  padding: $spacing-xl $spacing-md;
+  background: $neutral-white;
+  margin-top: -$spacing-lg;
+  position: relative;
+  z-index: 10;
+
+  .stat-card {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(78, 175, 80, 0.05) 100%);
+    padding: $spacing-xl $spacing-md;
+    border-radius: $radius-lg;
+    text-align: center;
+    border: 1px solid $primary-green-light;
+    transition: all $transition-base;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-md;
+      background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(78, 175, 80, 0.1) 100%);
+    }
+
+    .stat-number {
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
+      color: $primary-green;
+      margin-bottom: $spacing-sm;
+    }
+
+    .stat-label {
+      font-size: $font-size-xs;
+      color: $text-secondary;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+// Content Section
+.content-section {
+  padding: $spacing-xl $spacing-md;
+  background: $neutral-white;
+}
+
+// Card Styling
+.mission-card,
+.vision-card,
+.activities-card {
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  margin: 0 0 $spacing-lg 0;
+  border: none;
+  animation: slideInUp $transition-base ease-out;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+
+  ion-card-header {
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    padding: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    border-bottom: 1px solid $neutral-medium-gray;
+  }
+
+  .card-icon {
+    color: $primary-green;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  ion-card-title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    flex: 1;
+  }
+
+  ion-card-content {
+    padding: $spacing-lg;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+// Activities List
+.activities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    color: $text-secondary;
+    font-size: $font-size-base;
+    line-height: $line-height-normal;
+    border-bottom: 1px solid $neutral-medium-gray;
+    transition: all $transition-base;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      color: $primary-green;
+      padding-left: $spacing-md;
+    }
+
+    .activity-bullet {
+      font-size: $font-size-xl;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// CTA Section
+.cta-section {
+  padding: $spacing-2xl $spacing-lg;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(78, 175, 80, 0.05) 100%);
+  text-align: center;
+  border-top: 1px solid $primary-green-light;
+}
+
+.cta-text {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $primary-green;
+  margin-bottom: $spacing-lg;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.cta-btn {
+  height: 50px;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+
+  &.primary-btn {
+    --background: $primary-green;
+    --color: $neutral-white;
+
+    &:hover:not(:disabled) {
+      --background: $primary-green-dark;
+      box-shadow: $shadow-lg;
+      transform: translateY(-2px);
+    }
+  }
+
+  &.secondary-btn {
+    --color: $primary-green;
+    --border-color: $primary-green;
+    --border-width: 2px;
+
+    &:hover:not(:disabled) {
+      --color: $primary-green-dark;
+      --border-color: $primary-green-dark;
+      background-color: rgba(46, 125, 50, 0.05);
+      transform: translateY(-2px);
+    }
+  }
+
+  ion-icon {
+    margin-right: $spacing-sm;
+  }
+}
+
+// Footer Text
+.footer-text {
+  padding: $spacing-lg;
+  text-align: center;
+  color: $text-tertiary;
+  font-size: $font-size-sm;
+  background: $neutral-white;
+
+  p {
+    margin: 0;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Profile Button
+.profile-btn {
+  --color: $neutral-white;
+  --padding-end: $spacing-md;
+  --padding-start: $spacing-md;
+  transition: all $transition-base;
+
+  ion-icon {
+    font-size: 24px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .hero-section {
+    padding: $spacing-2xl $spacing-md $spacing-xl;
+  }
+
+  .logo-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .hero-text .hero-title {
+    font-size: $font-size-2xl;
+    letter-spacing: 1px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-sm;
+    padding: $spacing-lg $spacing-sm;
+    margin-top: -#{$spacing-md};
+
+    .stat-card {
+      padding: $spacing-md;
+      border-radius: $radius-md;
+
+      .stat-number {
+        font-size: $font-size-xl;
+      }
+
+      .stat-label {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+
+  .content-section,
+  .cta-section,
+  .footer-text {
+    padding: $spacing-lg $spacing-md;
+  }
+
+  .cta-text {
+    font-size: $font-size-lg;
+  }
+}
+
+@media (max-width: 380px) {
+  .stats-container .stat-card {
+    padding: $spacing-sm;
+
+    .stat-number {
+      font-size: $font-size-lg;
+    }
+  }
+}
