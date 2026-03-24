@@ -15,32 +15,30 @@
     padding: $spacing-2xl $spacing-lg;
     margin-bottom: $spacing-lg;
 
-    .stats-banner {
-      h2 {
-        color: $neutral-white;
-        margin-bottom: $spacing-xl;
-        font-size: $font-size-2xl;
-      }
+    h2 {
+      color: $neutral-white;
+      margin-bottom: $spacing-xl;
+      font-size: $font-size-2xl;
+    }
 
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: $spacing-lg;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-lg;
 
-        .stat-item {
-          text-align: center;
+      .stat-item {
+        text-align: center;
 
-          .stat-value {
-            font-size: $font-size-2xl;
-            font-weight: $font-weight-bold;
-            display: block;
-            margin-bottom: $spacing-sm;
-          }
+        .stat-value {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          display: block;
+          margin-bottom: $spacing-sm;
+        }
 
-          .stat-label {
-            font-size: $font-size-xs;
-            opacity: 0.9;
-          }
+        .stat-label {
+          font-size: $font-size-xs;
+          opacity: 0.9;
         }
       }
     }
@@ -48,126 +46,113 @@
 
   .contribution-form {
     padding: $spacing-lg;
-    animation: slideUp 0.5s ease-out;
 
-    .form-container {
-      .form-header {
-        text-align: center;
-        margin-bottom: $spacing-2xl;
+    .form-header {
+      text-align: center;
+      margin-bottom: $spacing-2xl;
 
-        .heart-icon {
-          font-size: 64px;
-          color: $error-color;
+      .heart-icon {
+        font-size: 64px;
+        color: $error-color;
+        display: block;
+        margin-bottom: $spacing-md;
+      }
+
+      h1 {
+        margin-bottom: $spacing-md;
+        color: $text-primary;
+      }
+
+      .subtitle {
+        color: $text-secondary;
+      }
+    }
+
+    .form-card {
+      box-shadow: $shadow-md;
+      border-radius: $radius-lg;
+      margin-bottom: $spacing-xl;
+
+      .card-content {
+        padding: $spacing-lg 0;
+      }
+
+      .form-group {
+        margin-bottom: $spacing-xl;
+
+        .form-label {
           display: block;
           margin-bottom: $spacing-md;
-          animation: pulse 2s infinite;
-        }
-
-        h1 {
-          margin-bottom: $spacing-md;
+          font-weight: $font-weight-medium;
           color: $text-primary;
+
+          .required {
+            color: $error-color;
+          }
         }
 
-        .subtitle {
-          color: $text-secondary;
+        .amount-input-wrapper {
+          display: flex;
+          align-items: center;
+          border: 1px solid $neutral-medium-gray;
+          border-radius: $radius-md;
+          padding: $spacing-md;
+          background: $neutral-white;
+
+          .currency {
+            font-size: $font-size-2xl;
+            font-weight: $font-weight-bold;
+            color: $primary-green;
+            margin-right: $spacing-sm;
+          }
+
+          ion-input {
+            flex: 1;
+          }
+        }
+
+        .form-select, .payment-methods ion-segment {
+          border: 1px solid $neutral-medium-gray;
+          border-radius: $radius-md;
+          padding: $spacing-md;
+          background: $neutral-white;
         }
       }
 
-      .form-card {
-        box-shadow: $shadow-md;
-        border-radius: $radius-lg;
-        margin-bottom: $spacing-xl;
+      .amount-presets {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-md;
+        margin: $spacing-xl 0;
 
-        .card-content {
-          padding: $spacing-lg 0;
-        }
-
-        .form-group {
-          margin-bottom: $spacing-xl;
-
-          .form-label {
-            display: block;
-            margin-bottom: $spacing-md;
-            font-weight: $font-weight-medium;
-            color: $text-primary;
-
-            .required {
-              color: $error-color;
-            }
-          }
-
-          .amount-input-wrapper {
-            display: flex;
-            align-items: center;
-            border: 1px solid $neutral-medium-gray;
-            border-radius: $radius-md;
-            padding: $spacing-md;
-            background: $neutral-white;
-
-            .currency {
-              font-size: $font-size-2xl;
-              font-weight: $font-weight-bold;
-              color: $primary-green;
-              margin-right: $spacing-sm;
-            }
-
-            ion-input {
-              flex: 1;
-            }
-          }
-
-          .form-select {
-            border: 1px solid $neutral-medium-gray;
-            border-radius: $radius-md;
-            padding: $spacing-md;
-            background: $neutral-white;
-          }
-
-          .payment-methods {
-            ion-segment {
-              background: $neutral-white;
-              border: 1px solid $neutral-medium-gray;
-              border-radius: $radius-md;
-              padding: $spacing-sm;
-            }
-          }
-        }
-
-        .amount-presets {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: $spacing-md;
-          margin: $spacing-xl 0;
-
-          .preset-btn {
-            padding: $spacing-md;
-            border: 2px solid $neutral-medium-gray;
-            background: $neutral-white;
-            border-radius: $radius-md;
-            font-weight: $font-weight-medium;
-            color: $primary-green;
-            cursor: pointer;
-            transition: all $transition-base;
-
-            &:hover {
-              border-color: $primary-green;
-              background: rgba(46, 125, 50, 0.05);
-            }
-          }
-        }
-
-        .info-box {
-          background: rgba(33, 150, 243, 0.1);
-          color: $info-color;
+        .preset-btn {
           padding: $spacing-md;
+          border: 2px solid $neutral-medium-gray;
+          background: $neutral-white;
           border-radius: $radius-md;
-          display: flex;
-          align-items: center;
-          gap: $spacing-md;
+          font-weight: $font-weight-medium;
+          color: $primary-green;
+          cursor: pointer;
+          transition: all $transition-base;
 
-          ion-icon {
-            font-size: 20px;
+          &:hover {
+            border-color: $primary-green;
+            background: rgba(46, 125, 50, 0.05);
           }
+        }
+      }
+
+      .info-box {
+        background: rgba(33, 150, 243, 0.1);
+        color: $info-color;
+        padding: $spacing-md;
+        border-radius: $radius-md;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        ion-icon {
+          font-size: 20px;
         }
       }
 
@@ -200,7 +185,9 @@
             padding: $spacing-md 0;
             border-bottom: 1px solid rgba(46, 125, 50, 0.1);
 
-            &:last-child { border-bottom: none; }
+            &:last-child {
+              border-bottom: none;
+            }
 
             ion-icon {
               color: $success-color;
@@ -214,142 +201,137 @@
 
   .qr-screen {
     padding: $spacing-lg;
-    animation: slideUp 0.5s ease-out;
 
-    .qr-container {
-      .qr-header {
-        margin-bottom: $spacing-lg;
+    .qr-header {
+      margin-bottom: $spacing-lg;
 
-        .back-btn {
-          --padding-start: 0;
-          --padding-end: 0;
+      .back-btn {
+        --padding-start: 0;
+        --padding-end: 0;
+      }
+    }
+
+    .qr-card {
+      box-shadow: $shadow-md;
+      margin-bottom: $spacing-lg;
+
+      ion-card-header {
+        background: linear-gradient(135deg, #{$primary-green}, #{$secondary-color});
+        color: $neutral-white;
+
+        ion-card-title {
+          color: $neutral-white;
         }
       }
 
-      .qr-card {
-        box-shadow: $shadow-md;
-        margin-bottom: $spacing-lg;
+      .qr-content {
+        .amount-display {
+          text-align: center;
+          padding: $spacing-xl 0;
+          border-bottom: 1px solid $neutral-medium-gray;
 
-        ion-card-header {
-          background: linear-gradient(135deg, #{$primary-green}, #{$secondary-color});
-          color: $neutral-white;
-
-          ion-card-title {
-            color: $neutral-white;
-          }
-        }
-
-        .qr-content {
-          .amount-display {
-            text-align: center;
-            padding: $spacing-xl 0;
-            border-bottom: 1px solid $neutral-medium-gray;
-
-            span {
-              color: $text-secondary;
-              display: block;
-              margin-bottom: $spacing-md;
-            }
-
-            h2 {
-              color: $primary-green;
-              font-size: $font-size-4xl;
-              margin: 0;
-            }
-          }
-
-          .qr-code-box {
-            text-align: center;
-            padding: $spacing-2xl $spacing-lg;
-
-            .qr-label {
-              color: $text-secondary;
-              margin-bottom: $spacing-md;
-            }
-
-            .qr-image {
-              max-width: 250px;
-              width: 100%;
-              border: 3px solid $primary-green;
-              border-radius: $radius-lg;
-              padding: $spacing-md;
-              background: $neutral-white;
-            }
-          }
-
-          .payment-details {
-            padding: $spacing-lg 0;
-            border-top: 1px solid $neutral-medium-gray;
-
-            .detail-item {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding: $spacing-md 0;
-              border-bottom: 1px solid $neutral-light-gray;
-
-              &:last-child { border-bottom: none; }
-
-              .detail-label {
-                color: $text-secondary;
-                font-size: $font-size-sm;
-              }
-
-              .detail-value {
-                font-weight: $font-weight-medium;
-                color: $text-primary;
-
-                &.detail-copy {
-                  font-family: $font-family-mono;
-                  background: rgba(46, 125, 50, 0.1);
-                  padding: $spacing-sm $spacing-md;
-                  border-radius: $radius-md;
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-
-          .verify-btn {
-            --background: #{$success-color};
+          span {
+            color: $text-secondary;
+            display: block;
             margin-bottom: $spacing-md;
           }
+
+          h2 {
+            color: $primary-green;
+            font-size: $font-size-4xl;
+            margin: 0;
+          }
+        }
+
+        .qr-code-box {
+          text-align: center;
+          padding: $spacing-2xl $spacing-lg;
+
+          .qr-label {
+            color: $text-secondary;
+            margin-bottom: $spacing-md;
+          }
+
+          .qr-image {
+            max-width: 250px;
+            width: 100%;
+            border: 3px solid $primary-green;
+            border-radius: $radius-lg;
+            padding: $spacing-md;
+            background: $neutral-white;
+          }
+        }
+
+        .payment-details {
+          padding: $spacing-lg 0;
+          border-top: 1px solid $neutral-medium-gray;
+
+          .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: $spacing-md 0;
+            border-bottom: 1px solid $neutral-light-gray;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            .detail-label {
+              color: $text-secondary;
+              font-size: $font-size-sm;
+            }
+
+            .detail-value {
+              font-weight: $font-weight-medium;
+              color: $text-primary;
+
+              &.detail-copy {
+                font-family: $font-family-mono;
+                background: rgba(46, 125, 50, 0.1);
+                padding: $spacing-xs $spacing-md;
+                border-radius: $radius-md;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+
+        .verify-btn {
+          --background: #{$success-color};
+          margin-bottom: $spacing-md;
         }
       }
+    }
 
-      .help-section {
-        text-align: center;
-        padding: $spacing-lg;
-        background: rgba(255, 152, 0, 0.1);
-        border-radius: $radius-md;
+    .help-section {
+      text-align: center;
+      padding: $spacing-lg;
+      background: rgba(255, 152, 0, 0.1);
+      border-radius: $radius-md;
+      color: $warning-color;
+
+      p {
+        margin: 0;
+      }
+
+      a {
         color: $warning-color;
-
-        p { margin: 0; }
-
-        a {
-          color: $warning-color;
-          text-decoration: none;
-          font-weight: $font-weight-medium;
-        }
+        text-decoration: none;
+        font-weight: $font-weight-medium;
       }
     }
   }
 
   .success-screen {
     padding: $spacing-lg;
-    animation: slideUp 0.5s ease-out;
 
     .success-container {
       text-align: center;
 
-      .success-animation {
-        margin-bottom: $spacing-2xl;
-      }
-
       .success-icon {
         font-size: 120px;
         color: $success-color;
-        animation: bounce 0.6s ease-in;
       }
 
       .success-title {
@@ -390,8 +372,13 @@
         p {
           margin: $spacing-md 0;
 
-          &:first-child { margin-top: 0; }
-          &:last-child { margin-bottom: 0; }
+          &:first-child {
+            margin-top: 0;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
       }
 
@@ -428,35 +415,13 @@
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-@keyframes bounce {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
 @media (max-width: 576px) {
   .contribution-content {
-    .donation-stats .stats-banner .stats-grid {
+    .donation-stats .stats-grid {
       grid-template-columns: 1fr;
     }
 
-    .contribution-form .form-container .form-card .amount-presets {
+    .contribution-form .form-card .amount-presets {
       grid-template-columns: repeat(2, 1fr);
     }
   }

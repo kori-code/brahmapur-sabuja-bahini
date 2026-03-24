@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   selector: 'app-admin',
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
+  standalone: false
 })
 export class AdminPage implements OnInit {
   // Use your real email here
