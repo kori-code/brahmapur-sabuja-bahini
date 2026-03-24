@@ -82,7 +82,82 @@
     </ion-card>
   </div>
 
-  <!-- CTA Buttons -->
+  <!-- Services Section -->
+  <div class="content-section services-section">
+    <div class="section-header">
+      <h2>Our Services</h2>
+      <p class="section-subtitle">Making a difference in Berhampur</p>
+    </div>
+    
+    <div class="services-grid">
+      <ion-card class="service-card animate-slide-up" *ngFor="let service of services">
+        <div class="service-image-wrapper">
+          <img [src]="service.image" [alt]="service.title" class="service-image" />
+          <div class="service-overlay">
+            <ion-icon [name]="service.icon" class="service-icon-large"></ion-icon>
+          </div>
+        </div>
+        <ion-card-content class="service-content">
+          <ion-card-title class="service-title">{{service.title}}</ion-card-title>
+          <p class="service-description">{{service.description}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <!-- Upcoming Events Section -->
+  <div class="content-section events-section">
+    <div class="section-header">
+      <h2>Upcoming Events</h2>
+      <ion-button fill="clear" color="success" class="view-all-btn">
+        View All <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+    
+    <div class="events-list">
+      <ion-card class="event-card animate-slide-up" *ngFor="let event of events">
+        <div class="event-date-badge">
+          <span class="date-badges">{{event.date | date:'d'}}<br/><span class="month">{{event.date | date:'MMM'}}</span></span>
+        </div>
+        <ion-card-content class="event-content">
+          <div class="event-header">
+            <ion-card-title class="event-title">{{event.title}}</ion-card-title>
+            <ion-chip class="event-category">{{event.category}}</ion-chip>
+          </div>
+          <p class="event-description">{{event.description}}</p>
+          <div class="event-meta">
+            <span class="event-location">
+              <ion-icon name="location-outline"></ion-icon>
+              {{event.location}}
+            </span>
+            <span class="event-volunteers">
+              <ion-icon name="people-outline"></ion-icon>
+              {{event.volunteers}} interested
+            </span>
+          </div>
+          <ion-button fill="clear" color="success" class="register-btn" (click)="registerEvent(event.id)">
+            Register <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <!-- Support Us Section -->
+  <div class="support-section">
+    <div class="support-content">
+      <h3>Support Our Mission</h3>
+      <p>Your donations help us plant more trees and create a greener Berhampur</p>
+      <ion-button 
+        expand="block" 
+        color="danger"
+        shape="round"
+        class="donate-btn">
+        <ion-icon slot="start" name="heart-outline"></ion-icon>
+        Donate Now
+      </ion-button>
+    </div>
+  </div>
   <div class="cta-section">
     <p class="cta-text">Join Our Green Revolution</p>
     

@@ -1,141 +1,209 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Our Work</ion-title>
+    <ion-title>About Us</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="currentUser" routerLink="/admin" color="success">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="gallery-content">
-  <!-- Header Section -->
-  <div class="gallery-header">
-    <div class="header-content">
-      <h1>Our Impact</h1>
-      <p class="subtitle">Real photographs from our environmental initiatives in Berhampur</p>
+<ion-content [fullscreen]="true" class="about-content">
+  
+  <!-- About Section -->
+  <div class="about-section">
+    <div class="about-header">
+      <div class="org-logo-large">
+        <img src="assets/icon/favicon.png" alt="BSB Logo" />
+      </div>
+      <h1>Brahmapur Sabuja Bahini</h1>
+      <p class="organization-tagline">"Green City, Clean City"</p>
     </div>
-  </div>
 
-  <!-- Filter Tabs -->
-  <div class="filter-tabs" *ngIf="false">
-    <button class="filter-btn active">All</button>
-    <button class="filter-btn">Tree Planting</button>
-    <button class="filter-btn">Community</button>
-    <button class="filter-btn">Events</button>
-  </div>
-
-  <!-- Gallery Grid -->
-  <div class="gallery-container">
-    <ion-grid class="gallery-grid">
-      <ion-row class="gallery-row">
-        <!-- Item 1 -->
-        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
-          <ion-card class="gallery-card animate-slide-up">
-            <div class="gallery-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&h=400&fit=crop" 
-                   alt="Tree Plantation Drive"
-                   class="gallery-image" />
-              <div class="gallery-overlay">
-                <ion-button fill="clear" color="light" class="view-btn">
-                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
-                </ion-button>
-              </div>
-            </div>
-            <ion-card-content class="gallery-info">
-              <p class="gallery-title">Tree Plantation Drive</p>
-              <span class="gallery-date">March 2024</span>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-
-        <!-- Item 2 -->
-        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
-          <ion-card class="gallery-card animate-slide-up">
-            <div class="gallery-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1615461066870-40c144056e52?w=400&h=400&fit=crop" 
-                   alt="Community Cleanup"
-                   class="gallery-image" />
-              <div class="gallery-overlay">
-                <ion-button fill="clear" color="light" class="view-btn">
-                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
-                </ion-button>
-              </div>
-            </div>
-            <ion-card-content class="gallery-info">
-              <p class="gallery-title">Community Cleanup</p>
-              <span class="gallery-date">February 2024</span>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-
-        <!-- Item 3 -->
-        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
-          <ion-card class="gallery-card animate-slide-up">
-            <div class="gallery-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop" 
-                   alt="Team Volunteers"
-                   class="gallery-image" />
-              <div class="gallery-overlay">
-                <ion-button fill="clear" color="light" class="view-btn">
-                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
-                </ion-button>
-              </div>
-            </div>
-            <ion-card-content class="gallery-info">
-              <p class="gallery-title">Team Volunteers</p>
-              <span class="gallery-date">January 2024</span>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-
-        <!-- Item 4 -->
-        <ion-col size="6" sizeSm="6" size-xs="12" class="gallery-col">
-          <ion-card class="gallery-card animate-slide-up">
-            <div class="gallery-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400&h=400&fit=crop" 
-                   alt="Green Initiative"
-                   class="gallery-image" />
-              <div class="gallery-overlay">
-                <ion-button fill="clear" color="light" class="view-btn">
-                  <ion-icon slot="icon-only" name="expand-outline"></ion-icon>
-                </ion-button>
-              </div>
-            </div>
-            <ion-card-content class="gallery-info">
-              <p class="gallery-title">Green Initiative</p>
-              <span class="gallery-date">December 2023</span>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-  <!-- Stats Section -->
-  <div class="stats-section">
-    <ion-card class="stats-card">
+    <!-- Organization Info Card -->
+    <ion-card class="about-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="leaf-outline" class="section-icon"></ion-icon>
+          Who We Are
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number">50K+</div>
-            <p>Trees Planted</p>
+        <p>Brahmapur Sabuja Bahini (BSB) is a dedicated environmental NGO working towards making Berhampur greener, cleaner, and more sustainable. Since our inception, we've been actively involved in tree plantation campaigns, waste management drives, and community awareness programs.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Mission & Vision -->
+    <div class="mission-vision-grid">
+      <ion-card class="mv-card">
+        <ion-card-header>
+          <ion-card-title class="mv-title">Mission</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>To promote environmental awareness and sustainable living through community action and innovative conservation strategies.</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="mv-card">
+        <ion-card-header>
+          <ion-card-title class="mv-title">Vision</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Building a greener, cleaner, and more sustainable Berhampur for future generations through collective community effort.</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Core Values -->
+    <ion-card class="values-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="heart-outline" class="section-icon"></ion-icon>
+          Our Core Values
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="values-grid">
+          <div class="value-item">
+            <h4>Community</h4>
+            <p>Together we achieve more</p>
           </div>
-          <div class="stat-item">
-            <div class="stat-number">1000+</div>
-            <p>Active Members</p>
+          <div class="value-item">
+            <h4>Sustainability</h4>
+            <p>Long-term environmental care</p>
           </div>
-          <div class="stat-item">
-            <div class="stat-number">200+</div>
-            <p>Events Held</p>
+          <div class="value-item">
+            <h4>Transparency</h4>
+            <p>Honest and accountable</p>
+          </div>
+          <div class="value-item">
+            <h4>Innovation</h4>
+            <p>Creative solutions for change</p>
           </div>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <!-- CTA Section -->
-  <div class="cta-footer">
-    <p>Interested in joining us?</p>
-    <ion-button expand="block" color="success" routerLink="/register" shape="round">
-      <ion-icon slot="start" name="person-add-outline"></ion-icon>
-      Become a Volunteer
+  <!-- Team Members Section -->
+  <div class="team-section">
+    <div class="section-header">
+      <h2>Our Team</h2>
+      <p>Dedicated volunteers making a difference</p>
+    </div>
+
+    <div class="team-grid">
+      <ion-card class="team-member-card animate-slide-up" *ngFor="let member of topMembers">
+        <div class="member-avatar-wrapper">
+          <img [src]="member.avatar" [alt]="member.name" class="member-avatar" />
+          <div class="member-overlay">
+            <span class="member-role">{{member.role}}</span>
+          </div>
+        </div>
+        <ion-card-content class="member-info">
+          <h3 class="member-name">{{member.name}}</h3>
+          <p class="member-joined">Joined {{member.joinDate | date:'MMM yyyy'}}</p>
+          <div class="member-stats">
+            <span class="stat-badge">{{member.contributions}} Contributions</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-button 
+      fill="outline" 
+      color="success" 
+      expand="block"
+      shape="round"
+      class="view-all-members-btn">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      View All Members ({{totalMembers}})
     </ion-button>
   </div>
+
+  <!-- Impact Stats -->
+  <div class="impact-section">
+    <ion-card class="impact-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="stats-chart-outline" class="section-icon"></ion-icon>
+          Our Impact
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="stats-showcase">
+          <div class="impact-stat">
+            <div class="stat-number">250+</div>
+            <p>Active Volunteers</p>
+          </div>
+          <div class="impact-stat">
+            <div class="stat-number">15K+</div>
+            <p>Trees Planted</p>
+          </div>
+          <div class="impact-stat">
+            <div class="stat-number">150+</div>
+            <p>Programs</p>
+          </div>
+          <div class="impact-stat">
+            <div class="stat-number">10K+</div>
+            <p>Families Reached</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section">
+    <ion-card class="contact-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="call-outline" class="section-icon"></ion-icon>
+          Get in Touch
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="contact-info">
+          <div class="contact-item">
+            <ion-icon name="mail-outline"></ion-icon>
+            <div>
+              <p class="contact-label">Email</p>
+              <a href="mailto:info@berhampursabujabahini.in">info@berhampursabujabahini.in</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <ion-icon name="call-outline"></ion-icon>
+            <div>
+              <p class="contact-label">Phone</p>
+              <a href="tel:+919876543210">+91 98765 43210</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <ion-icon name="location-outline"></ion-icon>
+            <div>
+              <p class="contact-label">Location</p>
+              <p>Berhampur, Odisha</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <ion-button fill="clear" color="primary" class="social-btn">
+            <ion-icon slot="icon-only" name="logo-facebook"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="primary" class="social-btn">
+            <ion-icon slot="icon-only" name="logo-instagram"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="primary" class="social-btn">
+            <ion-icon slot="icon-only" name="logo-twitter"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="primary" class="social-btn">
+            <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>

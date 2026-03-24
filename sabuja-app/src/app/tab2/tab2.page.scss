@@ -1,544 +1,463 @@
 @import "../../theme/variables.scss";
 
 .contribution-content {
-  --background: $bg-secondary;
-  --ion-padding: 0;
-}
+  --ion-background-color: #{$neutral-light-gray};
+  background: linear-gradient(135deg, #{$neutral-light-gray} 0%, #ffffff 100%);
 
-// ==========================================
-// CONTRIBUTION FORM SCREEN
-// ==========================================
-
-.contribution-form {
-  animation: slideInUp $transition-base ease-out;
-}
-
-.form-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: $spacing-xl $spacing-md;
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: $spacing-3xl;
-  padding: $spacing-xl 0;
-
-  .heart-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, $primary-green-dark, $primary-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto $spacing-lg;
-    box-shadow: $shadow-lg;
-
-    ion-icon {
-      font-size: 40px;
-      color: $neutral-white;
-    }
+  .donate-btn {
+    --background: #{$error-color};
+    --color: #{$neutral-white};
   }
 
-  h1 {
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    margin-bottom: $spacing-md;
-    color: $text-primary;
-  }
+  .donation-stats {
+    background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
+    color: $neutral-white;
+    padding: $spacing-2xl $spacing-lg;
+    margin-bottom: $spacing-lg;
 
-  .subtitle {
-    font-size: $font-size-base;
-    color: $text-secondary;
-    line-height: $line-height-relaxed;
-  }
-}
+    .stats-banner {
+      h2 {
+        color: $neutral-white;
+        margin-bottom: $spacing-xl;
+        font-size: $font-size-2xl;
+      }
 
-.form-card {
-  border-radius: $radius-lg;
-  box-shadow: $shadow-lg;
-  margin-bottom: $spacing-xl;
-}
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-lg;
 
-.card-content {
-  padding: $spacing-xl;
-}
+        .stat-item {
+          text-align: center;
 
-.form-group {
-  margin-bottom: $spacing-lg;
+          .stat-value {
+            font-size: $font-size-2xl;
+            font-weight: $font-weight-bold;
+            display: block;
+            margin-bottom: $spacing-sm;
+          }
 
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.form-label {
-  display: block;
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-sm;
-  color: $text-primary;
-  margin-bottom: $spacing-md;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-
-  .required {
-    color: $error-color;
-    margin-left: $spacing-xs;
-  }
-}
-
-// Amount Input
-.amount-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background-color: $neutral-light-gray;
-  border-radius: $radius-md;
-  padding: $spacing-md;
-  border: 2px solid transparent;
-  transition: all $transition-base;
-
-  &:focus-within {
-    border-color: $primary-green;
-    background-color: rgba(46, 125, 50, 0.05);
-  }
-
-  .currency {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $primary-green;
-    margin-right: $spacing-sm;
-  }
-
-  ion-input {
-    flex: 1;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-
-    &::placeholder {
-      color: $text-tertiary;
-    }
-  }
-}
-
-// Amount Presets
-.amount-presets {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $spacing-sm;
-  margin-bottom: $spacing-lg;
-
-  .preset-btn {
-    padding: $spacing-md;
-    border: 2px solid $neutral-medium-gray;
-    border-radius: $radius-md;
-    background: $neutral-white;
-    color: $text-primary;
-    font-weight: $font-weight-semibold;
-    cursor: pointer;
-    transition: all $transition-base;
-    font-size: $font-size-sm;
-
-    &:hover,
-    &:active {
-      border-color: $primary-green;
-      background-color: rgba(46, 125, 50, 0.05);
-      color: $primary-green;
-    }
-  }
-}
-
-// Form Select
-.form-select {
-  --background: $neutral-light-gray;
-  --inner-padding-start: $spacing-md;
-  --inner-padding-end: $spacing-md;
-  border-radius: $radius-md;
-  padding: 0;
-
-  &:focus-within {
-    --background: rgba(46, 125, 50, 0.05);
-  }
-
-  ion-icon {
-    color: $primary-green;
-    margin-right: $spacing-md;
-  }
-}
-
-// Info Box
-.info-box {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(78, 175, 80, 0.05) 100%);
-  padding: $spacing-md;
-  border-radius: $radius-md;
-  border: 1px solid $primary-green-light;
-  font-size: $font-size-sm;
-  color: $text-secondary;
-  margin-top: $spacing-lg;
-
-  ion-icon {
-    color: $primary-green;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-}
-
-// Pay Button
-.pay-btn {
-  height: 50px;
-  font-weight: $font-weight-bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: $shadow-md;
-  margin-bottom: $spacing-2xl;
-}
-
-// Benefits Section
-.benefits-section {
-  background: $neutral-white;
-  padding: $spacing-lg;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-
-  h3 {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    margin-bottom: $spacing-md;
-    color: $text-primary;
-  }
-
-  .benefits-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      display: flex;
-      align-items: center;
-      gap: $spacing-md;
-      padding: $spacing-sm 0;
-      color: $text-secondary;
-      font-size: $font-size-sm;
-
-      ion-icon {
-        color: $success-color;
-        font-size: 18px;
-        flex-shrink: 0;
+          .stat-label {
+            font-size: $font-size-xs;
+            opacity: 0.9;
+          }
+        }
       }
     }
   }
-}
 
-// ==========================================
-// QR CODE PAYMENT SCREEN
-// ==========================================
-
-.qr-screen {
-  animation: slideInUp $transition-base ease-out;
-}
-
-.qr-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.qr-header {
-  padding: $spacing-md;
-  display: flex;
-  align-items: center;
-
-  .back-btn {
-    --padding-start: 0;
-    --padding-end: $spacing-md;
-  }
-}
-
-.qr-card {
-  margin: 0 $spacing-md $spacing-xl;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-lg;
-
-  ion-card-header {
-    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
-    border-bottom: 1px solid $neutral-medium-gray;
+  .contribution-form {
     padding: $spacing-lg;
-  }
+    animation: slideUp 0.5s ease-out;
 
-  ion-card-title {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin: 0;
-  }
-}
+    .form-container {
+      .form-header {
+        text-align: center;
+        margin-bottom: $spacing-2xl;
 
-.qr-content {
-  padding: $spacing-xl;
-}
+        .heart-icon {
+          font-size: 64px;
+          color: $error-color;
+          display: block;
+          margin-bottom: $spacing-md;
+          animation: pulse 2s infinite;
+        }
 
-.amount-display {
-  text-align: center;
-  margin-bottom: $spacing-2xl;
-  padding-bottom: $spacing-lg;
-  border-bottom: 2px solid $neutral-medium-gray;
+        h1 {
+          margin-bottom: $spacing-md;
+          color: $text-primary;
+        }
 
-  span {
-    display: block;
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin-bottom: $spacing-sm;
-    text-transform: uppercase;
-    font-weight: $font-weight-semibold;
-  }
+        .subtitle {
+          color: $text-secondary;
+        }
+      }
 
-  h2 {
-    font-size: $font-size-4xl;
-    font-weight: $font-weight-bold;
-    color: $primary-green;
-    margin: 0;
-  }
-}
+      .form-card {
+        box-shadow: $shadow-md;
+        border-radius: $radius-lg;
+        margin-bottom: $spacing-xl;
 
-.qr-code-box {
-  text-align: center;
-  margin: $spacing-xl 0;
-  padding: $spacing-lg;
-  background: $neutral-light-gray;
-  border-radius: $radius-lg;
+        .card-content {
+          padding: $spacing-lg 0;
+        }
 
-  .qr-label {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin-bottom: $spacing-md;
-    font-weight: $font-weight-semibold;
-  }
+        .form-group {
+          margin-bottom: $spacing-xl;
 
-  .qr-image {
-    max-width: 250px;
-    width: 100%;
-    border-radius: $radius-md;
-    border: 2px solid $neutral-white;
-  }
-}
+          .form-label {
+            display: block;
+            margin-bottom: $spacing-md;
+            font-weight: $font-weight-medium;
+            color: $text-primary;
 
-.payment-details {
-  background: $neutral-light-gray;
-  padding: $spacing-lg;
-  border-radius: $radius-md;
-  margin-bottom: $spacing-lg;
+            .required {
+              color: $error-color;
+            }
+          }
 
-  .detail-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: $spacing-md 0;
-    border-bottom: 1px solid $neutral-medium-gray;
+          .amount-input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid $neutral-medium-gray;
+            border-radius: $radius-md;
+            padding: $spacing-md;
+            background: $neutral-white;
 
-    &:last-child {
-      border-bottom: none;
-    }
+            .currency {
+              font-size: $font-size-2xl;
+              font-weight: $font-weight-bold;
+              color: $primary-green;
+              margin-right: $spacing-sm;
+            }
 
-    .detail-label {
-      font-size: $font-size-sm;
-      color: $text-secondary;
-      font-weight: $font-weight-medium;
-      text-transform: uppercase;
-    }
+            ion-input {
+              flex: 1;
+            }
+          }
 
-    .detail-value {
-      font-weight: $font-weight-bold;
-      color: $text-primary;
-      font-size: $font-size-sm;
-      word-break: break-all;
-    }
+          .form-select {
+            border: 1px solid $neutral-medium-gray;
+            border-radius: $radius-md;
+            padding: $spacing-md;
+            background: $neutral-white;
+          }
 
-    .detail-copy {
-      cursor: pointer;
-      transition: color $transition-base;
+          .payment-methods {
+            ion-segment {
+              background: $neutral-white;
+              border: 1px solid $neutral-medium-gray;
+              border-radius: $radius-md;
+              padding: $spacing-sm;
+            }
+          }
+        }
 
-      &:hover {
-        color: $primary-green;
+        .amount-presets {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: $spacing-md;
+          margin: $spacing-xl 0;
+
+          .preset-btn {
+            padding: $spacing-md;
+            border: 2px solid $neutral-medium-gray;
+            background: $neutral-white;
+            border-radius: $radius-md;
+            font-weight: $font-weight-medium;
+            color: $primary-green;
+            cursor: pointer;
+            transition: all $transition-base;
+
+            &:hover {
+              border-color: $primary-green;
+              background: rgba(46, 125, 50, 0.05);
+            }
+          }
+        }
+
+        .info-box {
+          background: rgba(33, 150, 243, 0.1);
+          color: $info-color;
+          padding: $spacing-md;
+          border-radius: $radius-md;
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+
+          ion-icon {
+            font-size: 20px;
+          }
+        }
+      }
+
+      .pay-btn {
+        --background: #{$primary-green};
+        --color: #{$neutral-white};
+        padding: $spacing-lg;
+        font-weight: $font-weight-bold;
+      }
+
+      .benefits-section {
+        background: rgba(46, 125, 50, 0.05);
+        padding: $spacing-lg;
+        border-radius: $radius-lg;
+
+        h3 {
+          color: $primary-green;
+          margin-bottom: $spacing-md;
+        }
+
+        .benefits-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: $spacing-md;
+            padding: $spacing-md 0;
+            border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+
+            &:last-child { border-bottom: none; }
+
+            ion-icon {
+              color: $success-color;
+              font-size: 20px;
+            }
+          }
+        }
       }
     }
   }
-}
 
-.verify-btn {
-  height: 50px;
-  font-weight: $font-weight-bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: $spacing-md;
-}
-
-.help-section {
-  text-align: center;
-  padding: $spacing-lg;
-  color: $text-secondary;
-  font-size: $font-size-sm;
-
-  a {
-    color: $primary-green;
-    text-decoration: none;
-    font-weight: $font-weight-semibold;
-  }
-}
-
-// ==========================================
-// SUCCESS SCREEN
-// ==========================================
-
-.success-screen {
-  animation: slideInUp $transition-base ease-out;
-  padding: $spacing-xl $spacing-md;
-}
-
-.success-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.success-animation {
-  text-align: center;
-  margin-bottom: $spacing-2xl;
-}
-
-.success-icon {
-  font-size: 120px;
-  color: $success-color;
-  animation: slideInDown $transition-base ease-out;
-}
-
-.success-title {
-  text-align: center;
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin: 0 0 $spacing-sm 0;
-}
-
-.success-subtitle {
-  text-align: center;
-  font-size: $font-size-lg;
-  color: $text-secondary;
-  margin-bottom: $spacing-2xl;
-}
-
-.success-amount {
-  text-align: center;
-  margin-bottom: $spacing-xl;
-
-  span {
-    display: block;
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin-bottom: $spacing-sm;
-    text-transform: uppercase;
-    font-weight: $font-weight-semibold;
-  }
-
-  h2 {
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $success-color;
-    margin: 0;
-  }
-}
-
-.success-message {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(129, 199, 132, 0.05) 100%);
-  border: 1px solid $success-color;
-  margin-bottom: $spacing-xl;
-
-  ion-card-content {
+  .qr-screen {
     padding: $spacing-lg;
-  }
+    animation: slideUp 0.5s ease-out;
 
-  p {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    line-height: $line-height-relaxed;
-    margin: 0 0 $spacing-md 0;
+    .qr-container {
+      .qr-header {
+        margin-bottom: $spacing-lg;
 
-    &:last-child {
-      margin-bottom: 0;
+        .back-btn {
+          --padding-start: 0;
+          --padding-end: 0;
+        }
+      }
+
+      .qr-card {
+        box-shadow: $shadow-md;
+        margin-bottom: $spacing-lg;
+
+        ion-card-header {
+          background: linear-gradient(135deg, #{$primary-green}, #{$secondary-color});
+          color: $neutral-white;
+
+          ion-card-title {
+            color: $neutral-white;
+          }
+        }
+
+        .qr-content {
+          .amount-display {
+            text-align: center;
+            padding: $spacing-xl 0;
+            border-bottom: 1px solid $neutral-medium-gray;
+
+            span {
+              color: $text-secondary;
+              display: block;
+              margin-bottom: $spacing-md;
+            }
+
+            h2 {
+              color: $primary-green;
+              font-size: $font-size-4xl;
+              margin: 0;
+            }
+          }
+
+          .qr-code-box {
+            text-align: center;
+            padding: $spacing-2xl $spacing-lg;
+
+            .qr-label {
+              color: $text-secondary;
+              margin-bottom: $spacing-md;
+            }
+
+            .qr-image {
+              max-width: 250px;
+              width: 100%;
+              border: 3px solid $primary-green;
+              border-radius: $radius-lg;
+              padding: $spacing-md;
+              background: $neutral-white;
+            }
+          }
+
+          .payment-details {
+            padding: $spacing-lg 0;
+            border-top: 1px solid $neutral-medium-gray;
+
+            .detail-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: $spacing-md 0;
+              border-bottom: 1px solid $neutral-light-gray;
+
+              &:last-child { border-bottom: none; }
+
+              .detail-label {
+                color: $text-secondary;
+                font-size: $font-size-sm;
+              }
+
+              .detail-value {
+                font-weight: $font-weight-medium;
+                color: $text-primary;
+
+                &.detail-copy {
+                  font-family: $font-family-mono;
+                  background: rgba(46, 125, 50, 0.1);
+                  padding: $spacing-sm $spacing-md;
+                  border-radius: $radius-md;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+
+          .verify-btn {
+            --background: #{$success-color};
+            margin-bottom: $spacing-md;
+          }
+        }
+      }
+
+      .help-section {
+        text-align: center;
+        padding: $spacing-lg;
+        background: rgba(255, 152, 0, 0.1);
+        border-radius: $radius-md;
+        color: $warning-color;
+
+        p { margin: 0; }
+
+        a {
+          color: $warning-color;
+          text-decoration: none;
+          font-weight: $font-weight-medium;
+        }
+      }
     }
-
-    strong {
-      color: $success-color;
-      font-weight: $font-weight-bold;
-    }
-  }
-}
-
-.success-actions {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  margin-bottom: $spacing-xl;
-
-  .download-btn {
-    height: 50px;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-}
-
-.social-actions {
-  text-align: center;
-  padding: $spacing-lg 0;
-  border-top: 1px solid $neutral-medium-gray;
-
-  p {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin-bottom: $spacing-md;
-    text-transform: uppercase;
-    font-weight: $font-weight-semibold;
-  }
-
-  .social-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-md $spacing-lg;
-    border: 2px solid $neutral-medium-gray;
-    background: $neutral-white;
-    border-radius: $radius-full;
-    cursor: pointer;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
-    transition: all $transition-base;
-
-    &:hover {
-      border-color: $primary-green;
-      color: $primary-green;
-      background-color: rgba(46, 125, 50, 0.05);
-    }
-
-    ion-icon {
-      font-size: 18px;
-    }
-  }
-}
-
-// Responsive Design
-@media (max-width: 576px) {
-  .form-container {
-    padding: $spacing-lg $spacing-md;
-  }
-
-  .amount-presets {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .success-screen {
-    padding: $spacing-lg $spacing-md;
+    padding: $spacing-lg;
+    animation: slideUp 0.5s ease-out;
+
+    .success-container {
+      text-align: center;
+
+      .success-animation {
+        margin-bottom: $spacing-2xl;
+      }
+
+      .success-icon {
+        font-size: 120px;
+        color: $success-color;
+        animation: bounce 0.6s ease-in;
+      }
+
+      .success-title {
+        font-size: $font-size-3xl;
+        color: $primary-green;
+        margin-bottom: $spacing-md;
+      }
+
+      .success-subtitle {
+        color: $text-secondary;
+        margin-bottom: $spacing-2xl;
+      }
+
+      .success-amount {
+        background: rgba(46, 125, 50, 0.05);
+        padding: $spacing-2xl;
+        border-radius: $radius-lg;
+        margin-bottom: $spacing-xl;
+
+        span {
+          display: block;
+          color: $text-secondary;
+          margin-bottom: $spacing-md;
+        }
+
+        h2 {
+          color: $primary-green;
+          font-size: $font-size-4xl;
+          margin: 0;
+        }
+      }
+
+      .success-message {
+        margin-bottom: $spacing-xl;
+        background: rgba(76, 175, 80, 0.1);
+        border-left: 4px solid $success-color;
+
+        p {
+          margin: $spacing-md 0;
+
+          &:first-child { margin-top: 0; }
+          &:last-child { margin-bottom: 0; }
+        }
+      }
+
+      .success-actions {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        margin-bottom: $spacing-2xl;
+
+        .download-btn {
+          --background: #{$primary-green};
+          --color: #{$neutral-white};
+        }
+      }
+
+      .social-actions {
+        padding: $spacing-lg;
+        background: $neutral-white;
+        border-radius: $radius-lg;
+        box-shadow: $shadow-sm;
+
+        p {
+          color: $text-secondary;
+          margin-bottom: $spacing-md;
+        }
+
+        .social-btn {
+          --padding-start: $spacing-lg;
+          --padding-end: $spacing-lg;
+          margin: 0 $spacing-sm;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes bounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 576px) {
+  .contribution-content {
+    .donation-stats .stats-banner .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contribution-form .form-container .form-card .amount-presets {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }

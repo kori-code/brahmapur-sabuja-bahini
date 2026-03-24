@@ -6,6 +6,27 @@
 
 <ion-content class="contribution-content">
   
+  <!-- Donation Statistics -->
+  <div *ngIf="!showQrScreen && !showSuccessScreen" class="donation-stats">
+    <div class="stats-banner">
+      <h2>Together We're Making Impact</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">₹{{donationStats?.totalDonations | number}}</div>
+          <div class="stat-label">Total Raised</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{donationStats?.totalDonors}}</div>
+          <div class="stat-label">Donors</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">₹{{donationStats?.thisMonthDonations | number}}</div>
+          <div class="stat-label">This Month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Initial Form Screen -->
   <div *ngIf="!showQrScreen && !showSuccessScreen" class="contribution-form animate-slide-up">
     <div class="form-container">
@@ -45,6 +66,26 @@
                     (click)="paymentAmount = amount">
               ₹{{amount}}
             </button>
+          </div>
+
+          <!-- Payment Method Selection -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Payment Method</span>
+              <span class="required">*</span>
+            </label>
+            <div class="payment-methods">
+              <ion-segment [(ngModel)]="paymentMethod" color="success">
+                <ion-segment-button value="phonepe" layout="icon-top">
+                  <ion-label>PhonePe</ion-label>
+                  <ion-icon name="phone-portrait-outline"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="upi" layout="icon-top">
+                  <ion-label>Other UPI</ion-label>
+                  <ion-icon name="wallet-outline"></ion-icon>
+                </ion-segment-button>
+              </ion-segment>
+            </div>
           </div>
 
           <!-- Purpose Selection -->
