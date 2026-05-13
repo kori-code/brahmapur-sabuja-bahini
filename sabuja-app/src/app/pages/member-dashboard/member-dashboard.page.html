@@ -21,9 +21,9 @@
         <div class="profile-info">
           <h1 class="member-name">{{ currentMember.name }}</h1>
           <p class="member-id">ID: {{ currentMember.memberId }}</p>
-          <span class="status-badge" [color]="getStatusColor(subscriptionStatus)">
+          <ion-badge [color]="getStatusColor(subscriptionStatus)">
             {{ subscriptionStatus }}
-          </span>
+          </ion-badge>
         </div>
       </div>
     </div>
