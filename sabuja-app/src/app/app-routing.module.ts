@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
   {
+    path: 'member-dashboard',
+    loadChildren: () => import('./pages/member-dashboard/member-dashboard.module').then( m => m.MemberDashboardPageModule)
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule),
     canActivate: [SuperadminGuard]

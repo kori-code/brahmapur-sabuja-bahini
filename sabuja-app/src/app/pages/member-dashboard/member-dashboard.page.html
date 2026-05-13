@@ -1,0 +1,218 @@
+<ion-header [translucent]="true" class="header-modern">
+  <ion-toolbar class="toolbar-gradient">
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="light">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="member-dashboard-content" [fullscreen]="true">
+  
+  <!-- Member Profile Card -->
+  <div *ngIf="currentMember" class="profile-section">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar" [style.background]="'linear-gradient(135deg, #2E7D32 0%, #66BB6A 100%)'">
+          <span class="avatar-initials">{{ getInitials(currentMember.name) }}</span>
+        </div>
+        <div class="profile-info">
+          <h1 class="member-name">{{ currentMember.name }}</h1>
+          <p class="member-id">ID: {{ currentMember.memberId }}</p>
+          <span class="status-badge" [color]="getStatusColor(subscriptionStatus)">
+            {{ subscriptionStatus }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon success">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">Total Paid</p>
+        <p class="stat-value">₹{{ totalPaid }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon warning" *ngIf="monthsDue > 0">
+        <ion-icon name="alert-circle"></ion-icon>
+      </div>
+      <div class="stat-icon success" *ngIf="monthsDue === 0">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">Amount Due</p>
+        <p class="stat-value">₹{{ totalDue }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon info">
+        <ion-icon name="calendar"></ion-icon>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">Months Due</p>
+        <p class="stat-value">{{ monthsDue }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segment Tabs -->
+  <div class="segment-container">
+    <ion-segment [(ngModel)]="segmentValue" color="success" class="custom-segment">
+      <ion-segment-button value="overview" layout="label">
+        <ion-label>Overview</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="payments" layout="label">
+        <ion-label>Payments</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="profile" layout="label">
+        <ion-label>Profile</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Overview Tab -->
+  <div *ngIf="segmentValue === 'overview'" class="tab-content">
+    <!-- Subscription Status -->
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Subscription Status</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="subscription-detail">
+          <span>Status:</span>
+          <ion-badge [color]="getStatusColor(subscriptionStatus)">{{ subscriptionStatus }}</ion-badge>
+        </div>
+        <div class="subscription-detail">
+          <span>Monthly Fee:</span>
+          <span class="amount">₹{{ MONTHLY_FEE }}</span>
+        </div>
+        <div class="subscription-detail" *ngIf="lastPaymentDate">
+          <span>Last Payment:</span>
+          <span>{{ lastPaymentDate }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Activity Summary -->
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Organization Info</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Brahmapur Sabuja Bahini</strong></p>
+        <p class="text-muted">Working towards a greener Brahmapur through environmental conservation and community initiatives.</p>
+        <p class="text-muted"><small>Registered: GJM 8937-83 of 2019-2020</small></p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Payment Due Alert -->
+    <ion-card class="alert-card" *ngIf="monthsDue > 0">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="warning" color="warning"></ion-icon>
+          Payment Due
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>You have <strong>{{ monthsDue }} month(s)</strong> of membership fees due.</p>
+        <p class="amount">Total Due: <strong>₹{{ totalDue }}</strong></p>
+        <ion-button expand="block" color="warning" (click)="goToPayments()" class="pay-button">
+          <ion-icon slot="start" name="card-outline"></ion-icon>
+          Pay Now
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Payments Tab -->
+  <div *ngIf="segmentValue === 'payments'" class="tab-content">
+    <ion-card *ngIf="recentPayments.length > 0; else noPayments" class="payments-card">
+      <ion-card-header>
+        <ion-card-title>Recent Payment History</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let payment of recentPayments" class="payment-item">
+          <div class="payment-main">
+            <div class="payment-info">
+              <span class="payment-purpose">{{ payment.purpose }}</span>
+              <span class="payment-date">{{ payment.date | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="payment-status">
+              <ion-badge [color]="payment.status === 'Verified' ? 'success' : 'warning'">
+                {{ payment.status }}
+              </ion-badge>
+              <span class="payment-amount">₹{{ payment.amount }}</span>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ng-template #noPayments>
+      <div class="empty-state">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <h3>No Payments Yet</h3>
+        <p>Your payment history will appear here</p>
+      </div>
+    </ng-template>
+
+    <ion-button expand="block" color="success" (click)="goToPayments()" class="make-payment-btn">
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+      Make Payment
+    </ion-button>
+  </div>
+
+  <!-- Profile Tab -->
+  <div *ngIf="segmentValue === 'profile' && currentMember" class="tab-content">
+    <ion-card class="profile-info-card">
+      <ion-card-header>
+        <ion-card-title>Personal Information</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="profile-field">
+          <span class="label">Full Name</span>
+          <span class="value">{{ currentMember.name }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Member ID</span>
+          <span class="value">{{ currentMember.memberId }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Phone</span>
+          <span class="value">{{ currentMember.phone }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Address</span>
+          <span class="value">{{ currentMember.address }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Aadhar/PAN</span>
+          <span class="value">{{ currentMember.aadharPan }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Email</span>
+          <span class="value">{{ currentMember.email || 'Not provided' }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Membership Type</span>
+          <span class="value">{{ currentMember.membershipType }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Joined Date</span>
+          <span class="value">{{ currentMember.createdAt | date:'MMM dd, yyyy' }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

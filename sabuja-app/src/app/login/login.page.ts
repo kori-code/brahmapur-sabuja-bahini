@@ -93,8 +93,18 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     try {
-      // Check if super admin
+      // Check if super admin (hardcoded credentials as fallback)
       if (this.email === this.superAdminUser && this.password === this.superAdminPassword) {
+        // Create/sign in admin user in Firebase for guard purposes
+        try {
+          await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
+        } catch (firebaseError: any) {
+          // If Firebase auth fails (user doesn't exist), create the account
+          if (firebaseError.code === 'auth/user-not-found') {
+            await this.afAuth.createUserWithEmailAndPassword(this.email, this.password);
+          }
+        }
+        
         await loading.dismiss();
         this.router.navigate(['/admin']);
         return;
