@@ -266,3 +266,107 @@
     align-items: flex-start;
   }
 }
+
+// Login Type Toggle
+.login-type-toggle {
+  margin-bottom: $spacing-lg;
+
+  ion-segment {
+    --background: $neutral-light-gray;
+    border-radius: $radius-md;
+    padding: $spacing-sm;
+
+    ion-segment-button {
+      border-radius: $radius-md;
+      min-height: 50px;
+      text-transform: capitalize;
+    }
+  }
+}
+
+// Info Section
+.info-section {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background-color: rgba(46, 125, 50, 0.08);
+  border-radius: $radius-md;
+  border-left: 4px solid $primary-green;
+  margin-bottom: $spacing-lg;
+
+  ion-icon {
+    color: $primary-green;
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  div {
+    flex: 1;
+  }
+
+  p {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: 1.5;
+
+    strong {
+      color: $text-primary;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+// Password Toggle Button
+.password-toggle {
+  --color: $primary-green;
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+// Help Section
+.help-section {
+  text-align: center;
+  margin-top: $spacing-lg;
+  padding: $spacing-md;
+  background-color: $neutral-light-gray;
+  border-radius: $radius-md;
+
+  .help-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: 1.6;
+
+    ion-icon {
+      color: $primary-green;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    strong {
+      color: $text-primary;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn $transition-base ease-in;
+}

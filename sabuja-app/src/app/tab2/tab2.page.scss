@@ -413,6 +413,163 @@
       }
     }
   }
+
+  // Pending Payment Screen
+  .pending-screen {
+    padding: $spacing-lg;
+
+    .pending-container {
+      text-align: center;
+
+      .pending-animation {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto $spacing-2xl;
+
+        .pending-spinner {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border: 4px solid rgba(46, 125, 50, 0.1);
+          border-top: 4px solid $primary-green;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        .pending-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 60px;
+          color: $warning-color;
+          animation: pulse 2s ease-in-out infinite;
+        }
+      }
+
+      .pending-title {
+        font-size: $font-size-3xl;
+        color: $text-primary;
+        margin-bottom: $spacing-md;
+      }
+
+      .pending-subtitle {
+        color: $text-secondary;
+        margin-bottom: $spacing-2xl;
+      }
+
+      .pending-details-card {
+        margin-bottom: $spacing-xl;
+        background: rgba(255, 193, 7, 0.05);
+        border-left: 4px solid $warning-color;
+
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-md 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .detail-label {
+            color: $text-secondary;
+            font-size: $font-size-sm;
+          }
+
+          .detail-value {
+            color: $text-primary;
+            font-weight: $font-weight-semibold;
+
+            &.status-pending {
+              display: flex;
+              align-items: center;
+              gap: $spacing-sm;
+              color: $warning-color;
+
+              ion-icon {
+                animation: spin 2s linear infinite;
+              }
+            }
+          }
+        }
+      }
+
+      .info-message-card {
+        margin-bottom: $spacing-xl;
+        background: rgba(33, 150, 243, 0.05);
+        border-left: 4px solid #2196F3;
+
+        .message-icon {
+          font-size: 48px;
+          color: #2196F3;
+          margin-bottom: $spacing-md;
+
+          ion-icon {
+            display: block;
+          }
+        }
+
+        p {
+          margin: $spacing-md 0;
+          color: $text-secondary;
+          line-height: 1.6;
+
+          &:first-child {
+            margin-top: 0;
+          }
+
+          strong {
+            color: $text-primary;
+          }
+        }
+      }
+
+      .pending-actions {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        margin-bottom: $spacing-2xl;
+
+        .check-status-btn {
+          --background: #{$primary-green};
+          --color: #{$neutral-white};
+        }
+      }
+
+      .help-section {
+        padding: $spacing-lg;
+        background: rgba(244, 67, 54, 0.08);
+        border-radius: $radius-md;
+        color: #D32F2F;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 @media (max-width: 576px) {

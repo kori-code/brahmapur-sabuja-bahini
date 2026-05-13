@@ -1,0 +1,353 @@
+@import "../../../theme/variables.scss";
+
+.first-login-content {
+  --ion-background-color: #{$neutral-light-gray};
+  background: linear-gradient(135deg, #{$neutral-light-gray} 0%, #ffffff 100%);
+
+  .setup-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: $spacing-lg;
+  }
+
+  // Step Indicator
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-3xl;
+    padding: $spacing-xl;
+    background: $neutral-white;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-sm;
+      position: relative;
+
+      span,
+      ion-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: $neutral-light-gray;
+        color: $text-secondary;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+      }
+
+      p {
+        font-size: $font-size-xs;
+        color: $text-secondary;
+        margin: 0;
+        text-align: center;
+      }
+
+      &.active {
+        span, ion-icon {
+          background: $primary-green;
+          color: $neutral-white;
+        }
+
+        p {
+          color: $primary-green;
+          font-weight: $font-weight-bold;
+        }
+      }
+
+      &.completed {
+        span, ion-icon {
+          background: #4CAF50;
+          color: $neutral-white;
+        }
+
+        p {
+          color: #4CAF50;
+        }
+      }
+    }
+
+    .step-connector {
+      width: 60px;
+      height: 3px;
+      background: $neutral-light-gray;
+      transition: all $transition-base;
+
+      &.completed {
+        background: #4CAF50;
+      }
+    }
+  }
+
+  // Welcome Section
+  .welcome-section {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+    animation: slideDown $transition-base ease-out;
+
+    .welcome-icon {
+      font-size: 80px;
+      color: $primary-green;
+      margin-bottom: $spacing-lg;
+      display: block;
+    }
+
+    h1 {
+      color: $primary-green;
+      margin-bottom: $spacing-md;
+      font-size: $font-size-3xl;
+    }
+
+    .subtitle {
+      color: $text-secondary;
+      font-size: $font-size-base;
+      margin: 0;
+    }
+  }
+
+  // Setup Steps
+  .setup-step {
+    animation: slideUp $transition-base ease-out;
+
+    .step-card {
+      box-shadow: $shadow-md;
+      border-radius: $radius-lg;
+      overflow: hidden;
+
+      ion-card-header {
+        background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
+        color: $neutral-white;
+        padding: $spacing-2xl $spacing-lg;
+
+        ion-card-title {
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+          color: $neutral-white;
+          margin-bottom: $spacing-md;
+          font-size: $font-size-lg;
+
+          ion-icon {
+            font-size: 28px;
+          }
+        }
+
+        .step-description {
+          margin: 0;
+          color: rgba(255, 255, 255, 0.9);
+          font-size: $font-size-sm;
+        }
+      }
+
+      .step-content {
+        padding: $spacing-2xl $spacing-lg !important;
+      }
+    }
+
+    .form-group {
+      margin-bottom: $spacing-2xl;
+
+      .form-label {
+        display: block;
+        margin-bottom: $spacing-md;
+        font-weight: $font-weight-medium;
+        color: $text-primary;
+        font-size: $font-size-sm;
+      }
+
+      .form-item {
+        --background: $neutral-light-gray;
+        --inner-padding-start: $spacing-md;
+        --inner-padding-end: $spacing-md;
+        border-radius: $radius-md;
+        padding: 0;
+        transition: all $transition-base;
+
+        &:focus-within {
+          --background: rgba(46, 125, 50, 0.05);
+          box-shadow: inset 0 0 0 2px $primary-green-light;
+        }
+
+        ion-icon {
+          color: $primary-green;
+          margin-right: $spacing-md;
+        }
+
+        ion-input {
+          font-size: $font-size-base;
+          color: $text-primary;
+        }
+
+        ion-button {
+          --color: $primary-green;
+        }
+      }
+
+      .password-hint {
+        display: block;
+        margin-top: $spacing-sm;
+        color: $text-tertiary;
+        font-size: $font-size-xs;
+      }
+    }
+
+    .info-box {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-lg;
+      background: rgba(46, 125, 50, 0.08);
+      border-radius: $radius-md;
+      border-left: 4px solid $primary-green;
+      margin-bottom: $spacing-2xl;
+
+      ion-icon {
+        color: $primary-green;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+
+      span {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        line-height: 1.5;
+      }
+    }
+
+    .action-btn {
+      --background: #{$primary-green};
+      --color: #{$neutral-white};
+      height: 50px;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-md;
+      box-shadow: $shadow-md;
+      transition: all $transition-base;
+
+      &:hover:not(:disabled) {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  // Complete Step
+  .setup-complete {
+    text-align: center;
+    padding: $spacing-3xl $spacing-lg;
+    animation: slideUp $transition-base ease-out;
+
+    .success-animation {
+      margin-bottom: $spacing-3xl;
+    }
+
+    .success-icon {
+      font-size: 120px;
+      color: #4CAF50;
+      display: block;
+      margin-bottom: $spacing-lg;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    h2 {
+      color: $primary-green;
+      margin-bottom: $spacing-md;
+      font-size: $font-size-3xl;
+    }
+
+    p {
+      color: $text-secondary;
+      margin-bottom: $spacing-2xl;
+      font-size: $font-size-base;
+    }
+
+    ion-spinner {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  // Animations
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .first-login-content {
+    .setup-container {
+      padding: $spacing-md;
+    }
+
+    .step-indicator {
+      gap: $spacing-sm;
+      padding: $spacing-lg;
+
+      .step {
+        span, ion-icon {
+          width: 36px;
+          height: 36px;
+          font-size: $font-size-base;
+        }
+
+        p {
+          font-size: $font-size-xs;
+        }
+      }
+
+      .step-connector {
+        width: 40px;
+      }
+    }
+
+    .welcome-section {
+      .welcome-icon {
+        font-size: 60px;
+      }
+
+      h1 {
+        font-size: $font-size-2xl;
+      }
+    }
+  }
+}

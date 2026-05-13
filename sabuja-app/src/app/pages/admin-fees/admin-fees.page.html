@@ -1,0 +1,230 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Membership Fees</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportReport()">
+        <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="admin-fees-content">
+  
+  <!-- Statistics Overview -->
+  <div class="stats-overview">
+    <ion-card class="stat-card">
+      <ion-card-content>
+        <div class="stat-value">₹{{totalRevenue}}</div>
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-sublabel">$(monthlyTarget - totalRevenue | number}}) due</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="stat-card">
+      <ion-card-content>
+        <div class="stat-value">{{pendingPayments.length}}</div>
+        <div class="stat-label">Pending Approval</div>
+        <div class="stat-sublabel">₹{{pendingPayments | map:'amount' | sum}} awaiting</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="stat-card">
+      <ion-card-content>
+        <div class="stat-value">{{(getProgressPercentage() | number:'1.0-0')}%</div>
+        <div class="stat-label">Monthly Target</div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width]="(getProgressPercentage()) + '%'"></div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Tabs -->
+  <ion-segment [(ngModel)]="selectedTab" (ionChange)="selectedTab = $event.detail.value!" color="success">
+    <ion-segment-button value="pending" layout="icon-top">
+      <ion-label>Pending <ion-badge color="warning">{{pendingPayments.length}}</ion-badge></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="verified" layout="icon-top">
+      <ion-label>Verified<ion-badge color="success">{{verifiedPayments.length}}</ion-badge></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="rejected" layout="icon-top">
+      <ion-label>Rejected<ion-badge color="danger">{{rejectedPayments.length}}</ion-badge></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="members" layout="icon-top">
+      <ion-label>Members</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Pending Payments Tab -->
+  <div *ngIf="selectedTab === 'pending'" class="tab-content">
+    <div *ngIf="pendingPayments.length > 0">
+      <ion-card class="payment-card pending" *ngFor="let payment of pendingPayments">
+        <ion-card-content>
+          <div class="payment-header">
+            <div class="payment-info">
+              <h3>{{getMemberDetails(payment.memberId)?.name}}</h3>
+              <p class="member-id">ID: {{payment.memberId}}</p>
+              <p class="transaction-id">TXN: {{payment.transactionId}}</p>
+            </div>
+            <div class="payment-amount">
+              ₹{{payment.amount}}
+            </div>
+          </div>
+
+          <div class="payment-details">
+            <div class="detail">
+              <span class="label">Purpose:</span>
+              <span class="value">{{payment.purpose}}</span>
+            </div>
+            <div class="detail">
+              <span class="label">Date:</span>
+              <span class="value">{{payment.date | date:'MMM dd, yyyy'}}</span>
+            </div>
+            <div class="detail">
+              <span class="label">Method:</span>
+              <span class="value">{{payment.paymentMethod}}</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button 
+              expand="block" 
+              color="success"
+              shape="round"
+              (click)="approvePayment(payment)"
+              size="small">
+              <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+              Approve
+            </ion-button>
+            <ion-button 
+              expand="block" 
+              color="danger"
+              fill="outline"
+              shape="round"
+              (click)="rejectPaymentWithReason(payment)"
+              size="small">
+              <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+              Reject
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="pendingPayments.length === 0" class="empty-state">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <h3>No Pending Payments</h3>
+      <p>All payments have been reviewed</p>
+    </div>
+  </div>
+
+  <!-- Verified Payments Tab -->
+  <div *ngIf="selectedTab === 'verified'" class="tab-content">
+    <div *ngIf="verifiedPayments.length > 0">
+      <ion-card class="payment-card verified" *ngFor="let payment of verifiedPayments">
+        <ion-card-content>
+          <div class="payment-header">
+            <div class="payment-info">
+              <h3>{{getMemberDetails(payment.memberId)?.name}}</h3>
+              <p class="member-id">ID: {{payment.memberId}}</p>
+              <p class="transaction-id">TXN: {{payment.transactionId}}</p>
+            </div>
+            <div class="payment-amount verified">
+              ₹{{payment.amount}}
+            </div>
+          </div>
+
+          <div class="payment-details">
+            <div class="detail">
+              <span class="label">Purpose:</span>
+              <span class="value">{{payment.purpose}}</span>
+            </div>
+            <div class="detail">
+              <span class="label">Approved:</span>
+              <span class="value">{{payment.approvalDate | date:'MMM dd, yyyy'}}</span>
+            </div>
+            <div class="detail">
+              <span class="label">By:</span>
+              <span class="value">{{payment.approvedBy}}</span>
+            </div>
+          </div>
+
+          <span class="status-badge verified">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            Verified
+          </span>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="verifiedPayments.length === 0" class="empty-state">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <h3>No Verified Payments</h3>
+      <p>No approved payments yet</p>
+    </div>
+  </div>
+
+  <!-- Rejected Payments Tab -->
+  <div *ngIf="selectedTab === 'rejected'" class="tab-content">
+    <div *ngIf="rejectedPayments.length > 0">
+      <ion-card class="payment-card rejected" *ngFor="let payment of rejectedPayments">
+        <ion-card-content>
+          <div class="payment-header">
+            <div class="payment-info">
+              <h3>{{getMemberDetails(payment.memberId)?.name}}</h3>
+              <p class="member-id">ID: {{payment.memberId}}</p>
+              <p class="transaction-id">TXN: {{payment.transactionId}}</p>
+            </div>
+            <div class="payment-amount">
+              ₹{{payment.amount}}
+            </div>
+          </div>
+
+          <div class="payment-details">
+            <div class="detail">
+              <span class="label">Rejection Reason:</span>
+              <span class="value">{{payment.notes}}</span>
+            </div>
+          </div>
+
+          <span class="status-badge rejected">
+            <ion-icon name="close-circle"></ion-icon>
+            Rejected
+          </span>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="rejectedPayments.length === 0" class="empty-state">
+      <ion-icon name="happy-outline"></ion-icon>
+      <h3>No Rejected Payments</h3>
+      <p>Great! No payments have been rejected</p>
+    </div>
+  </div>
+
+  <!-- Members Tab -->
+  <div *ngIf="selectedTab === 'members'" class="tab-content members-list">
+    <ion-card class="member-card" *ngFor="let member of allMembers">
+      <ion-card-content>
+        <div class="member-info">
+          <h3>{{member.name}}</h3>
+          <p class="member-type">{{member.membershipType}} - {{member.address}}</p>
+          <p class="member-phone">{{member.phone}}</p>
+        </div>
+
+        <div class="member-dues">
+          <span class="dues-label">Monthly Due:</span>
+          <span class="dues-amount">₹200</span>
+        </div>
+
+        <div class="member-status">
+          <span [ngClass]="'status-' + (member.subscriptionStatus | lowercase)">
+            {{member.subscriptionStatus}}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

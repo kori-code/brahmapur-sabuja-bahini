@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>About Us</ion-title>
+    <ion-title>Our Team - Members</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="currentUser" routerLink="/admin" color="success">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
@@ -9,7 +9,154 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="about-content">
+<ion-content [fullscreen]="true" class="team-content">
+  
+  <!-- Header Section -->
+  <div class="team-header-section">
+    <div class="header-banner">
+      <h1>Brahmapur Sabuja Bahini Members</h1>
+      <p class="subtitle">Total Members: <strong>{{totalMembers}}</strong></p>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <ion-item lines="none" class="search-item">
+        <ion-icon slot="start" name="search-outline"></ion-icon>
+        <ion-input 
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Search by name, phone, or address"
+          clearInput>
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <ion-button 
+        [fill]="selectedFilter === 'all' ? 'solid' : 'outline'"
+        color="success"
+        shape="round"
+        (click)="selectedFilter = 'all'; onFilterChange()"
+        size="sm">
+        All ({{allMembers.length}})
+      </ion-button>
+      <ion-button 
+        [fill]="selectedFilter === 'regular' ? 'solid' : 'outline'"
+        color="success"
+        shape="round"
+        (click)="selectedFilter = 'regular'; onFilterChange()"
+        size="sm">
+        Regular
+      </ion-button>
+      <ion-button 
+        [fill]="selectedFilter === 'volunteer' ? 'solid' : 'outline'"
+        color="success"
+        shape="round"
+        (click)="selectedFilter = 'volunteer'; onFilterChange()"
+        size="sm">
+        Volunteer
+      </ion-button>
+      <ion-button 
+        [fill]="selectedFilter === 'patron' ? 'solid' : 'outline'"
+        color="success"
+        shape="round"
+        (click)="selectedFilter = 'patron'; onFilterChange()"
+        size="sm">
+        Patron
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Members Grid -->
+  <div class="members-grid">
+    <ion-card 
+      class="member-card animate-slide-up" 
+      *ngFor="let member of displayedMembers; let i = index"
+      [style.--member-color]="getMemberColor(member.memberId)">
+      
+      <!-- Member Header with Avatar -->
+      <div class="member-card-header" [style.background-color]="getMemberColor(member.memberId)">
+        <div class="member-avatar">
+          {{getInitials(member.name)}}
+        </div>
+        <div class="member-badge" [color]="getMembershipTypeColor(member.membershipType)">
+          <ion-icon [name]="getMembershipTypeIcon(member.membershipType)"></ion-icon>
+          {{member.membershipType}}
+        </div>
+      </div>
+
+      <!-- Member Info -->
+      <ion-card-content class="member-details">
+        <h3 class="member-name">{{member.name}}</h3>
+        
+        <div class="member-info-row">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>{{member.phone}}</span>
+        </div>
+
+        <div class="member-info-row">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>{{member.address}}</span>
+        </div>
+
+        <div class="member-info-row">
+          <ion-icon name="id-card-outline"></ion-icon>
+          <span class="aadhar-pan">{{member.aadharPan}}</span>
+        </div>
+
+        <!-- Membership Status -->
+        <div class="subscription-status" *ngIf="member.subscriptionStatus">
+          <span [ngClass]="'status-' + member.subscriptionStatus.toLowerCase()">
+            {{member.subscriptionStatus}}
+          </span>
+        </div>
+
+        <!-- Member ID -->
+        <div class="member-meta">
+          <small>Member ID: {{member.memberId}}</small>
+          <small *ngIf="member.createdAt">
+            Joined: {{member.createdAt | date:'MMM dd, yyyy'}}
+          </small>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- No Results Message -->
+  <div *ngIf="displayedMembers.length === 0" class="no-results">
+    <ion-icon name="search-outline"></ion-icon>
+    <h3>No Members Found</h3>
+    <p *ngIf="searchTerm">No members match your search criteria</p>
+    <p *ngIf="!searchTerm">No members available for this category</p>
+  </div>
+
+  <!-- Organization Info Footer -->
+  <div class="org-info-footer">
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>About Brahmapur Sabuja Bahini</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Registered:</strong> GJM 8937-83 of 2019-2020</p>
+        <p><strong>Address:</strong> Ganesh Nagar 5th Lane, Near Old Berhampur High School, BRAHMAPUR- 760 002 (Gm.) Odisha</p>
+        <div class="contact-info">
+          <p><strong>Contact Persons:</strong></p>
+          <ul>
+            <li>Sibaram: 9777377039</li>
+            <li>Dilip: 7789092442</li>
+            <li>Susil: 9090915747</li>
+          </ul>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
   
   <!-- About Section -->
   <div class="about-section">

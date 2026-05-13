@@ -1,0 +1,425 @@
+@import "../../../theme/variables.scss";
+
+.member-profile-content {
+  --ion-background-color: #{$neutral-light-gray};
+  background: linear-gradient(135deg, #{$neutral-light-gray} 0%, #ffffff 100%);
+
+  // Profile Header
+  .profile-header {
+    background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
+    color: $neutral-white;
+    padding: $spacing-2xl $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-3xl;
+      font-weight: $font-weight-bold;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      flex: 1;
+
+      h1 {
+        color: $neutral-white;
+        margin-bottom: $spacing-md;
+        font-size: $font-size-2xl;
+      }
+
+      .membership-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-sm;
+        background: rgba(255, 255, 255, 0.2);
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-full;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $neutral-white;
+      }
+    }
+  }
+
+  // Status Overview
+  .status-overview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    margin: -$spacing-lg $spacing-lg $spacing-lg;
+    position: relative;
+    z-index: 10;
+
+    .status-card {
+      box-shadow: $shadow-md;
+      border-radius: $radius-lg;
+
+      ion-card-content {
+        padding: $spacing-lg !important;
+
+        .status-item {
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+
+          ion-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+          }
+
+          small {
+            display: block;
+            color: $text-secondary;
+            font-size: $font-size-xs;
+          }
+
+          h3 {
+            margin: $spacing-sm 0 0;
+            color: $text-primary;
+            font-size: $font-size-lg;
+          }
+        }
+      }
+    }
+  }
+
+  // Dues Section
+  .dues-section {
+    padding: 0 $spacing-lg;
+
+    .dues-card {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.1));
+      border-left: 4px solid #FF9800;
+      box-shadow: $shadow-md;
+
+      ion-card-content {
+        padding: $spacing-lg !important;
+
+        .dues-header {
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+          margin-bottom: $spacing-lg;
+          font-weight: $font-weight-bold;
+          color: #F57C00;
+
+          ion-icon {
+            font-size: 24px;
+          }
+        }
+
+        .dues-details {
+          margin-bottom: $spacing-lg;
+
+          .dues-months {
+            font-size: $font-size-lg;
+            color: #F57C00;
+            margin-bottom: $spacing-sm;
+            font-weight: $font-weight-semibold;
+          }
+
+          .dues-amount {
+            font-size: $font-size-2xl;
+            color: #D32F2F;
+            margin: 0;
+            font-weight: $font-weight-bold;
+          }
+        }
+      }
+    }
+  }
+
+  // Info Card
+  .info-card {
+    margin: $spacing-lg;
+    box-shadow: $shadow-sm;
+
+    ion-card-header {
+      background: rgba(46, 125, 50, 0.05);
+      border-bottom: 2px solid $primary-green;
+
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        color: $primary-green;
+        margin-bottom: 0;
+
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .info-content {
+      padding: $spacing-lg 0 !important;
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-md $spacing-lg;
+        border-bottom: 1px solid $neutral-light-gray;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .label {
+          font-weight: $font-weight-medium;
+          color: $text-secondary;
+          font-size: $font-size-sm;
+        }
+
+        .value {
+          color: $text-primary;
+          font-weight: $font-weight-medium;
+          text-align: right;
+        }
+
+        &.email-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .email-edit {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            flex: 1;
+            margin-left: $spacing-lg;
+
+            ion-input {
+              flex: 1;
+              border: 1px solid $primary-green;
+              border-radius: $radius-md;
+              padding: $spacing-sm;
+              --padding-start: $spacing-md;
+              --padding-end: $spacing-md;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // History Card
+  .history-card {
+    margin: $spacing-lg;
+    box-shadow: $shadow-sm;
+
+    ion-card-header {
+      background: rgba(46, 125, 50, 0.05);
+      border-bottom: 2px solid $primary-green;
+
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        color: $primary-green;
+        margin-bottom: 0;
+
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .history-content {
+      padding: $spacing-lg !important;
+
+      .payment-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-lg;
+        background: $neutral-light-gray;
+        border-radius: $radius-md;
+        margin-bottom: $spacing-md;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .payment-info {
+          flex: 1;
+
+          h4 {
+            margin: 0 0 $spacing-sm;
+            color: $text-primary;
+            font-size: $font-size-base;
+          }
+
+          .payment-date {
+            margin: 0 0 $spacing-sm;
+            color: $text-secondary;
+            font-size: $font-size-xs;
+          }
+
+          .payment-status {
+            display: inline-block;
+            padding: $spacing-xs $spacing-md;
+            border-radius: $radius-full;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-bold;
+
+            &.status-verified,
+            &.status-success {
+              background: rgba(76, 175, 80, 0.15);
+              color: #43A047;
+            }
+
+            &.status-pending {
+              background: rgba(255, 152, 0, 0.15);
+              color: #F57C00;
+            }
+
+            &.status-rejected {
+              background: rgba(244, 67, 54, 0.15);
+              color: #D32F2F;
+            }
+          }
+        }
+
+        .payment-amount {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-bold;
+          color: $primary-green;
+          text-align: right;
+          margin-left: $spacing-lg;
+        }
+      }
+
+      .no-payments {
+        text-align: center;
+        padding: $spacing-2xl $spacing-lg;
+        color: $text-secondary;
+
+        ion-icon {
+          font-size: 64px;
+          color: $neutral-medium-gray;
+          display: block;
+          margin-bottom: $spacing-lg;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // Summary Card
+  .summary-card {
+    margin: $spacing-lg;
+    box-shadow: $shadow-sm;
+
+    ion-card-header {
+      background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
+      color: $neutral-white;
+
+      ion-card-title {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        color: $neutral-white;
+        margin-bottom: 0;
+
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .summary-content {
+      padding: $spacing-lg !important;
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-md 0;
+        border-bottom: 1px solid $neutral-light-gray;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        span:first-child {
+          color: $text-secondary;
+          font-weight: $font-weight-medium;
+        }
+
+        .amount {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-bold;
+          color: $primary-green;
+
+          &.warning {
+            color: #F57C00;
+          }
+        }
+      }
+    }
+  }
+
+  // Account Actions
+  .account-actions {
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+
+    ion-button {
+      --background: #{$neutral-white};
+      --border-color: #{$primary-green};
+      --color: #{$primary-green};
+
+      &[color="danger"] {
+        --border-color: #{$error-color};
+        --color: #{$error-color};
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .member-profile-content {
+    .profile-header {
+      flex-direction: column;
+      text-align: center;
+
+      .profile-info h1 {
+        font-size: $font-size-2xl;
+      }
+    }
+
+    .status-overview {
+      grid-template-columns: 1fr;
+      margin: 0 $spacing-md $spacing-lg;
+    }
+
+    .info-row {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .value {
+        text-align: left;
+        width: 100%;
+        margin-top: $spacing-sm;
+      }
+    }
+  }
+}

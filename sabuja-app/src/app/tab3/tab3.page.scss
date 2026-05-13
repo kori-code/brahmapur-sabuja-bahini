@@ -1,107 +1,239 @@
 @import "../../theme/variables.scss";
 
-.about-content {
+.team-content {
   --ion-background-color: #{$neutral-light-gray};
   background: linear-gradient(135deg, #{$neutral-light-gray} 0%, #ffffff 100%);
 
-  .about-section {
-    padding: 0 !important;
-  }
-
-  .about-header {
+  // Header Section
+  .team-header-section {
     background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
     color: $neutral-white;
     padding: $spacing-2xl $spacing-lg;
     text-align: center;
 
-    .org-logo-large {
-      margin-bottom: $spacing-xl;
+    .header-banner {
+      h1 {
+        color: $neutral-white;
+        margin-bottom: $spacing-md;
+        font-size: $font-size-4xl;
+      }
 
-      img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        background: $neutral-white;
-        padding: $spacing-md;
-        box-shadow: $shadow-lg;
+      .subtitle {
+        font-size: $font-size-lg;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+
+        strong {
+          color: #FFD700;
+        }
+      }
+    }
+  }
+
+  // Search and Filter Section
+  .search-filter-section {
+    padding: $spacing-lg;
+    background: $neutral-white;
+    margin: $spacing-lg;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+
+    .search-container {
+      margin-bottom: $spacing-lg;
+
+      .search-item {
+        --background: #{$neutral-light-gray};
+        border-radius: $radius-md;
+        padding: 0 $spacing-md !important;
+
+        ion-icon {
+          color: $primary-green;
+          margin-right: $spacing-md;
+        }
+
+        ion-input {
+          font-size: $font-size-base;
+        }
       }
     }
 
-    h1 {
-      color: $neutral-white;
-      margin-bottom: $spacing-md;
-      font-size: $font-size-4xl;
+    .filter-buttons {
+      display: flex;
+      gap: $spacing-sm;
+      overflow-x: auto;
+      padding-bottom: $spacing-sm;
+
+      ion-button {
+        --padding-start: $spacing-md;
+        --padding-end: $spacing-md;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // Members Grid
+  .members-grid {
+    padding: $spacing-lg;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+
+    .member-card {
+      overflow: hidden;
+      box-shadow: $shadow-sm;
+      transition: all $transition-base;
+      animation: slideUp 0.5s ease-out;
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: $shadow-lg;
+      }
+
+      .member-card-header {
+        padding: $spacing-xl $spacing-lg;
+        color: $neutral-white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-lg;
+
+        .member-avatar {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          color: $neutral-white;
+          flex-shrink: 0;
+          border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .member-badge {
+          display: flex;
+          align-items: center;
+          gap: $spacing-sm;
+          background: rgba(255, 255, 255, 0.2);
+          padding: $spacing-sm $spacing-md;
+          border-radius: $radius-full;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-medium;
+          white-space: nowrap;
+
+          ion-icon {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .member-details {
+        padding: $spacing-lg !important;
+
+        .member-name {
+          margin: 0 0 $spacing-md;
+          font-size: $font-size-lg;
+          font-weight: $font-weight-bold;
+          color: $text-primary;
+        }
+
+        .member-info-row {
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+          margin-bottom: $spacing-md;
+          font-size: $font-size-sm;
+          color: $text-secondary;
+
+          ion-icon {
+            color: $primary-green;
+            flex-shrink: 0;
+          }
+
+          .aadhar-pan {
+            font-family: monospace;
+            font-weight: $font-weight-medium;
+          }
+        }
+
+        .subscription-status {
+          margin: $spacing-md 0;
+          padding: $spacing-sm $spacing-md;
+          border-radius: $radius-md;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-bold;
+          text-align: center;
+
+          &.status-active {
+            background: rgba(76, 175, 80, 0.15);
+            color: #43A047;
+          }
+
+          &.status-pending {
+            background: rgba(255, 152, 0, 0.15);
+            color: #F57C00;
+          }
+
+          &.status-unverified {
+            background: rgba(244, 67, 54, 0.15);
+            color: #D32F2F;
+          }
+        }
+
+        .member-meta {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-sm;
+          padding-top: $spacing-md;
+          border-top: 1px solid $neutral-light-gray;
+
+          small {
+            color: $text-tertiary;
+            font-size: $font-size-xs;
+          }
+        }
+      }
+    }
+  }
+
+  // No Results Message
+  .no-results {
+    text-align: center;
+    padding: $spacing-3xl $spacing-lg;
+    margin: $spacing-2xl;
+
+    ion-icon {
+      font-size: 80px;
+      color: $neutral-medium-gray;
+      margin-bottom: $spacing-lg;
+      display: block;
     }
 
-    .organization-tagline {
-      font-size: $font-size-lg;
-      color: rgba(255, 255, 255, 0.9);
-      font-style: italic;
+    h3 {
+      color: $text-primary;
+      margin-bottom: $spacing-md;
+    }
+
+    p {
+      color: $text-secondary;
       margin: 0;
     }
   }
 
-  .about-card,
-  .mission-vision-grid,
-  .values-card,
-  .team-section,
-  .impact-section,
-  .contact-section {
-    padding: $spacing-lg !important;
-    margin: $spacing-lg;
-    border-radius: $radius-lg;
+  // Organization Footer Info
+  .org-info-footer {
+    padding: $spacing-lg;
+    margin: $spacing-xl $spacing-lg $spacing-2xl;
 
-    ion-card {
-      box-shadow: $shadow-sm;
-      transition: all $transition-base;
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: $shadow-md;
-      }
-    }
-  }
-
-  .about-card {
-    ion-card-header {
-      display: flex;
-      align-items: center;
-      gap: $spacing-md;
-
-      .section-icon {
-        color: $primary-green;
-        font-size: 28px;
-      }
-
-      ion-card-title {
-        margin-bottom: 0;
-      }
-    }
-
-    ion-card-content {
-      padding: 0 !important;
-
-      p {
-        color: $text-secondary;
-        line-height: $line-height-relaxed;
-      }
-    }
-  }
-
-  .mission-vision-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: $spacing-lg;
-    padding: 0 !important;
-    margin: $spacing-lg !important;
-
-    .mv-card {
+    .info-card {
       ion-card {
         ion-card-header {
-          background: linear-gradient(135deg, #{$primary-green}, #{$secondary-color});
+          background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
           color: $neutral-white;
 
-          .mv-title {
+          ion-card-title {
             color: $neutral-white;
             margin-bottom: 0;
           }
@@ -111,274 +243,35 @@
           padding: $spacing-lg !important;
 
           p {
+            margin: $spacing-sm 0;
             color: $text-secondary;
-            margin: 0;
-            line-height: $line-height-relaxed;
-          }
-        }
-      }
-    }
-  }
-
-  .values-card {
-    ion-card {
-      ion-card-header {
-        display: flex;
-        align-items: center;
-        gap: $spacing-md;
-
-        .section-icon {
-          color: $primary-green;
-          font-size: 28px;
-        }
-      }
-
-      .values-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: $spacing-lg;
-
-        .value-item {
-          text-align: center;
-
-          h4 {
-            color: $primary-green;
-            margin-bottom: $spacing-sm;
-            font-size: $font-size-lg;
-          }
-
-          p {
             font-size: $font-size-sm;
-            color: $text-secondary;
-            margin: 0;
-          }
-        }
-      }
-    }
-  }
 
-  .team-section {
-    .section-header {
-      text-align: center;
-      margin-bottom: $spacing-2xl;
-
-      h2 {
-        margin-bottom: $spacing-md;
-        color: $primary-green;
-      }
-
-      p {
-        color: $text-secondary;
-        margin-bottom: 0;
-      }
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: $spacing-lg;
-      margin-bottom: $spacing-xl;
-
-      .team-member-card {
-        overflow: hidden;
-        box-shadow: $shadow-sm;
-        transition: all $transition-base;
-        animation: slideUp 0.5s ease-out;
-
-        &:hover {
-          transform: translateY(-8px);
-          box-shadow: $shadow-md;
-
-          .member-overlay {
-            opacity: 1;
-          }
-        }
-
-        .member-avatar-wrapper {
-          position: relative;
-          overflow: hidden;
-          height: 150px;
-          background: $neutral-light-gray;
-
-          .member-avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-          .member-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(46, 125, 50, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity $transition-base;
-
-            .member-role {
-              color: $neutral-white;
-              font-weight: $font-weight-medium;
-              text-align: center;
-              padding: $spacing-md;
+            strong {
+              color: $text-primary;
             }
           }
-        }
 
-        .member-info {
-          padding: $spacing-md !important;
+          .contact-info {
+            margin-top: $spacing-lg;
+            padding-top: $spacing-lg;
+            border-top: 1px solid $neutral-light-gray;
 
-          .member-name {
-            margin-bottom: $spacing-sm;
-            font-size: $font-size-lg;
-            color: $primary-green;
-          }
+            ul {
+              list-style: none;
+              padding: 0;
+              margin: $spacing-md 0 0;
 
-          .member-joined {
-            font-size: $font-size-xs;
-            color: $text-secondary;
-            margin-bottom: $spacing-md;
-          }
+              li {
+                padding: $spacing-sm 0;
+                color: $text-secondary;
+                font-size: $font-size-sm;
 
-          .member-stats {
-            .stat-badge {
-              background: rgba(46, 125, 50, 0.1);
-              color: $primary-green;
-              padding: $spacing-xs $spacing-md;
-              border-radius: $radius-full;
-              font-size: $font-size-xs;
-              font-weight: $font-weight-medium;
-              display: inline-block;
+                strong {
+                  color: $primary-green;
+                }
+              }
             }
-          }
-        }
-      }
-    }
-
-    .view-all-members-btn {
-      --color: #{$primary-green};
-      --border-color: #{$primary-green};
-      margin: 0 $spacing-lg;
-    }
-  }
-
-  .impact-section {
-    ion-card {
-      ion-card-header {
-        display: flex;
-        align-items: center;
-        gap: $spacing-md;
-
-        .section-icon {
-          color: $primary-green;
-          font-size: 28px;
-        }
-      }
-
-      .stats-showcase {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: $spacing-lg;
-        margin-top: $spacing-lg;
-
-        .impact-stat {
-          text-align: center;
-          padding: $spacing-lg;
-          background: rgba(46, 125, 50, 0.05);
-          border-radius: $radius-md;
-          border: 1px solid rgba(46, 125, 50, 0.1);
-
-          .stat-number {
-            font-size: $font-size-3xl;
-            font-weight: $font-weight-bold;
-            color: $primary-green;
-            display: block;
-            margin-bottom: $spacing-sm;
-          }
-
-          p {
-            font-size: $font-size-sm;
-            color: $text-secondary;
-            margin: 0;
-          }
-        }
-      }
-    }
-  }
-
-  .contact-section {
-    ion-card {
-      ion-card-header {
-        display: flex;
-        align-items: center;
-        gap: $spacing-md;
-        background: linear-gradient(135deg, #{$primary-green}, #{$secondary-color});
-        color: $neutral-white;
-
-        .section-icon {
-          color: $neutral-white;
-          font-size: 28px;
-        }
-
-        ion-card-title {
-          color: $neutral-white;
-          margin-bottom: 0;
-        }
-      }
-
-      .contact-info {
-        margin-bottom: $spacing-2xl;
-
-        .contact-item {
-          display: flex;
-          align-items: flex-start;
-          gap: $spacing-md;
-          padding: $spacing-lg 0;
-          border-bottom: 1px solid $neutral-medium-gray;
-
-          &:last-child {
-            border-bottom: none;
-          }
-
-          ion-icon {
-            color: $primary-green;
-            font-size: 24px;
-            margin-top: $spacing-sm;
-          }
-
-          .contact-label {
-            font-size: $font-size-sm;
-            color: $text-secondary;
-            margin-bottom: $spacing-xs;
-          }
-
-          p, a {
-            margin: 0;
-            color: $text-primary;
-            text-decoration: none;
-
-            &:hover {
-              color: $primary-green;
-            }
-          }
-        }
-      }
-
-      .social-links {
-        display: flex;
-        justify-content: center;
-        gap: $spacing-md;
-
-        .social-btn {
-          --padding-start: $spacing-md;
-          --padding-end: $spacing-md;
-          --color: #{$primary-green};
-
-          ion-icon {
-            font-size: 32px;
           }
         }
       }
@@ -386,6 +279,7 @@
   }
 }
 
+// Animations
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -397,20 +291,30 @@
   }
 }
 
-@media (max-width: 576px) {
-  .about-content {
-    .mission-vision-grid,
-    .team-section .team-grid {
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .team-content {
+    .members-grid {
       grid-template-columns: 1fr;
+      padding: $spacing-md;
+      gap: $spacing-md;
     }
 
-    .values-card ion-card .values-grid,
-    .impact-section ion-card .stats-showcase {
-      grid-template-columns: repeat(2, 1fr);
+    .search-filter-section {
+      margin: $spacing-md;
+
+      .filter-buttons {
+        flex-wrap: wrap;
+      }
     }
 
-    .team-section .view-all-members-btn {
-      margin: 0 !important;
+    .member-card .member-card-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 }

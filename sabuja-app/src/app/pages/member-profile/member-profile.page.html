@@ -1,0 +1,227 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="danger">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="member-profile-content" *ngIf="currentMember">
+  
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-avatar">
+      {{currentMember.name.split(' ').map(n => n.charAt(0).toUpperCase()).join('').substring(0, 2)}}
+    </div>
+    <div class="profile-info">
+      <h1>{{currentMember.name}}</h1>
+      <p class="membership-badge" [color]="getStatusColor(currentMember.membershipType)">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        {{currentMember.membershipType}} Member
+      </p>
+    </div>
+  </div>
+
+  <!-- Status Overview -->
+  <div class="status-overview">
+    <ion-card class="status-card">
+      <ion-card-content>
+        <div class="status-item">
+          <ion-icon name="checkmark-circle-outline" [color]="getStatusColor(currentMember.subscriptionStatus)"></ion-icon>
+          <div>
+            <small>Subscription Status</small>
+            <h3>{{currentMember.subscriptionStatus}}</h3>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="status-card">
+      <ion-card-content>
+        <div class="status-item">
+          <ion-icon name="calendar-outline" color="success"></ion-icon>
+          <div>
+            <small>Monthly Fee</small>
+            <h3>₹{{monthlyFee}}/month</h3>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Due Status -->
+  <div class="dues-section" *ngIf="monthsDue > 0">
+    <ion-card class="dues-card warning">
+      <ion-card-content>
+        <div class="dues-header">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>Payment Due</span>
+        </div>
+        <div class="dues-details">
+          <p class="dues-months">{{monthsDue}} month<span *ngIf="monthsDue > 1">s</span> due</p>
+          <p class="dues-amount">₹{{totalDue}} total</p>
+        </div>
+        <ion-button expand="block" color="warning" shape="round" routerLink="/tabs/tab2">
+          <ion-icon slot="start" name="card-outline"></ion-icon>
+          Pay Now
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Member Information -->
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="person-outline"></ion-icon>
+        Personal Information
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="info-content">
+      <!-- Member ID -->
+      <div class="info-row">
+        <span class="label">Member ID</span>
+        <span class="value">{{currentMember.memberId}}</span>
+      </div>
+
+      <!-- Phone -->
+      <div class="info-row">
+        <span class="label">Phone Number</span>
+        <span class="value">{{currentMember.phone}}</span>
+      </div>
+
+      <!-- Address -->
+      <div class="info-row">
+        <span class="label">Address</span>
+        <span class="value">{{currentMember.address}}</span>
+      </div>
+
+      <!-- Aadhar/PAN -->
+      <div class="info-row">
+        <span class="label">Aadhar/PAN</span>
+        <span class="value">{{currentMember.aadharPan}}</span>
+      </div>
+
+      <!-- Email (Editable) -->
+      <div class="info-row email-row">
+        <span class="label">Email</span>
+        <div class="email-edit">
+          <span *ngIf="!isEditingEmail" class="value">{{currentMember.email || 'Not set'}}</span>
+          <ion-input 
+            *ngIf="isEditingEmail" 
+            [(ngModel)]="newEmail"
+            type="email"
+            placeholder="Enter email">
+          </ion-input>
+          <ion-button 
+            fill="clear" 
+            size="small"
+            (click)="isEditingEmail ? updateEmail() : isEditingEmail = true"
+            [color]="isEditingEmail ? 'success' : 'medium'">
+            <ion-icon [name]="isEditingEmail ? 'checkmark' : 'pencil'"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Joined Date -->
+      <div class="info-row">
+        <span class="label">Member Since</span>
+        <span class="value">{{currentMember.createdAt | date:'MMM dd, yyyy'}}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Payment History -->
+  <ion-card class="history-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="receipt-outline"></ion-icon>
+        Payment History
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="history-content">
+      <div *ngIf="paymentHistory.length > 0">
+        <div class="payment-item" *ngFor="let payment of paymentHistory | slice:0:5">
+          <div class="payment-info">
+            <h4>{{payment.purpose}}</h4>
+            <p class="payment-date">{{payment.date | date:'MMM dd, yyyy'}}</p>
+            <span class="payment-status" [ngClass]="'status-' + (payment.status | lowercase)">
+              {{payment.status}}
+            </span>
+          </div>
+          <div class="payment-amount">
+            ₹{{payment.amount}}
+          </div>
+        </div>
+
+        <ion-button 
+          *ngIf="paymentHistory.length > 5"
+          fill="outline" 
+          color="success" 
+          expand="block"
+          shape="round">
+          View All Payments
+        </ion-button>
+      </div>
+
+      <div *ngIf="paymentHistory.length === 0" class="no-payments">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <p>No payment history yet</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Subscription Summary -->
+  <ion-card class="summary-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        Summary
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="summary-content">
+      <div class="summary-item">
+        <span>Total Paid</span>
+        <span class="amount">₹{{currentMember.totalPaid}}</span>
+      </div>
+      <div class="summary-item">
+        <span>Monthly Fee</span>
+        <span class="amount">₹{{monthlyFee}}</span>
+      </div>
+      <div class="summary-item" *ngIf="monthsDue > 0">
+        <span>Amount Due</span>
+        <span class="amount warning">₹{{totalDue}}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Account Actions -->
+  <div class="account-actions">
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      color="medium"
+      shape="round"
+      (click)="openChangePassword()">
+      <ion-icon slot="start" name="key-outline"></ion-icon>
+      Change Password
+    </ion-button>
+
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      color="danger"
+      shape="round"
+      (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Logout
+    </ion-button>
+  </div>
+
+</ion-content>

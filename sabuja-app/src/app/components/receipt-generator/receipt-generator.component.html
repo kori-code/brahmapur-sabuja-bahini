@@ -1,0 +1,152 @@
+<div class="receipt-wrapper">
+  <!-- Receipt Document -->
+  <div #receiptContent class="receipt-document" *ngIf="receiptData">
+    <!-- Header -->
+    <div class="receipt-header">
+      <!-- Top Border -->
+      <div class="border-top" [style.border-top-color]="primaryColor"></div>
+
+      <!-- Registration Number (Top Left) -->
+      <div class="regd-number">
+        <small>Regd No: {{registeredNo}}</small>
+      </div>
+
+      <!-- Center Title -->
+      <div class="header-center">
+        <div class="org-name">{{organizationName}}</div>
+        <div class="org-odia">{{odiaText}}</div>
+      </div>
+
+      <!-- Contact Details (Top Right) -->
+      <div class="contact-details">
+        <small *ngFor="let contact of contacts">
+          {{contact.name}}: {{contact.phone}}
+        </small>
+      </div>
+
+      <!-- Address -->
+      <div class="address-section">
+        <p>{{address}}</p>
+      </div>
+
+      <!-- Money Receipt Title -->
+      <div class="receipt-title">MONEY RECEIPT</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="receipt-body">
+      <!-- Receipt Details Row 1 -->
+      <div class="receipt-line">
+        <span class="label">Receipt No:</span>
+        <span class="value">{{receiptData.receiptNo}}</span>
+      </div>
+
+      <!-- Receipt Details Row 2 -->
+      <div class="receipt-line">
+        <span class="label">Date:</span>
+        <span class="value">{{receiptData.date | date:'dd-MMM-yyyy'}}</span>
+      </div>
+
+      <!-- Received With Thanks From -->
+      <div class="receipt-section">
+        <div class="receipt-line">
+          <span class="label">Received with thanks from:</span>
+          <span class="value bold">{{receiptData.memberName}}</span>
+        </div>
+      </div>
+
+      <!-- Amount Section -->
+      <div class="receipt-section">
+        <div class="receipt-line">
+          <span class="label">The sum of Rupees:</span>
+          <span class="value bold">{{receiptData.amountInWords}} (₹{{receiptData.amount}})</span>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="receipt-section">
+        <div class="receipt-line">
+          <span class="label">Payment Method:</span>
+          <span class="value">{{receiptData.paymentMethod}}</span>
+        </div>
+        <div class="receipt-line" *ngIf="receiptData.transactionId">
+          <span class="label">Transaction ID:</span>
+          <span class="value">{{receiptData.transactionId}}</span>
+        </div>
+      </div>
+
+      <!-- Purpose -->
+      <div class="receipt-section">
+        <div class="receipt-line">
+          <span class="label">Towards:</span>
+          <span class="value">{{receiptData.purpose}}</span>
+        </div>
+      </div>
+
+      <!-- Approval Section (if verified) -->
+      <div class="receipt-section" *ngIf="receiptData.approvedBy">
+        <div class="receipt-line">
+          <span class="label">Verified by:</span>
+          <span class="value">{{receiptData.approvedBy}}</span>
+        </div>
+        <div class="receipt-line" *ngIf="receiptData.approvalDate">
+          <span class="label">Approval Date:</span>
+          <span class="value">{{receiptData.approvalDate | date:'dd-MMM-yyyy'}}</span>
+        </div>
+      </div>
+
+      <!-- Member Phone -->
+      <div class="receipt-section">
+        <div class="receipt-line">
+          <span class="label">Member Phone:</span>
+          <span class="value">{{receiptData.memberPhone}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="receipt-footer">
+      <div class="footer-note">
+        <p><strong>Note:</strong> Receipt is valid subject to successful payment verification by admin.</p>
+      </div>
+
+      <!-- Bottom Border -->
+      <div class="border-bottom" [style.border-bottom-color]="primaryColor"></div>
+    </div>
+  </div>
+
+  <!-- Action Buttons (Hidden on Print) -->
+  <div class="action-buttons" *ngIf="receiptData">
+    <ion-button 
+      expand="block" 
+      color="success"
+      (click)="downloadAsPDF()"
+      shape="round"
+      class="print-hide">
+      <ion-icon slot="start" name="download-outline"></ion-icon>
+      Download as PDF
+    </ion-button>
+
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      color="success"
+      (click)="printReceipt()"
+      shape="round"
+      class="print-hide">
+      <ion-icon slot="start" name="print-outline"></ion-icon>
+      Print Receipt
+    </ion-button>
+
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      color="medium"
+      (click)="shareViaEmail()"
+      shape="round"
+      class="print-hide">
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      Share via Email
+    </ion-button>
+  </div>
+</div>

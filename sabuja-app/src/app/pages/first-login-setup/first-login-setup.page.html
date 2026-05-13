@@ -1,0 +1,198 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Setup Your Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="first-login-content">
+  <div class="setup-container">
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div [class.completed]="currentStep !== 'password'" [class.active]="currentStep === 'password'" class="step">
+        <span>1</span>
+        <p>Password</p>
+      </div>
+      <div class="step-connector" [class.completed]="currentStep === 'complete' || currentStep === 'email'"></div>
+      <div [class.completed]="currentStep === 'complete'" [class.active]="currentStep === 'email'" class="step">
+        <span>2</span>
+        <p>Email</p>
+      </div>
+      <div class="step-connector" [class.completed]="currentStep === 'complete'"></div>
+      <div [class.completed]="currentStep === 'complete'" class="step">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        <p>Done</p>
+      </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section animate-slide-down">
+      <div class="welcome-icon">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </div>
+      <h1>Welcome, {{memberName}}!</h1>
+      <p class="subtitle">Let's set up your account to get started</p>
+    </div>
+
+    <!-- Step 1: Change Password -->
+    <div *ngIf="currentStep === 'password'" class="setup-step animate-slide-up">
+      <ion-card class="step-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            Change Your Password
+          </ion-card-title>
+          <p class="step-description">Set a new secure password for your account</p>
+        </ion-card-header>
+
+        <ion-card-content class="step-content">
+          <!-- Current Password -->
+          <div class="form-group">
+            <label class="form-label">Current Password</label>
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="lock-outline"></ion-icon>
+              <ion-input 
+                [type]="showCurrentPassword ? 'text' : 'password'"
+                [(ngModel)]="currentPassword"
+                placeholder="Enter current password">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end"
+                (click)="showCurrentPassword = !showCurrentPassword"
+                size="small">
+                <ion-icon [name]="showCurrentPassword ? 'eye-off' : 'eye'"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </div>
+
+          <!-- New Password -->
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="lock-outline"></ion-icon>
+              <ion-input 
+                [type]="showNewPassword ? 'text' : 'password'"
+                [(ngModel)]="newPassword"
+                placeholder="Create new password">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end"
+                (click)="showNewPassword = !showNewPassword"
+                size="small">
+                <ion-icon [name]="showNewPassword ? 'eye-off' : 'eye'"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <small class="password-hint">At least 6 characters</small>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="lock-outline"></ion-icon>
+              <ion-input 
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                [(ngModel)]="confirmPassword"
+                placeholder="Confirm new password">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end"
+                (click)="showConfirmPassword = !showConfirmPassword"
+                size="small">
+                <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-box">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Use a strong password with mix of letters, numbers, and symbols</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <ion-button 
+            expand="block"
+            color="success"
+            shape="round"
+            (click)="validateAndChangePassword()"
+            [disabled]="!currentPassword || !newPassword || !confirmPassword"
+            class="action-btn">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            Continue
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Step 2: Add Email -->
+    <div *ngIf="currentStep === 'email'" class="setup-step animate-slide-up">
+      <ion-card class="step-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="mail-outline"></ion-icon>
+            Add Your Email
+          </ion-card-title>
+          <p class="step-description">We'll use this to send you updates and receipts</p>
+        </ion-card-header>
+
+        <ion-card-content class="step-content">
+          <!-- Email Input -->
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-input 
+                type="email"
+                [(ngModel)]="email"
+                placeholder="your@email.com"
+                inputmode="email">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-box">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>We'll never share your email address with anyone</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <ion-button 
+            expand="block"
+            color="success"
+            shape="round"
+            (click)="validateAndAddEmail()"
+            [disabled]="!email"
+            class="action-btn">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            Complete Setup
+          </ion-button>
+
+          <ion-button 
+            expand="block"
+            fill="outline"
+            color="medium"
+            shape="round"
+            (click)="skipEmailStep()">
+            Skip for Now
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Step 3: Complete -->
+    <div *ngIf="currentStep === 'complete'" class="setup-complete animate-slide-up">
+      <div class="success-animation">
+        <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+      </div>
+
+      <h2>Setup Complete!</h2>
+      <p>Your account is ready to use. Redirecting to your profile...</p>
+
+      <ion-spinner name="crescent" color="success"></ion-spinner>
+    </div>
+  </div>
+</ion-content>

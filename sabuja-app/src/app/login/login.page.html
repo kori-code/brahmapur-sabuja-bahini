@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Member Login</ion-title>
+    <ion-title>Brahmapur Sabuja Bahini</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,8 +19,37 @@
     <div class="form-section animate-slide-up">
       <ion-card class="login-card">
         <ion-card-content class="form-content">
-          <!-- Email Input -->
-          <div class="form-group">
+          <!-- Login Type Toggle -->
+          <div class="login-type-toggle">
+            <ion-segment [(ngModel)]="loginType" color="success">
+              <ion-segment-button value="phone" layout="icon-top">
+                <ion-icon name="phone-portrait-outline"></ion-icon>
+                <ion-label>Phone</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="email" layout="icon-top">
+                <ion-icon name="mail-outline"></ion-icon>
+                <ion-label>Email</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+
+          <!-- Phone Input (Phone Login) -->
+          <div *ngIf="loginType === 'phone'" class="form-group animate-fade-in">
+            <ion-item lines="none" class="form-item">
+              <ion-icon slot="start" name="call-outline"></ion-icon>
+              <ion-label position="floating">Phone Number</ion-label>
+              <ion-input 
+                type="tel" 
+                [(ngModel)]="phone"
+                placeholder="10 digit number"
+                inputmode="tel"
+                maxlength="10">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Email Input (Email Login) -->
+          <div *ngIf="loginType === 'email'" class="form-group animate-fade-in">
             <ion-item lines="none" class="form-item">
               <ion-icon slot="start" name="mail-outline"></ion-icon>
               <ion-label position="floating">Email Address</ion-label>
@@ -39,20 +68,27 @@
               <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
               <ion-label position="floating">Password</ion-label>
               <ion-input 
-                type="password" 
+                [type]="showPassword ? 'text' : 'password'"
                 [(ngModel)]="password"
                 placeholder="Enter your password">
               </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end"
+                (click)="togglePasswordVisibility()"
+                class="password-toggle">
+                <ion-icon name="{{ showPassword ? 'eye-off-outline' : 'eye-outline' }}"></ion-icon>
+              </ion-button>
             </ion-item>
           </div>
 
-          <!-- Remember Me & Forgot Password -->
-          <div class="form-footer">
+          <!-- Info Section -->
+          <div class="info-section">
+            <ion-icon name="information-circle-outline"></ion-icon>
             <div>
-              <ion-checkbox></ion-checkbox>
-              <span>Remember me</span>
+              <p *ngIf="loginType === 'phone'"><strong>First time?</strong> Use your 10-digit mobile number and password sent by admin</p>
+              <p *ngIf="loginType === 'email'"><strong>Admin Login</strong> Use email and password for administrative access</p>
             </div>
-            <a href="#" class="forgot-password">Forgot Password?</a>
           </div>
 
           <!-- Login Button -->
@@ -65,28 +101,15 @@
             <ion-icon slot="start" name="log-in-outline"></ion-icon>
             Login
           </ion-button>
-
-          <!-- Divider -->
-          <div class="form-divider">
-            <span>or</span>
-          </div>
-
-          <!-- Social Login Placeholder -->
-          <div class="social-buttons">
-            <ion-button fill="outline" color="medium" shape="round">
-              <ion-icon name="logo-google"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline" color="medium" shape="round">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </ion-button>
-          </div>
         </ion-card-content>
       </ion-card>
 
-      <!-- Sign Up Link -->
-      <div class="signup-section">
-        <p>Don't have an account? 
-          <a routerLink="/register" class="signup-link">Create one now</a>
+      <!-- Help Section -->
+      <div class="help-section">
+        <p class="help-text">
+          <ion-icon name="help-circle-outline"></ion-icon>
+          Need help? Contact admin for login credentials at: 
+          <strong>9777377039</strong>
         </p>
       </div>
     </div>

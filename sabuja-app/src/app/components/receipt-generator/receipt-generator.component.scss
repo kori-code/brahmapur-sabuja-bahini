@@ -1,0 +1,255 @@
+@import "../../../theme/variables.scss";
+
+.receipt-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+}
+
+.receipt-document {
+  background: $neutral-white;
+  border: 2px solid #2E7D32;
+  padding: $spacing-2xl;
+  font-family: 'Calibri', 'Segoe UI', serif;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: $spacing-2xl;
+  page-break-after: always;
+
+  // Header Section
+  .receipt-header {
+    border-bottom: 3px solid #2E7D32;
+    padding-bottom: $spacing-2xl;
+    margin-bottom: $spacing-2xl;
+    text-align: center;
+    position: relative;
+
+    .border-top {
+      height: 3px;
+      border-top: 3px double #2E7D32;
+      margin-bottom: $spacing-md;
+    }
+
+    .regd-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 11px;
+      color: #2E7D32;
+      font-weight: bold;
+    }
+
+    .contact-details {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 11px;
+      color: #2E7D32;
+
+      small {
+        display: block;
+        margin-bottom: 2px;
+      }
+    }
+
+    .header-center {
+      margin: $spacing-lg 0;
+
+      .org-name {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2E7D32;
+        letter-spacing: 1px;
+        margin-bottom: $spacing-sm;
+      }
+
+      .org-odia {
+        font-size: 18px;
+        color: #2E7D32;
+        margin-bottom: $spacing-md;
+        font-weight: 500;
+      }
+    }
+
+    .address-section {
+      background: rgba(46, 125, 50, 0.05);
+      padding: $spacing-md;
+      border-radius: $radius-md;
+      margin: $spacing-md 0;
+      font-size: 12px;
+      color: #333;
+
+      p {
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+
+    .receipt-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2E7D32;
+      letter-spacing: 2px;
+      margin-top: $spacing-lg;
+      text-decoration: underline;
+      text-decoration-color: #2E7D32;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  // Body Section
+  .receipt-body {
+    margin-bottom: $spacing-2xl;
+
+    .receipt-line {
+      display: flex;
+      justify-content: space-between;
+      padding: $spacing-sm 0;
+      border-bottom: 1px dotted #999;
+
+      .label {
+        font-weight: 600;
+        color: #2E7D32;
+        flex: 0 0 auto;
+        margin-right: $spacing-lg;
+      }
+
+      .value {
+        flex: 1;
+        text-align: right;
+        color: #333;
+
+        &.bold {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .receipt-section {
+      margin-bottom: $spacing-lg;
+      padding: $spacing-md 0;
+      border-left: 3px solid #2E7D32;
+      padding-left: $spacing-md;
+    }
+  }
+
+  // Footer Section
+  .receipt-footer {
+    border-top: 3px solid #2E7D32;
+    padding-top: $spacing-2xl;
+    text-align: center;
+
+    .footer-note {
+      background: rgba(46, 125, 50, 0.08);
+      padding: $spacing-lg;
+      border-radius: $radius-md;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: $spacing-lg;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .border-bottom {
+      height: 3px;
+      border-bottom: 3px double #2E7D32;
+      margin-top: $spacing-md;
+    }
+  }
+}
+
+// Action Buttons
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: 0 $spacing-lg;
+
+  ion-button {
+    --background: #2E7D32;
+    --color: $neutral-white;
+
+    &[fill="outline"] {
+      --border-color: #2E7D32;
+      --color: #2E7D32;
+    }
+  }
+}
+
+// Print Styles
+@media print {
+  .print-hide {
+    display: none !important;
+  }
+
+  .receipt-document {
+    border: 1px solid #2E7D32;
+    page-break-after: always;
+    box-shadow: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .receipt-document {
+    padding: $spacing-lg;
+    font-size: 12px;
+
+    .receipt-header {
+      .org-name {
+        font-size: 18px;
+      }
+
+      .org-odia {
+        font-size: 14px;
+      }
+
+      .receipt-title {
+        font-size: 18px;
+      }
+
+      .regd-number,
+      .contact-details {
+        position: static;
+        margin: $spacing-sm 0;
+      }
+    }
+
+    .receipt-line {
+      flex-direction: column;
+
+      .label {
+        margin-right: 0;
+        margin-bottom: $spacing-sm;
+      }
+
+      .value {
+        text-align: left;
+      }
+    }
+  }
+}
+
+// Animation for receipt display
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.receipt-document {
+  animation: slideIn 0.3s ease-out;
+}

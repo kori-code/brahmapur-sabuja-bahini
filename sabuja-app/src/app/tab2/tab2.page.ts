@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { PaymentService } from '../services/payment.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { PaymentService, PaymentTransaction } from '../services/payment.service';
+import { MembersService, MemberProfile } from '../services/members.service';
 
 @Component({
   selector: 'app-tab2',
@@ -11,22 +11,22 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class Tab2Page implements OnInit {
   paymentAmount: number | null = null;
-  paymentPurpose: string = 'Monthly Contribution';
+  paymentPurpose: string = 'Monthly Subscription';
   paymentNote: string = '';
-  userEmail: string = '';
-  userPhone: string = '';
+  currentMember: MemberProfile | null = null;
   
   // States for the UI
   showQrScreen: boolean = false;
+  showPendingScreen: boolean = false;
   showSuccessScreen: boolean = false;
-  qrCodeUrl: string = '';
-  paymentMethod: 'upi' | 'phonepe' = 'phonepe'; // Default to PhonePe
-
+  currentTransactionId: string = '';
+  paymentMethod: 'upi' | 'phonepe' = 'phonepe';
+  
   myUpiId: string = 'berhampursabujabahini@sbi'; 
   orgName: string = 'Brahmapur Sabuja Bahini';
   merchantId: string = 'BSBNGO001';
 
-  paymentHistory: any[] = [];
+  paymentHistory: PaymentTransaction[] = [];
   donationStats: any = {};
 
   constructor(
@@ -34,29 +34,32 @@ export class Tab2Page implements OnInit {
     private loadingController: LoadingController,
     private toastController: ToastController,
     private paymentService: PaymentService,
-    private afAuth: AngularFireAuth
+    private membersService: MembersService
   ) {}
 
   ngOnInit() {
-    this.getCurrentUser();
+    this.getCurrentMember();
     this.loadPaymentHistory();
     this.loadDonationStats();
   }
 
-  getCurrentUser() {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userEmail = user.email || '';
+  getCurrentMember() {
+    this.membersService.getCurrentMemberProfile().subscribe(member => {
+      this.currentMember = member;
+      if (member) {
+        this.loadPaymentHistory();
       }
     });
   }
 
   loadPaymentHistory() {
-    this.paymentService.getPaymentHistory(this.userEmail).subscribe(
-      (history) => {
-        this.paymentHistory = history;
-      }
-    );
+    if (this.currentMember) {
+      this.paymentService.getMemberPaymentHistory(this.currentMember.id).subscribe(
+        (history) => {
+          this.paymentHistory = history;
+        }
+      );
+    }
   }
 
   loadDonationStats() {
@@ -69,12 +72,12 @@ export class Tab2Page implements OnInit {
 
   async payNow() {
     if (!this.paymentAmount || this.paymentAmount < 10) {
-      const alert = await this.alertController.create({
-        header: 'Invalid Amount',
-        message: 'Minimum donation amount is ₹10',
-        buttons: ['OK']
-      });
-      await alert.present();
+      await this.showAlert('Invalid Amount', 'Minimum payment amount is ₹10');
+      return;
+    }
+
+    if (!this.currentMember) {
+      await this.showAlert('Error', 'Member information not found. Please login again.');
       return;
     }
 
@@ -87,41 +90,40 @@ export class Tab2Page implements OnInit {
 
   async initiatePhonePePayment() {
     const loading = await this.loadingController.create({
-      message: 'Initiating PhonePe payment...',
+      message: 'Initiating payment...',
+      spinner: 'crescent'
     });
     await loading.present();
 
-    const paymentRequest = {
-      amount: this.paymentAmount || 0,
-      purpose: this.paymentPurpose,
-      phone: this.userPhone,
-      email: this.userEmail,
-      userEmail: this.userEmail
-    };
+    try {
+      const response = await this.paymentService.initiatePayment({
+        amount: this.paymentAmount || 0,
+        purpose: this.paymentPurpose,
+        phone: this.currentMember?.phone || '',
+        email: this.currentMember?.email || '',
+        memberId: this.currentMember?.id
+      });
 
-    this.paymentService.initiatePayment(paymentRequest).subscribe(
-      async (response) => {
-        await loading.dismiss();
-        if (response.success) {
-          this.showSuccessScreen = true;
-          const toast = await this.toastController.create({
-            message: 'PhonePe payment initiated successfully!',
-            duration: 3000,
-            position: 'bottom'
-          });
-          await toast.present();
-        }
-      },
-      async (error) => {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          header: 'Payment Failed',
-          message: error.message || 'Unable to process payment',
-          buttons: ['OK']
+      await loading.dismiss();
+
+      if (response.success) {
+        this.currentTransactionId = response.transactionId || '';
+        this.showPendingScreen = true;
+        
+        const toast = await this.toastController.create({
+          message: 'Payment submitted for verification',
+          duration: 3000,
+          position: 'bottom',
+          color: 'warning'
         });
-        await alert.present();
+        await toast.present();
+      } else {
+        await this.showAlert('Payment Failed', response.message);
       }
-    );
+    } catch (error: any) {
+      await loading.dismiss();
+      await this.showAlert('Error', error.message || 'Payment initiation failed');
+    }
   }
 
   async initiateUpiPayment() {
@@ -130,57 +132,131 @@ export class Tab2Page implements OnInit {
 
     if (isMobile) {
       window.location.href = upiUrl;
+      
+      // After some time, initiate the payment record in Firestore
+      setTimeout(async () => {
+        const response = await this.paymentService.initiatePayment({
+          amount: this.paymentAmount || 0,
+          purpose: this.paymentPurpose,
+          phone: this.currentMember?.phone || '',
+          email: this.currentMember?.email || '',
+          memberId: this.currentMember?.id
+        });
+        
+        if (response.success) {
+          this.currentTransactionId = response.transactionId || '';
+          this.showPendingScreen = true;
+        }
+      }, 3000);
     } else {
       // Generate QR and show the desktop UI
-      this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-      this.showQrScreen = true;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
+      this.showQRDialog(qrUrl);
     }
   }
 
-  async verifyPayment() {
+  async showQRDialog(qrUrl: string) {
+    const alert = await this.alertController.create({
+      header: 'Scan QR Code',
+      cssClass: 'qr-alert',
+      message: `
+        <div style="text-align: center; padding: 20px;">
+          <img src="${qrUrl}" alt="UPI QR Code" style="width: 250px; height: 250px; margin: 20px 0;">
+          <p>Scan this QR code with your UPI app to complete the payment</p>
+        </div>
+      `,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'I have paid',
+          handler: async () => {
+            // Record payment attempt
+            const response = await this.paymentService.initiatePayment({
+              amount: this.paymentAmount || 0,
+              purpose: this.paymentPurpose,
+              phone: this.currentMember?.phone || '',
+              email: this.currentMember?.email || '',
+              memberId: this.currentMember?.id
+            });
+            
+            if (response.success) {
+              this.currentTransactionId = response.transactionId || '';
+              this.showPendingScreen = true;
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async verifyPaymentStatus() {
+    if (!this.currentTransactionId) return;
+
     const loading = await this.loadingController.create({
-      message: 'Verifying payment with bank...',
-      duration: 2000
+      message: 'Checking payment status...',
+      spinner: 'crescent'
     });
     await loading.present();
 
-    setTimeout(async () => {
+    try {
+      const transaction = await this.paymentService.getPaymentStatus(this.currentTransactionId);
       await loading.dismiss();
-      this.showQrScreen = false;
-      this.showSuccessScreen = true;
-    }, 2000);
+
+      if (transaction) {
+        if (transaction.status === 'Verified') {
+          this.showPendingScreen = false;
+          this.showSuccessScreen = true;
+          
+          const toast = await this.toastController.create({
+            message: 'Payment verified successfully!',
+            duration: 3000,
+            position: 'bottom',
+            color: 'success'
+          });
+          await toast.present();
+        } else if (transaction.status === 'Rejected') {
+          this.showPendingScreen = false;
+          await this.showAlert('Payment Rejected', 'Your payment has been rejected. Please contact admin.');
+          this.resetForm();
+        } else {
+          await this.showAlert('Pending', 'Your payment is still pending admin verification. Please wait or contact admin.');
+        }
+      }
+    } catch (error: any) {
+      await loading.dismiss();
+      await this.showAlert('Error', error.message || 'Failed to check status');
+    }
   }
 
-  downloadInvoice() {
-    const invoice = `
-      -----------------------------------------
-      OFFICIAL DONATION RECEIPT
-      BRAHMAPUR SABUJA BAHINI (BSB)
-      -----------------------------------------
-      Date: ${new Date().toLocaleDateString()}
-      Organization: ${this.orgName}
-      Donor Email: ${this.userEmail}
-      Amount: ₹${this.paymentAmount}
-      Purpose: ${this.paymentPurpose}
-      Payment Method: ${this.paymentMethod.toUpperCase()}
-      Status: SUCCESSFUL
-      Transaction ID: BSB_${Date.now()}
-      -----------------------------------------
-      Thank you for your generous contribution!
-      Your support helps us create a greener Berhampur.
-      -----------------------------------------
-    `;
-    const blob = new Blob([invoice], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `BSB_Receipt_${Date.now()}.txt`;
-    a.click();
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  downloadReceipt() {
+    // This will be implemented in the receipt generation component
+    const toast = this.toastController.create({
+      message: 'Receipt download feature coming soon!',
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.then(t => t.present());
   }
 
   resetForm() {
     this.showSuccessScreen = false;
+    this.showPendingScreen = false;
     this.paymentAmount = null;
-    this.showQrScreen = false;
+    this.paymentPurpose = 'Monthly Subscription';
+    this.currentTransactionId = '';
   }
 }

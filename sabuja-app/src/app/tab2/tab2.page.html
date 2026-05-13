@@ -137,7 +137,83 @@
     </div>
   </div>
 
-  <!-- QR Code Payment Screen -->
+  <!-- Pending Payment Screen (Awaiting Admin Verification) -->
+  <div *ngIf="showPendingScreen && !showSuccessScreen && !showQrScreen" class="pending-screen animate-slide-up">
+    <div class="pending-container">
+      <div class="pending-animation">
+        <div class="pending-spinner"></div>
+        <ion-icon name="time-outline" class="pending-icon"></ion-icon>
+      </div>
+
+      <h1 class="pending-title">Payment Under Review</h1>
+      <p class="pending-subtitle">Your payment is awaiting admin verification</p>
+
+      <!-- Transaction Details -->
+      <ion-card class="pending-details-card">
+        <ion-card-content>
+          <div class="detail-row">
+            <span class="detail-label">Transaction ID</span>
+            <span class="detail-value">{{currentTransactionId}}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Amount</span>
+            <span class="detail-value">₹{{paymentAmount}}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Purpose</span>
+            <span class="detail-value">{{paymentPurpose}}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Status</span>
+            <span class="detail-value status-pending">
+              <ion-icon name="hourglass-outline"></ion-icon>
+              Pending Verification
+            </span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Info Message -->
+      <ion-card class="info-message-card">
+        <ion-card-content>
+          <div class="message-icon">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </div>
+          <p><strong>What happens next?</strong></p>
+          <p>An admin will verify your payment details shortly. Once approved, your membership will be activated and you'll receive a confirmation SMS/email.</p>
+          <p><strong>Typical approval time: 2-24 hours</strong></p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Buttons -->
+      <div class="pending-actions">
+        <ion-button 
+          expand="block" 
+          color="success" 
+          (click)="verifyPaymentStatus()"
+          shape="round"
+          class="check-status-btn">
+          <ion-icon slot="start" name="refresh-outline"></ion-icon>
+          Check Status
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          color="success" 
+          (click)="resetForm()"
+          shape="round">
+          <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+          Go Back
+        </ion-button>
+      </div>
+
+      <!-- Help Section -->
+      <div class="help-section">
+        <p><strong>Didn't receive confirmation?</strong> Contact admin at <strong>9777377039</strong></p>
+      </div>
+    </div>
+  </div>
   <div *ngIf="showQrScreen && !showSuccessScreen" class="qr-screen animate-slide-up">
     <div class="qr-container">
       <!-- Header -->

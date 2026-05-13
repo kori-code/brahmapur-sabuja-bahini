@@ -1,0 +1,309 @@
+@import "../../../theme/variables.scss";
+
+.admin-fees-content {
+  --ion-background-color: #{$neutral-light-gray};
+  background: linear-gradient(135deg, #{$neutral-light-gray} 0%, #ffffff 100%);
+
+  // Statistics Overview
+  .stats-overview {
+    padding: $spacing-lg;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+
+    .stat-card {
+      box-shadow: $shadow-md;
+      background: linear-gradient(135deg, #{$primary-green} 0%, #{$secondary-color} 100%);
+      color: $neutral-white;
+
+      ion-card-content {
+        padding: $spacing-2xl !important;
+        text-align: center;
+
+        .stat-value {
+          font-size: $font-size-4xl;
+          font-weight: $font-weight-bold;
+          display: block;
+          margin-bottom: $spacing-md;
+        }
+
+        .stat-label {
+          font-size: $font-size-base;
+          margin-bottom: $spacing-sm;
+          display: block;
+          opacity: 0.9;
+        }
+
+        .stat-sublabel {
+          font-size: $font-size-xs;
+          opacity: 0.7;
+          display: block;
+        }
+
+        .progress-bar {
+          width: 100%;
+          height: 8px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: $radius-full;
+          overflow: hidden;
+          margin-top: $spacing-md;
+
+          .progress-fill {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: $radius-full;
+            transition: width 0.3s ease;
+          }
+        }
+      }
+    }
+  }
+
+  // Segment/Tabs
+  ion-segment {
+    margin: 0;
+    background: $neutral-white;
+    border-bottom: 2px solid $neutral-light-gray;
+    --background: #{$neutral-white};
+  }
+
+  ion-badge {
+    margin-left: $spacing-sm;
+    font-size: 10px;
+  }
+
+  // Tab Content
+  .tab-content {
+    padding: $spacing-lg;
+
+    .payment-card {
+      box-shadow: $shadow-sm;
+      margin-bottom: $spacing-lg;
+      border-left: 4px solid $neutral-medium-gray;
+
+      &.pending {
+        border-left-color: #FF9800;
+      }
+
+      &.verified {
+        border-left-color: #4CAF50;
+      }
+
+      &.rejected {
+        border-left-color: #D32F2F;
+      }
+
+      ion-card-content {
+        padding: $spacing-lg !important;
+      }
+
+      .payment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: $spacing-lg;
+
+        .payment-info {
+          flex: 1;
+
+          h3 {
+            margin-bottom: $spacing-sm;
+            color: $text-primary;
+          }
+
+          p {
+            margin: $spacing-xs 0;
+            color: $text-secondary;
+            font-size: $font-size-sm;
+          }
+        }
+
+        .payment-amount {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          color: $primary-green;
+          min-width: 80px;
+          text-align: right;
+
+          &.verified {
+            color: #4CAF50;
+          }
+        }
+      }
+
+      .payment-details {
+        background: $neutral-light-gray;
+        padding: $spacing-lg;
+        border-radius: $radius-md;
+        margin-bottom: $spacing-lg;
+
+        .detail {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: $spacing-sm;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .label {
+            font-weight: $font-weight-medium;
+            color: $text-secondary;
+            font-size: $font-size-sm;
+          }
+
+          .value {
+            color: $text-primary;
+            text-align: right;
+          }
+        }
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-md;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-sm;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-full;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+
+        &.verified {
+          background: rgba(76, 175, 80, 0.15);
+          color: #43A047;
+        }
+
+        &.rejected {
+          background: rgba(244, 67, 54, 0.15);
+          color: #D32F2F;
+        }
+      }
+    }
+
+    .member-card {
+      box-shadow: $shadow-sm;
+      margin-bottom: $spacing-lg;
+
+      ion-card-content {
+        padding: $spacing-lg !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $spacing-lg;
+
+        .member-info {
+          flex: 1;
+
+          h3 {
+            margin-bottom: $spacing-sm;
+            color: $text-primary;
+          }
+
+          p {
+            margin: $spacing-xs 0;
+            color: $text-secondary;
+            font-size: $font-size-sm;
+          }
+        }
+
+        .member-dues {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: $spacing-sm;
+          padding: 0 $spacing-lg;
+          border-left: 1px solid $neutral-light-gray;
+          border-right: 1px solid $neutral-light-gray;
+
+          .dues-label {
+            font-size: $font-size-xs;
+            color: $text-secondary;
+          }
+
+          .dues-amount {
+            font-size: $font-size-2xl;
+            font-weight: $font-weight-bold;
+            color: $primary-green;
+          }
+        }
+
+        .member-status {
+          .status-active,
+          .status-pending,
+          .status-unverified {
+            display: inline-block;
+            padding: $spacing-sm $spacing-md;
+            border-radius: $radius-full;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-bold;
+          }
+
+          .status-active {
+            background: rgba(76, 175, 80, 0.15);
+            color: #43A047;
+          }
+
+          .status-pending {
+            background: rgba(255, 152, 0, 0.15);
+            color: #F57C00;
+          }
+
+          .status-unverified {
+            background: rgba(244, 67, 54, 0.15);
+            color: #D32F2F;
+          }
+        }
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: $spacing-3xl $spacing-lg;
+
+      ion-icon {
+        font-size: 80px;
+        color: $neutral-medium-gray;
+        margin-bottom: $spacing-lg;
+        display: block;
+      }
+
+      h3 {
+        color: $text-primary;
+        margin-bottom: $spacing-md;
+      }
+
+      p {
+        color: $text-secondary;
+        margin: 0;
+      }
+    }
+
+    &.members-list {
+      padding-top: $spacing-lg;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-fees-content {
+    .stats-overview {
+      grid-template-columns: 1fr;
+    }
+
+    .tab-content {
+      padding: $spacing-md;
+
+      .payment-card ion-card-content .action-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
