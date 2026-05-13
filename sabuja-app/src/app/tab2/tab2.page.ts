@@ -28,6 +28,7 @@ export class Tab2Page implements OnInit {
 
   paymentHistory: PaymentTransaction[] = [];
   donationStats: any = {};
+  qrCodeUrl: string = '';
 
   constructor(
     private alertController: AlertController,
@@ -149,9 +150,9 @@ export class Tab2Page implements OnInit {
         }
       }, 3000);
     } else {
-      // Generate QR and show the desktop UI
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
-      this.showQRDialog(qrUrl);
+      // Generate QR and show the QR screen in template
+      this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUrl)}`;
+      this.showQrScreen = true;
     }
   }
 
@@ -252,11 +253,62 @@ export class Tab2Page implements OnInit {
     toast.then(t => t.present());
   }
 
+  downloadInvoice() {
+    // Same as downloadReceipt
+    this.downloadReceipt();
+  }
+
   resetForm() {
     this.showSuccessScreen = false;
     this.showPendingScreen = false;
     this.paymentAmount = null;
     this.paymentPurpose = 'Monthly Subscription';
     this.currentTransactionId = '';
+    this.showQrScreen = false;
+    this.qrCodeUrl = '';
+  }
+
+  async verifyPayment() {
+    if (!this.paymentAmount || !this.currentMember) {
+      await this.showAlert('Error', 'Payment information is incomplete');
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Recording payment...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    try {
+      const response = await this.paymentService.initiatePayment({
+        amount: this.paymentAmount || 0,
+        purpose: this.paymentPurpose,
+        phone: this.currentMember?.phone || '',
+        email: this.currentMember?.email || '',
+        memberId: this.currentMember?.id
+      });
+
+      await loading.dismiss();
+
+      if (response.success) {
+        this.currentTransactionId = response.transactionId || '';
+        this.showQrScreen = false;
+        this.showPendingScreen = true;
+
+        const toast = await this.toastController.create({
+          message: 'Payment submitted for verification',
+          duration: 3000,
+          position: 'bottom',
+          color: 'warning'
+        });
+        await toast.present();
+      } else {
+        await this.showAlert('Payment Failed', response.message);
+      }
+    } catch (error: any) {
+      await loading.dismiss();
+      await this.showAlert('Error', error.message || 'Payment recording failed');
+    }
   }
 }
